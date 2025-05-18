@@ -1,16 +1,9 @@
 local config_dir = vim.fn.stdpath('config')
 local opt = vim.opt
 
--- Настройки интерфейса
-opt.termguicolors = true
-opt.lazyredraw = true
-opt.background = "dark"
-opt.guifont = "JetBrainsMono Nerd Font:h12"
-opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
-
 -- Нумерация строк
 opt.number = true
---opt.relativenumber = true
+opt.relativenumber = true
 
 -- Подсветка текущей строки
 opt.cursorline = true
@@ -114,3 +107,10 @@ local spell_dir = config_dir .. '/spell'
 if vim.fn.isdirectory(spell_dir) == 0 then
   vim.fn.mkdir(spell_dir, 'p')
 end
+
+-- Цветовая схеме и формление
+-- opt.termguicolors = true
+opt.background = "dark"
+vim.cmd [[colorscheme tokyonight]]
+opt.guifont = "JetBrainsMono Nerd Font:h12"
+opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"

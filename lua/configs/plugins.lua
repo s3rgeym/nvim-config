@@ -157,27 +157,24 @@ return {
   -- Тема
   {
     "folke/tokyonight.nvim",
-    lazy = false,
     priority = 1000,
-    opts = {},
-    config = function()
-      require("tokyonight").setup({
-        -- Какие-то настройки
-      })
-      vim.cmd [[colorscheme tokyonight-storm]]
-    end
+    lazy = false, -- Загружаем сразу
+    opts = {
+      -- transparent = true,
+      -- styles = {
+      --   sidebars = "transparent",
+      --   floats = "transparent",
+      -- },
+    },
   },
 
   -- Фиксим прозрачность
   {
     "xiyaowong/transparent.nvim",
-    config = function()
-      require('transparent').setup({
-        extra_groups = {
-          'NormalFloat', -- plugins which have float panel such as Lazy, Mason, LspInfo
-        },
-        exclude_groups = { 'CursorLine' },
-      })
-    end
-  }
+    lazy = false,
+    config = {
+      extra_groups = {},
+      exclude_groups = {},
+    },
+  },
 }
