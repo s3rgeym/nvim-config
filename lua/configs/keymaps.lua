@@ -55,7 +55,7 @@ map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", "find file")
 map("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", "Find [using] grep")
 map("n", "<leader>fb", "<cmd>Telescope buffers<cr>", "find buffer")
 
-map("n", "<C-p>", "<cmd>NvimTreeToggle<CR>", "Toggle file [p]anel")
+map("n", "<C-t>", "<cmd>NvimTreeToggle<CR>", "Toggle nvim tree")
 
 -- Можно через telescope тоже самое делать
 local setup_lsp_keymaps = function(_, bufnr)
