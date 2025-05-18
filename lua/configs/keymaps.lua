@@ -65,7 +65,7 @@ local setup_lsp_keymaps = function(_, bufnr)
   map("n", "gi", vim.lsp.buf.implementation, "Go to implementation", bufnr)
   map("n", "gr", vim.lsp.buf.references, "List references", bufnr)
   map("n", "K", vim.lsp.buf.hover, "Hover documentation", bufnr)
-  -- На эту кллавишу в режиме редактирования по умолчанию уже задано это действие
+  -- На эту клавишу в режиме редактирования по умолчанию уже задано это действие
   map("n", "<C-s>", vim.lsp.buf.signature_help, "Signature help", bufnr)
   map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol", bufnr)
   map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action", bufnr)
