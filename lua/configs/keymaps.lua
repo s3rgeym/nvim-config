@@ -56,7 +56,8 @@ map("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", "Find [using] grep")
 map("n", "<leader>fb", "<cmd>Telescope buffers<cr>", "find buffer")
 
 -- Можно использовать любое из сочетаний с Ctrl+T/N/P, так как на них навешен бесполезный функционал
-map("n", "<C-t>", "<cmd>NvimTreeToggle<CR>", "Toggle nvim tree")
+-- Ctrl-T лучше не использовать для NvimTree
+map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", "Toggle nvim tree")
 
 -- Можно через telescope тоже самое делать
 local setup_lsp_keymaps = function(_, bufnr)
