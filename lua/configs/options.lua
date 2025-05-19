@@ -109,7 +109,7 @@ if vim.fn.isdirectory(spell_dir) == 0 then
 end
 
 -- Цветовая схеме и формление
--- opt.termguicolors = true
+opt.termguicolors = true
 opt.background = "dark"
 vim.cmd [[colorscheme tokyonight]]
 opt.guifont = "JetBrainsMono Nerd Font:h12"
