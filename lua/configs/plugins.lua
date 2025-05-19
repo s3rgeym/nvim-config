@@ -1,6 +1,50 @@
 local setup_lsp_keymaps = require("configs.keymaps").setup_lsp_keymaps
 
 return {
+  -- Строка статуса
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      require('lualine').setup({
+        sections = {
+          lualine_x = {
+            -- Добавим отображение раскладки
+            {
+              function()
+                if vim.opt.iminsert:get() > 0 and vim.b.keymap_name then
+                  return '⌨ ' .. vim.b.keymap_name
+                end
+                return ''
+              end,
+              cond = function() -- Показывать только если раскладка активна
+                return vim.opt.iminsert:get() > 0 and vim.b.keymap_name ~= nil
+              end,
+            },
+            'encoding',
+            'fileformat',
+            'filetype',
+          }
+        }
+      })
+    end
+  },
+
+  -- Отображение вкладок
+  {
+    'akinsho/bufferline.nvim',
+    version = "*",
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      require("bufferline").setup {
+        options = {
+          mode = "buffers",
+          separator_style = "slant"
+        }
+      }
+    end,
+  },
+
   -- Файловый менеджер
   {
     "nvim-tree/nvim-tree.lua",
@@ -44,7 +88,23 @@ return {
 
       configs.setup({
         -- Парсеры для каждого языка нужно ставить отдельно
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "python", "go", "rust", "java", "javascript", "php", "vue", "html", "json", "toml", "yaml" },
+        ensure_installed = {
+          "c",
+          "go",
+          "html",
+          "java",
+          "javascript",
+          "json",
+          "lua",
+          "php",
+          "python",
+          "rust",
+          "toml",
+          "vim",
+          "vimdoc",
+          "vue",
+          "yaml",
+        },
         sync_install = false,
         auto_install = true,
         highlight = { enable = true },
@@ -53,56 +113,107 @@ return {
     end
   },
 
-  -- LSP и Автодополнение
-  -- https://medium.com/@rishavinmngo/how-to-setup-lsp-in-neovim-1c3e5073bbd1
+  -- LSP и автодополнение
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      'neovim/nvim-lspconfig',
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline'
+      "neovim/nvim-lspconfig",
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
     },
     config = function()
-      local cmp = require('cmp')
+      -- Mason setup
+      require("mason").setup()
+      require("mason-lspconfig").setup({
+        -- Добавляем сюда языковые сервера, которые будут автоматически установлены
+        ensure_installed = {
+          -- "pyright",
+          -- не включаем gopls/lua_ls, они обычно идут с компилятором
+        },
+        automatic_installation = true,
+      })
+
+      -- nvim-cmp setup
+      local cmp = require("cmp")
       cmp.setup({
+        -- Что дополняем в режиме редактирования?
         sources = {
-          { name = 'nvim_lsp' },
-          { name = 'buffer' },
+          { name = "nvim_lsp" }, -- LSP
+          { name = "nvim_lua" }, -- Nvim Lua
+          { name = "buffer" },   -- Текст из открытых буферов
+          { name = "path" },     -- Пути до файдов
         },
         mapping = cmp.mapping.preset.insert({
-          ['<C-b>'] = cmp.mapping.scroll_docs(4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<Tab>'] = function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            else
+              fallback()
+            end
+          end,
+          ['<S-Tab>'] = function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            else
+              fallback()
+            end
+          end,
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-d>"] = cmp.mapping.scroll_docs(4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(-4),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
           ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          ['<Esc>'] = cmp.mapping.close(),
+        }),
+      })
+
+      -- `/` cmdline setup.
+      cmp.setup.cmdline('/', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = 'buffer' }
+        }
+      })
+
+      -- `:` cmdline setup.
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'path' }
+        }, {
+          {
+            name = 'cmdline',
+            option = {
+              ignore_cmds = { 'Man', '!' }
+            }
+          }
         })
       })
 
-      local lspconfig = require('lspconfig')
+      -- LSP servers setup
+      local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      -- npm install -g pyright
-      -- sudo pacman -S gopls lua-language-server
-      -- Mason может автоматически ставить зависимости
-      -- Тут нужно вписать названия серверов, поддерживаемых nvim-lspconfig
       local servers = {
-        'pyright',
-        'gopls',
-        'lua_ls',
+        "pyright",
+        "gopls",
+        "lua_ls",
       }
 
       for _, lsp in ipairs(servers) do
-        lspconfig[lsp].setup {
+        lspconfig[lsp].setup({
           on_attach = setup_lsp_keymaps,
           capabilities = capabilities,
-        }
+        })
       end
-    end
+    end,
   },
 
-  -- Выделение отступов
+  -- Отделение отступов вертикальными символами
   {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
@@ -110,47 +221,20 @@ return {
     end
   },
 
-  -- Нижняя строка статуса
+  -- Отображение изменений в Git
   {
-    "nvim-lualine/lualine.nvim",
-    dependencies = 'nvim-tree/nvim-web-devicons',
+    "lewis6991/gitsigns.nvim",
     config = function()
-      require('lualine').setup({
-        sections = {
-          lualine_x = {
-            -- Добавим отображение раскладки
-            {
-              function()
-                if vim.opt.iminsert:get() > 0 and vim.b.keymap_name then
-                  return '⌨ ' .. vim.b.keymap_name
-                end
-                return ''
-              end,
-              cond = function() -- Показывать только если раскладка активна
-                return vim.opt.iminsert:get() > 0 and vim.b.keymap_name ~= nil
-              end,
-            },
-            'encoding',
-            'fileformat',
-            'filetype',
-          }
-        }
-      })
-    end
+      require('gitsigns').setup()
+    end,
   },
 
-  -- Верхняя строка статуса (заменяет табы)
+  -- Посмотр сочетаний клавиш
   {
-    'akinsho/bufferline.nvim',
-    version = "*",
-    dependencies = 'nvim-tree/nvim-web-devicons',
+    "folke/which-key.nvim",
+    event = "VeryLazy",
     config = function()
-      require("bufferline").setup {
-        options = {
-          mode = "buffers",
-          separator_style = "slant"
-        }
-      }
+      require("which-key").setup()
     end,
   },
 
@@ -168,7 +252,7 @@ return {
     },
   },
 
-  -- Фиксим прозрачность
+  -- Фиксим прозрачность (не все темы ее поддерживают)
   {
     "xiyaowong/transparent.nvim",
     lazy = false,
