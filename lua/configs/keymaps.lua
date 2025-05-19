@@ -1,4 +1,5 @@
 local map = require("utils").map
+local M = {}
 
 vim.g.mapleader = ' '
 
@@ -60,7 +61,7 @@ map("n", "<leader>fb", "<cmd>Telescope buffers<cr>", "find buffer")
 map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", "Toggle nvim tree")
 
 -- Можно через telescope тоже самое делать
-local setup_lsp_keymaps = function(_, bufnr)
+M.setup_lsp_keymaps = function(_, bufnr)
   map("n", "gd", vim.lsp.buf.definition, "Go to definition", bufnr)
   map("n", "gD", vim.lsp.buf.declaration, "Go to declaration", bufnr)
   map("n", "gi", vim.lsp.buf.implementation, "Go to implementation", bufnr)
@@ -75,6 +76,4 @@ local setup_lsp_keymaps = function(_, bufnr)
   map("n", "<leader>e", vim.diagnostic.open_float, "Show diagnostics", bufnr)
 end
 
-return {
-  setup_lsp_keymaps = setup_lsp_keymaps
-}
+return M
