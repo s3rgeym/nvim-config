@@ -114,3 +114,8 @@ opt.background = "dark"
 vim.cmd [[colorscheme tokyonight]]
 opt.guifont = "JetBrainsMono Nerd Font:h12"
 opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
+
+if vim.g.neovide then
+  -- Тут какие-то специфические настройки
+  -- use ~/.config/neovide/config.toml instead
+end

@@ -3,8 +3,7 @@ local M = {}
 
 vim.g.mapleader = ' '
 
-map('n', '<C-a>', 'ggVG', "Select all text")
-map('i', '<C-a>', '<Esc>ggVG', "Select all text")
+map({ 'n', 'i' }, '<C-a>', '<Esc>ggVG', "Select all text")
 
 map('n', '<C-q>', '<cmd>q<CR>', "Close current window")
 map('n', '<C-x>', '<cmd>bd<CR>', "Delete current buffer")
