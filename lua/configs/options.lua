@@ -9,8 +9,8 @@ opt.relativenumber = true
 opt.cursorline = true
 
 -- Прокрутка
-opt.scrolloff = 5     -- по вертикали
-opt.sidescrolloff = 5 -- по горизонтали
+opt.scrolloff = 5     -- Сколько строк отображать после курсора при вертикальной прокрутке
+opt.sidescrolloff = 5 -- Аналог для горизонтальной прокрутке (при wrap=true не имеет эффекта)
 
 -- Отображение различных элементов
 opt.signcolumn = "yes"
