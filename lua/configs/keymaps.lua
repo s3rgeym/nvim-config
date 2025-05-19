@@ -20,6 +20,7 @@ map('v', '<S-Tab>', '<gv', "Decrease indent")
 
 map('n', '<Esc>', '<cmd>nohlsearch<CR><Esc>', "Clear search highlight")
 
+-- Можно на Ctrl-[ и Ctrl-] навесить — то же распространенное сочетание
 map('n', '<C-Up>', '<cmd>bp<CR>', "Previous buffer")
 map('n', '<C-Down>', '<cmd>bn<CR>', "Next buffer")
 
