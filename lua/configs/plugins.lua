@@ -149,6 +149,11 @@ return {
           { name = "path" },     -- Пути до файдов
         },
         mapping = cmp.mapping.preset.insert({
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ['<Esc>'] = cmp.mapping.abort(),
           ['<Tab>'] = function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
@@ -163,12 +168,6 @@ return {
               fallback()
             end
           end,
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-d>"] = cmp.mapping.scroll_docs(4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(-4),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<Esc>'] = cmp.mapping.close(),
         }),
       })
 
