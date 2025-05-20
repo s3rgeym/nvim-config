@@ -131,18 +131,16 @@ vim.diagnostic.config({
   update_in_insert = false,
 })
 
--- Цветовая схеме и формление
+-- Цветовая схеме и оформление
+opt.termguicolors = true
+opt.background = "dark"
+vim.cmd [[colorscheme tokyonight-storm]]
+
 if vim.fn.has("gui_running") == 1 then
-  -- neovide не поддерживает bg=None?
   opt.guifont = "JetBrainsMono Nerd Font:h12"
   opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
-else
-  opt.termguicolors = true
-  opt.background = "dark"
-  vim.cmd [[colorscheme tokyonight-storm]]
 end
 
 if vim.g.neovide then
-  -- Тут какие-то специфические настройки
-  -- use ~/.config/neovide/config.toml instead
+  -- Use ~/.config/neovide/config.toml instead
 end
