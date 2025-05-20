@@ -11,10 +11,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     }
   end,
 })
-
--- Показывать всплывающие окна с ошибками при наведении курсора
--- vim.api.nvim_create_autocmd("CursorHold", {
---   callback = function()
---     vim.diagnostic.open_float(nil, { focusable = false })
---   end,
--- })
