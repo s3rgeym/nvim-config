@@ -1,5 +1,4 @@
 local map = require("utils").map
-local M = {}
 
 vim.g.mapleader = ' '
 
@@ -29,15 +28,15 @@ map('n', '<C-j>', '<C-w>j', "Focus lower window")
 map('n', '<C-k>', '<C-w>k', "Focus upper window")
 map('n', '<C-l>', '<C-w>l', "Focus right window")
 
-map('n', '<A-h>', '<C-w>H', "Move window left")
-map('n', '<A-j>', '<C-w>J', "Move window down")
-map('n', '<A-k>', '<C-w>K', "Move window up")
-map('n', '<A-l>', '<C-w>L', "Move window right")
+map('n', '<M-h>', '<C-w>H', "Move window left")
+map('n', '<M-j>', '<C-w>J', "Move window down")
+map('n', '<M-k>', '<C-w>K', "Move window up")
+map('n', '<M-l>', '<C-w>L', "Move window right")
 
-map('n', '<A-Left>', '<cmd>vertical resize -2<CR>', "Decrease width")
-map('n', '<A-Right>', '<cmd>vertical resize +2<CR>', "Increase width")
-map('n', '<A-Down>', '<cmd>resize -2<CR>', "Decrease height")
-map('n', '<A-Up>', '<cmd>resize +2<CR>', "Increase height")
+map('n', '<M-Left>', '<cmd>vertical resize -2<CR>', "Decrease width")
+map('n', '<M-Right>', '<cmd>vertical resize +2<CR>', "Increase width")
+map('n', '<M-Down>', '<cmd>resize -2<CR>', "Decrease height")
+map('n', '<M-Up>', '<cmd>resize +2<CR>', "Increase height")
 
 map('v', "J", ":m '>+1<CR>gv=gv", "Shift visual selected line down")
 map('v', "K", ":m '<-2<CR>gv=gv", "Shift visual selected line up")
@@ -60,8 +59,20 @@ map("n", "<leader>fb", "<cmd>Telescope buffers<cr>", "find buffer")
 -- Ctrl-T лучше не использовать для NvimTree
 map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", "Toggle nvim tree")
 
+-- Debugging
+map("n", "<F5>", function() require('dap').continue() end, "Debugger: start or continue")
+map("n", "<F10>", function() require('dap').cstep_over() end, "Debugger: step over")
+map("n", "<F11>", function() require('dap').step_into() end, "Debugger: step into")
+map("n", "<F12>", function() require('dap').step_out() end, "Debugger: step out")
+map("n", '<M-b>', function() require('dap').toggle_breakpoint() end, "Debugger: toggle beakpoint")
+map({ "n", "v" }, '<M-e>', function() require('dapui').eval() end, "Debugger: eval expression")
+
+
+local M = {}
+
+-- Автодополнение через LSP
 -- Можно через telescope тоже самое делать
-M.setup_lsp_keymaps = function(_, bufnr)
+function M.setup_lsp_keymaps(_, bufnr)
   map("n", "gd", vim.lsp.buf.definition, "Go to definition", bufnr)
   map("n", "gD", vim.lsp.buf.declaration, "Go to declaration", bufnr)
   map("n", "gi", vim.lsp.buf.implementation, "Go to implementation", bufnr)
