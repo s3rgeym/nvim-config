@@ -310,6 +310,10 @@ return {
     event = "VeryLazy",
     opts = {
       preset = "modern",
+      triggers = {
+        -- по умолчанию добавлен в mode содержится x, из-за чего при выделении текста с Shift показываются сочетания с v
+        { "<auto>", mode = "nso" },
+      },
     },
     -- keys = {
     --   {

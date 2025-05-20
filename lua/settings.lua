@@ -74,19 +74,22 @@ opt.confirm = true
 opt.splitbelow = true
 opt.splitright = true
 
--- Мышь и работа с текстом
+-- Мышь, перемещение курсора и выделение текста
 opt.mouse = "a"
 opt.mousemoveevent = true
--- Выделение текста стрелками с зажатым Shift (лучше не использовать)
---opt.keymodel = "startsel,stopsel"
+-- Привычное перемещение курсора
+opt.whichwrap = 'h,l,<,>,[,]'
+-- Выделение текста стрелками с зажатым Shifts
+-- Со stopsel выделение блоков (Shit-V) стрелками не будет работать
+opt.keymodel = "startsel,stopsel"
+
+-- Поддержка русского языка ввода
 -- При переключении системной раскладки перестают работать привязки клавиш.
 -- В vim можно включить встроенную русскую раскладку с переключением по Ctrl-6
 opt.keymap = "russian-jcukenwin"
 -- Делаем раскладкой по умолчанию английскую
 opt.iminsert = 0
 opt.imsearch = 0
--- Привычное перемещение курсора
-opt.whichwrap = 'h,l,<,>,[,]'
 
 -- Автодополнение
 opt.wildmenu = true
@@ -116,11 +119,12 @@ vim.cmd [[colorscheme tokyonight-storm]]
 opt.guifont = "JetBrainsMono Nerd Font:h12"
 opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
 
--- Отображаем диагностические сообщения как виртуальный текст (добавляется рядом с ошибкой)
+-- Отображаем диагностические сообщения как виртуальный текст
 vim.diagnostic.config({
   virtual_text = {
     prefix = "●",
     spacing = 4,
+    severity = { min = vim.diagnostic.severity.WARN } -- отображаем только ошибки и предупреждения
   },
   signs = true,
   underline = true,
