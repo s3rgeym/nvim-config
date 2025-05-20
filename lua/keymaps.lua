@@ -1,6 +1,6 @@
-local map = require("utils").map
+-- Базовые сочетания
 
-vim.g.mapleader = ' '
+local map = require("utils").map
 
 map({ 'n', 'i' }, '<C-a>', '<Esc>ggVG', "Select all text")
 
@@ -50,41 +50,3 @@ map('n', '<leader>sv', '<cmd>so $MYVIMRC<CR>', "Reload vim config")
 
 -- F3-F11 лучше оставить для дебаггера
 map({ 'n', 'i' }, '<F2>', ":setlocal spell!<cr>", "Toggle spell check")
-
-map("n", "<leader>/", "<cmd>Telescope find_files<cr>", "Find file")
-map("n", "<leader>g", "<cmd>Telescope live_grep<cr>", "Find using grep")
-map("n", "<leader>b", "<cmd>Telescope buffers<cr>", "Find buffer")
-
--- Можно использовать любое из сочетаний с Ctrl+T/N/P, так как на них навешен бесполезный функционал
--- Ctrl-T лучше не использовать для NvimTree
-map("n", "<C-p>", "<cmd>NvimTreeToggle<CR>", "Toggle files panel")
-
--- Debugging
-map("n", "<F5>", function() require('dap').continue() end, "Continue debug")
-map("n", "<F10>", function() require('dap').cstep_over() end, "Debug: step over")
-map("n", "<F11>", function() require('dap').step_into() end, "Debug: step into")
-map("n", "<F12>", function() require('dap').step_out() end, "Debug: step out")
-map("n", '<M-b>', function() require('dap').toggle_breakpoint() end, "Toggle beakpoint")
-map({ "n", "v" }, '<M-e>', function() require('dapui').eval() end, "Eval expression")
-
-
-local M = {}
-
--- Автодополнение через LSP
--- Можно через telescope тоже самое делать
-function M.setup_lsp_keymaps(_, bufnr)
-  map("n", "gd", vim.lsp.buf.definition, "Go to definition", bufnr)
-  map("n", "gD", vim.lsp.buf.declaration, "Go to declaration", bufnr)
-  map("n", "gi", vim.lsp.buf.implementation, "Go to implementation", bufnr)
-  map("n", "gr", vim.lsp.buf.references, "List references", bufnr)
-  map("n", "K", vim.lsp.buf.hover, "Hover documentation", bufnr)
-  -- На эту клавишу в режиме редактирования по умолчанию уже задано это действие
-  map("n", "<C-s>", vim.lsp.buf.signature_help, "Signature help", bufnr)
-  map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol", bufnr)
-  map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action", bufnr)
-  map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic", bufnr)
-  map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic", bufnr)
-  map("n", "<leader>e", vim.diagnostic.open_float, "Show diagnostics", bufnr)
-end
-
-return M

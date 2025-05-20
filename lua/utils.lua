@@ -1,11 +1,9 @@
 local M = {}
 
--- Универсальная функция для биндингов
-function M.map(mode, keys, command, desc, bufnr)
-  local opts = { desc = desc, silent = true }
-  if bufnr then
-    opts.buffer = bufnr
-  end
+-- Функция для установки биндингов
+function M.map(mode, keys, command, desc, opts)
+  opts = opts or {}
+  opts.desc = desc
   vim.keymap.set(mode, keys, command, opts)
 end
 

@@ -1,3 +1,5 @@
+-- [[ Basic Settings ]]
+
 local config_dir = vim.fn.stdpath('config')
 local opt = vim.opt
 
