@@ -332,11 +332,12 @@ return {
     priority = 1000,
     lazy = false, -- Загружаем сразу
     opts = {
-      transparent = true,
-      styles = {
-        sidebars = "transparent",
-        floats = "transparent",
-      },
+      -- Включать прозрачность для темы не нужно, если установить colors.transparent_background_colors = true в настройках alacritty
+      -- transparent = true,
+      -- styles = {
+      --   sidebars = "transparent",
+      --   floats = "transparent",
+      -- },
     },
   },
 }
