@@ -34,7 +34,7 @@ opt.listchars = {
 }
 opt.fillchars = { eob = " " } -- вместо ~ отображаем просто пустые строки
 
--- Отступы и табуляция
+-- Отступы и форматирование текста
 opt.expandtab = true -- заменять символы табуляции на пробелы при отрисовке
 opt.tabstop = 4      -- на сколько пробелов заменяется символ табуляции при отображении
 opt.shiftwidth = 2   -- количество пробелов, вставляемых при шифтинге
@@ -43,6 +43,14 @@ opt.softtabstop = 2  -- ширина отступа
 opt.autoindent = true
 opt.smartindent = true
 opt.breakindent = true -- при переносе строки добавлять отступы
+opt.textwidth = 80
+opt.colorcolumn = tostring(vim.opt.textwidth:get() + 1)
+opt.formatoptions = {
+  c = true, -- перенос комментариев
+  q = true, -- gq
+  r = true, -- автоматический перенос при вводе
+}
+
 
 -- Поиск
 opt.ignorecase = true
