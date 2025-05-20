@@ -51,7 +51,6 @@ opt.formatoptions = {
   r = true, -- автоматический перенос при вводе
 }
 
-
 -- Поиск
 opt.ignorecase = true
 opt.smartcase = true
@@ -120,13 +119,6 @@ if vim.fn.isdirectory(spell_dir) == 0 then
   vim.fn.mkdir(spell_dir, 'p')
 end
 
--- Цветовая схеме и формление
-opt.termguicolors = true
-opt.background = "dark"
-vim.cmd [[colorscheme tokyonight-storm]]
-opt.guifont = "JetBrainsMono Nerd Font:h12"
-opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
-
 -- Отображаем диагностические сообщения как виртуальный текст
 vim.diagnostic.config({
   virtual_text = {
@@ -138,6 +130,17 @@ vim.diagnostic.config({
   underline = true,
   update_in_insert = false,
 })
+
+-- Цветовая схеме и формление
+if vim.fn.has("gui_running") == 1 then
+  -- neovide не поддерживает bg=None?
+  opt.guifont = "JetBrainsMono Nerd Font:h12"
+  opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
+else
+  opt.termguicolors = true
+  opt.background = "dark"
+  vim.cmd [[colorscheme tokyonight-storm]]
+end
 
 if vim.g.neovide then
   -- Тут какие-то специфические настройки
