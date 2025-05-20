@@ -61,6 +61,13 @@ opt.hlsearch = true
 opt.wrapscan = true
 opt.inccommand = "split"
 
+-- Настройка ripgrep вместо grep
+-- sudo pacman -S ripgrep
+if vim.fn.executable('rg') == 1 then
+  opt.grepprg = "rg --vimgrep --smart-case --hidden"
+  opt.grepformat = "%f:%l:%c:%m"
+end
+
 -- Файлы и буферы
 -- В последнем nvim вроде всегда такое поведение
 -- opt.hidden = true
