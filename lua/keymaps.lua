@@ -51,21 +51,21 @@ map('n', '<leader>sv', '<cmd>so $MYVIMRC<CR>', "Reload vim config")
 -- F3-F11 лучше оставить для дебаггера
 map({ 'n', 'i' }, '<F2>', ":setlocal spell!<cr>", "Toggle spell check")
 
-map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", "find file")
-map("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", "Find [using] grep")
-map("n", "<leader>fb", "<cmd>Telescope buffers<cr>", "find buffer")
+map("n", "<leader>/", "<cmd>Telescope find_files<cr>", "Find file")
+map("n", "<leader>g", "<cmd>Telescope live_grep<cr>", "Find using grep")
+map("n", "<leader>b", "<cmd>Telescope buffers<cr>", "Find buffer")
 
 -- Можно использовать любое из сочетаний с Ctrl+T/N/P, так как на них навешен бесполезный функционал
 -- Ctrl-T лучше не использовать для NvimTree
 map("n", "<C-p>", "<cmd>NvimTreeToggle<CR>", "Toggle files panel")
 
 -- Debugging
-map("n", "<F5>", function() require('dap').continue() end, "Debugger: start or continue")
-map("n", "<F10>", function() require('dap').cstep_over() end, "Debugger: step over")
-map("n", "<F11>", function() require('dap').step_into() end, "Debugger: step into")
-map("n", "<F12>", function() require('dap').step_out() end, "Debugger: step out")
-map("n", '<M-b>', function() require('dap').toggle_breakpoint() end, "Debugger: toggle beakpoint")
-map({ "n", "v" }, '<M-e>', function() require('dapui').eval() end, "Debugger: eval expression")
+map("n", "<F5>", function() require('dap').continue() end, "Continue debug")
+map("n", "<F10>", function() require('dap').cstep_over() end, "Debug: step over")
+map("n", "<F11>", function() require('dap').step_into() end, "Debug: step into")
+map("n", "<F12>", function() require('dap').step_out() end, "Debug: step out")
+map("n", '<M-b>', function() require('dap').toggle_breakpoint() end, "Toggle beakpoint")
+map({ "n", "v" }, '<M-e>', function() require('dapui').eval() end, "Eval expression")
 
 
 local M = {}
