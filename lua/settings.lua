@@ -86,13 +86,13 @@ opt.keymap = "russian-jcukenwin"
 opt.iminsert = 0
 opt.imsearch = 0
 -- Привычное перемещение курсора
-opt.whichwrap:append("hl<>[]")
+opt.whichwrap = 'h,l,<,>,[,]'
 
 -- Автодополнение
 opt.wildmenu = true
 opt.wildmode = "longest:full,full"
 -- Можно исключить из дополнения определенные типы файлов, имеющие бинарный формат
-opt.wildignore:append { '*.o', '*.obj', '*.py[co]', '__pycache__/*', '*.so', '*.zip', '*.rar', '*.tar.*', '*.gz', '*.docx', '*.xlsx', '*.pdf', '*.jpg', '*.jpeg', '*.gif', '*.png' }
+opt.wildignore:append { '*.o', '*.obj', '*.py[co]', '.git/*', '__pycache__/*', 'dist/*', 'build/*', '*.so', '*.zip', '*.rar', '*.tar.*', '*.gz', '*.docx', '*.xlsx', '*.pdf', '*.jpg', '*.jpeg', '*.gif', '*.png', '*.mp3', '*.mp4', '*.webp' }
 opt.completeopt = "menuone,noselect,noinsert"
 opt.pumheight = 10 -- высота всплывающего меню с вариантами для дополнения
 
