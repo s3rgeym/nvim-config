@@ -49,7 +49,7 @@ map('n', '<leader>ev', '<cmd>edit $MYVIMRC<CR>', "Edit vim config")
 map('n', '<leader>sv', '<cmd>so $MYVIMRC<CR>', "Reload vim config")
 
 -- F3-F11 лучше оставить для дебаггера
-map('', '<F2>', ":setlocal spell!<cr>", "Toggle spell check")
+map({ 'n', 'i' }, '<F2>', ":setlocal spell!<cr>", "Toggle spell check")
 
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", "find file")
 map("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", "Find [using] grep")
@@ -57,7 +57,7 @@ map("n", "<leader>fb", "<cmd>Telescope buffers<cr>", "find buffer")
 
 -- Можно использовать любое из сочетаний с Ctrl+T/N/P, так как на них навешен бесполезный функционал
 -- Ctrl-T лучше не использовать для NvimTree
-map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", "Toggle nvim tree")
+map("n", "<C-p>", "<cmd>NvimTreeToggle<CR>", "Toggle files panel")
 
 -- Debugging
 map("n", "<F5>", function() require('dap').continue() end, "Debugger: start or continue")
