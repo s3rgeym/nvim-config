@@ -1,10 +1,12 @@
-local setup_lsp_keymaps = require("configs.keymaps").setup_lsp_keymaps
+local setup_lsp_keymaps = require("keymaps").setup_lsp_keymaps
 
+-- Настройки плагинов для lazy.nvim задаются в виде хеш-таблицы (аналог ассоциативных массивов, поддерживающих нумерацию элементов)
 return {
   -- Строка статуса
   {
     "nvim-lualine/lualine.nvim",
     dependencies = 'nvim-tree/nvim-web-devicons',
+    -- Функция config нужна
     config = function()
       require('lualine').setup({
         sections = {
@@ -78,7 +80,16 @@ return {
     end
   },
 
-  -- tree-sitter используется для парсинга сходников
+  -- Автоматическая вставка парных скобок и кавычек
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    config = true
+    -- use opts = {} for passing setup options
+    -- this is equivalent to setup({}) function
+  },
+
+  -- tree-sitter используется для парсинга исходников в AST для навигации по коду, лучшей подсветки синтаксиса, например, в Vue-компонентах (HTML + JS + CSS), а так же применяется тем же DAP. Без него подсветка синтаксиса будет работать благодаря файлам синтаксиса vim, но вот остальное...
   -- :checkhealth nvim-treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -88,6 +99,7 @@ return {
 
       configs.setup({
         -- Парсеры для каждого языка нужно ставить отдельно
+        -- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
         ensure_installed = {
           "c",
           "go",
@@ -114,6 +126,7 @@ return {
   },
 
   -- LSP и автодополнение
+  -- Следует отметить, что не все LSP-сервера поддерживают форматирование, например, pyright не умеет, а ruff — да, поэтому могут понадобиться дополнитеьные плагины
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
@@ -121,6 +134,7 @@ return {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-nvim-lua",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
@@ -130,44 +144,54 @@ return {
       -- Mason setup
       require("mason").setup()
       require("mason-lspconfig").setup({
-        -- Добавляем сюда языковые сервера, которые будут автоматически установлены
-        ensure_installed = {
-          -- "pyright",
-          -- не включаем gopls/lua_ls, они обычно идут с компилятором
-        },
+        -- Добавляем сюда языковые сервера, которые будут установлены
+        -- :LspInstall позволяет их поставить вручную
+        ensure_installed = {},
         automatic_installation = true,
       })
 
       -- nvim-cmp setup
       local cmp = require("cmp")
       cmp.setup({
-        -- Что дополняем в режиме редактирования?
         sources = {
+          -- Что дополняем в режиме редактирования?
           { name = "nvim_lsp" }, -- LSP
           { name = "nvim_lua" }, -- Nvim Lua
           { name = "buffer" },   -- Текст из открытых буферов
-          { name = "path" },     -- Пути до файдов
+          { name = "path" },     -- Пути до файлов
+          -- Показывает сигнатуры функций с выделением текущих параметров
+          { name = 'nvim_lsp_signature_help' }
         },
         mapping = cmp.mapping.preset.insert({
           ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          ['<Esc>'] = cmp.mapping.abort(),
-          ['<Tab>'] = function(fallback)
+          ["<Esc>"] = cmp.mapping.abort(),
+          ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
+            elseif require("luasnip").expand_or_jumpable() then
+              vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
             else
               fallback()
             end
-          end,
-          ['<S-Tab>'] = function(fallback)
+          end, {
+            "i",
+            "s",
+          }),
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
+            elseif require("luasnip").jumpable(-1) then
+              vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
             else
               fallback()
             end
-          end,
+          end, {
+            "i",
+            "s",
+          }),
         }),
       })
 
@@ -198,18 +222,80 @@ return {
       local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      local servers = {
-        "pyright",
+      -- Тут прописываем языковые сервера, которые надо настроить для использования
+      -- :help lspconfig-all
+      -- https://github.com/neovim/nvim-lspconfig/tree/master/lsp
+      local lsp_servers = {
         "gopls",
         "lua_ls",
+        "ruff",
       }
 
-      for _, lsp in ipairs(servers) do
+      for _, lsp in ipairs(lsp_servers) do
         lspconfig[lsp].setup({
           on_attach = setup_lsp_keymaps,
           capabilities = capabilities,
         })
       end
+    end,
+  },
+
+  -- Debugger
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio", -- nvim-dap-ui requires nvim-nio to be installed. Install from https://github.com/nvim-neotest/nvim-nio
+      "theHamsta/nvim-dap-virtual-text",
+      "williamboman/mason.nvim",
+      "jay-babu/mason-nvim-dap.nvim",
+    },
+    config = function()
+      local dap = require("dap")
+
+      local dapui = require("dapui")
+
+      require("nvim-dap-virtual-text").setup()
+      dapui.setup()
+
+      require("mason-nvim-dap").setup({
+        ensure_installed = { "python" }, -- автоматически поставит debugpy
+        automatic_installation = true,
+        handlers = {
+          function(config)
+            require("mason-nvim-dap").default_setup(config)
+          end,
+        },
+      })
+
+      -- Если debugpy установлен, то можно прописать до него путь вместо установкм через mason-nvim-dap
+      -- dap.adapters.python = {
+      --   type = 'executable',
+      --   command = '/path/to/your/python',
+      --   args = { '-m', 'debugpy.adapter' },
+      -- }
+
+      -- UI авто-открытие/закрытие
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
+
+      -- Клавиши заданы в keymaps
+    end,
+  },
+
+  -- Просмотр ошибок
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("trouble").setup()
     end,
   },
 
@@ -229,6 +315,8 @@ return {
     end,
   },
 
+  -- Плагины для комментариев и editorconfig не нужны, так как этот функционал встроенный
+
   -- Посмотр сочетаний клавиш
   {
     "folke/which-key.nvim",
@@ -244,21 +332,11 @@ return {
     priority = 1000,
     lazy = false, -- Загружаем сразу
     opts = {
-      -- transparent = true,
-      -- styles = {
-      --   sidebars = "transparent",
-      --   floats = "transparent",
-      -- },
-    },
-  },
-
-  -- Фиксим прозрачность (не все темы ее поддерживают)
-  {
-    "xiyaowong/transparent.nvim",
-    lazy = false,
-    config = {
-      extra_groups = {},
-      exclude_groups = {},
+      transparent = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
     },
   },
 }

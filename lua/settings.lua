@@ -3,7 +3,8 @@ local opt = vim.opt
 
 -- Нумерация строк
 opt.number = true
-opt.relativenumber = true
+-- Мне не нравится нумерация относительно курсора
+--opt.relativenumber = true
 
 -- Подсветка текущей строки
 opt.cursorline = true
