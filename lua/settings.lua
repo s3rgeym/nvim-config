@@ -112,7 +112,7 @@ end
 -- Цветовая схеме и формление
 opt.termguicolors = true
 opt.background = "dark"
-vim.cmd [[colorscheme tokyonight]]
+vim.cmd [[colorscheme tokyonight-storm]]
 opt.guifont = "JetBrainsMono Nerd Font:h12"
 opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
 
