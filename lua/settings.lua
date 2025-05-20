@@ -77,8 +77,8 @@ opt.splitright = true
 -- Мышь и работа с текстом
 opt.mouse = "a"
 opt.mousemoveevent = true
--- Выделение текста стрелками с зажатым Shift
-opt.keymodel = "startsel,stopsel"
+-- Выделение текста стрелками с зажатым Shift (лучше не использовать)
+--opt.keymodel = "startsel,stopsel"
 -- При переключении системной раскладки перестают работать привязки клавиш.
 -- В vim можно включить встроенную русскую раскладку с переключением по Ctrl-6
 opt.keymap = "russian-jcukenwin"
@@ -115,6 +115,17 @@ opt.background = "dark"
 vim.cmd [[colorscheme tokyonight-storm]]
 opt.guifont = "JetBrainsMono Nerd Font:h12"
 opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
+
+-- Отображаем диагностические сообщения как виртуальный текст (добавляется рядом с ошибкой)
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = "●",
+    spacing = 4,
+  },
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+})
 
 if vim.g.neovide then
   -- Тут какие-то специфические настройки

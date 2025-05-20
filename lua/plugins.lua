@@ -90,7 +90,7 @@ return {
   },
 
   -- tree-sitter используется для парсинга исходников в AST для навигации по коду, лучшей подсветки синтаксиса, например, в Vue-компонентах (HTML + JS + CSS), а так же применяется тем же DAP. Без него подсветка синтаксиса будет работать благодаря файлам синтаксиса vim, но вот остальное...
-  -- :checkhealth nvim-treesitter
+  -- :checkhealth nvim-treesitter (так можно проверить любой плагин)
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -171,8 +171,6 @@ return {
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif require("luasnip").expand_or_jumpable() then
-              vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
             else
               fallback()
             end
@@ -183,8 +181,6 @@ return {
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif require("luasnip").jumpable(-1) then
-              vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
             else
               fallback()
             end
@@ -290,15 +286,6 @@ return {
     end,
   },
 
-  -- Просмотр ошибок
-  {
-    "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      require("trouble").setup()
-    end,
-  },
-
   -- Отделение отступов вертикальными символами
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -321,9 +308,18 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    config = function()
-      require("which-key").setup()
-    end,
+    opts = {
+      preset = "modern",
+    },
+    -- keys = {
+    --   {
+    --     "<leader>?",
+    --     function()
+    --       require("which-key").show({ global = false })
+    --     end,
+    --     desc = "Buffer Local Keymaps (which-key)",
+    --   },
+    -- },
   },
 
   -- Тема
