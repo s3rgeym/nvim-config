@@ -79,7 +79,7 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      preset = "modern",
+      preset = "helix",
       triggers = {
         -- по умолчанию в mode содержится "x", из-за чего при выделении текста с Shift показываются сочетания с v
         { "<auto>", mode = "nso" },
