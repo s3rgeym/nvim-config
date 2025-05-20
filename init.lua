@@ -18,10 +18,10 @@ vim.opt.rtp:prepend(lazypath)
 -- Клавишу leader надо объявить до загрузки плагинов lazy
 vim.g.mapleader = ' '
 
--- Настройка плагинов
+-- Загрузка плагинов
 require("lazy").setup("plugins")
 
--- Настройки изменять лучше после подключения плагинов
+-- Настройки должны идти после плагинов
 require("settings")
 require("keymaps")
 require("autocmds")
