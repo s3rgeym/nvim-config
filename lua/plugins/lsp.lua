@@ -87,6 +87,7 @@ return {
       })
     })
 
+    -- autcomd "LspAttach"
     local function on_attach(_, bufnr)
       local function nmap(keys, func, desc)
         vim.keymap.set('n', keys, func, { desc = "LSP: " .. desc, buffer = bufnr })
@@ -94,15 +95,18 @@ return {
 
       nmap("gd", vim.lsp.buf.definition, "Go to definition")
       nmap("gD", vim.lsp.buf.declaration, "Go to declaration")
-      nmap("gi", vim.lsp.buf.implementation, "Go to implementation")
-      nmap("gr", vim.lsp.buf.references, "List references")
+      -- Используются в Telescope 
+      -- nmap("gi", vim.lsp.buf.implementation, "Go to implementation")
+      -- nmap("gr", vim.lsp.buf.references, "List references")
       nmap("K", vim.lsp.buf.hover, "Hover documentation")
       -- На эту клавишу в режиме редактирования по умолчанию уже задано это действие
       nmap("<C-s>", vim.lsp.buf.signature_help, "Signature help")
-      nmap("<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+      nmap("<leader>rs", vim.lsp.buf.rename, "Rename symbol")
       nmap("<leader>ca", vim.lsp.buf.code_action, "Code action")
-      nmap("]d", vim.diagnostic.goto_next, "Next diagnostic")
-      nmap("[d", vim.diagnostic.goto_prev, "Previous diagnostic")
+      nmap("<leader>fd", function() vim.lsp.buf.format({ async = true }) end, "Format Document")
+      -- vim.diagnostic.goto_prev/vim.diagnostic.goto_next устарели
+      nmap("[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, "Previous diagnostic")
+      nmap("]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, "Next diagnostic")
       nmap("<leader>e", vim.diagnostic.open_float, "Show diagnostics")
     end
 
