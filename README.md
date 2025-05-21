@@ -6,6 +6,8 @@
 
 ![Fuck you Vim.org](https://i.imgur.com/kBFTJlg.jpeg)
 
+> Fuck u, vim org!
+
 * Конфиг разбит на файлы, которые находятся в директории `lua/`.
 * `settings.lua` содержит общие настройки.
 * Сочетания клавиш находятся в `keymaps.lua`.
