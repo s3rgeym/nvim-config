@@ -30,6 +30,7 @@ return {
         "vim",
         "vimdoc",
         "vue",
+        "xml",
         "yaml",
       },
       sync_install = false,
