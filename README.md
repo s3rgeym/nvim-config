@@ -34,6 +34,12 @@ sudo pacman -S wl-clipboard xclip
 sudo pacman -S ripgrep
 ```
 
+Так же нужен патченный nerd-шрифт, например:
+
+```sh
+sudo pacman -S ttf-jetbrains-mono-nerd
+```
+
 ## Заметки
 
 ### Использование lazy.nvim
