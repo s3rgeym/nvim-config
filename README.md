@@ -16,7 +16,23 @@
 * `plugins/dap.lua` — дебаггер.
 * Добавлен `.luarc.json` для включения автодополнения lua-конфигов nvim ([отсюда](https://lsp-zero.netlify.app/docs/guide/neovim-lua-ls.html)).
 
----
+## Установка и зависимости
+
+```sh
+sudo pacman -S neovim
+```
+
+Для копирования текста в буфер обмена нужны xclip (сессия X) или wl-copy (Wayland):
+
+```sh
+sudo pacman -S wl-clipboard xclip
+```
+
+Для поиска текста по регулярному выражению:
+
+```sh
+sudo pacman -S ripgrep
+```
 
 ## Заметки
 
