@@ -4,7 +4,7 @@
 
 Конфиг с настроенным LSP и дебаггером. Vim я не пользуюсь больше и другим не советую из-за политической позиции его разработчиков.
 
-![photo_2025-05-21_10-50-49](https://gist.github.com/user-attachments/assets/a22e00bc-26b3-49f4-acd3-7b2e43cfc725)
+![Fuck you Vim.org](https://i.imgur.com/kBFTJlg.jpeg)
 
 * Конфиг разбит на файлы, которые находятся в директории `lua/`.
 * `settings.lua` содержит общие настройки.
