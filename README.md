@@ -155,3 +155,9 @@ local foo = require("foo")
   end,
 }
 ```
+
+#### Удаление плагинов, кеша и тп
+
+```sh
+rm -rf ~/.local/share/nvim
+```
