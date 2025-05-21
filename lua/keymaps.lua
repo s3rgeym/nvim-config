@@ -28,10 +28,10 @@ map('n', '<C-j>', '<C-w>j', "Move focus to window below")
 map('n', '<C-k>', '<C-w>k', "Move focus to window above")
 map('n', '<C-l>', '<C-w>l', "Move focus to right window")
 
-map('n', '<M-h>', '<C-w>H', "Move current window to the left")
+map('n', '<M-h>', '<C-w>H', "Move current window to left")
 map('n', '<M-j>', '<C-w>J', "Move current window to bottom")
 map('n', '<M-k>', '<C-w>K', "Move current window to top")
-map('n', '<M-l>', '<C-w>L', "Move current window to the right")
+map('n', '<M-l>', '<C-w>L', "Move current window to right")
 
 map('n', '<M-Left>', '<cmd>vertical resize -2<CR>', "Decrease width")
 map('n', '<M-Right>', '<cmd>vertical resize +2<CR>', "Increase width")
