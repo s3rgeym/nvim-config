@@ -10,12 +10,17 @@ return {
       -- Парсеры для каждого языка нужно ставить отдельно
       -- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
       ensure_installed = {
+        "bash",
         "c",
+        "cpp",
+        "css",
+        "csv",
         "go",
         "html",
         "java",
         "javascript",
         "json",
+        "markdown",
         "lua",
         "php",
         "python",
