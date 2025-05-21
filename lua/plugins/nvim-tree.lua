@@ -1,20 +1,19 @@
+-- Файловый менеджер
 return {
-  "folke/which-key.nvim",
-  event = "VeryLazy",
+  "nvim-tree/nvim-tree.lua",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = {
-    preset = "helix",
-    triggers = {
-      -- по умолчанию в mode содержится "x", из-за чего при выделении текста с Shift показываются сочетания с v
-      { "<auto>", mode = "nso" },
+    view = { width = 30 },
+    filters = { dotfiles = false },
+    git = { enable = true },
+    actions = {
+      open_file = {
+        quit_on_open = true, -- закроет дерево после открытия файла
+      },
     },
+    hijack_netrw = true, -- авто-закрытие при последнем буфере
   },
   keys = {
-    {
-      "<leader>?",
-      function()
-        require("which-key").show({ global = false })
-      end,
-      desc = "Buffer Local Keymaps (which-key)",
-    },
+    { "<C-p>", "<cmd>NvimTreeToggle<CR>", desc = "Toggle files panel", mode = "n" },
   },
 }
