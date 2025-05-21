@@ -105,8 +105,9 @@ return {
       nmap("<leader>ca", vim.lsp.buf.code_action, "Code action")
       nmap("<leader>fd", function() vim.lsp.buf.format({ async = true }) end, "Format Document")
       -- vim.diagnostic.goto_prev/vim.diagnostic.goto_next устарели
-      nmap("[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, "Previous diagnostic")
-      nmap("]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, "Next diagnostic")
+      local jump = function(c) vim.diagnostic.jump({ count = c, float = true })  end
+      nmap("[d", function() jump(-1) end, "Previous diagnostic")
+      nmap("]d", function() jump(1) end, "Next diagnostic")
       nmap("<leader>e", vim.diagnostic.open_float, "Show diagnostics")
     end
 
