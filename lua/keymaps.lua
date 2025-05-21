@@ -49,4 +49,4 @@ map('n', '<leader>ev', '<cmd>edit $MYVIMRC<CR>', "Edit vim config")
 map('n', '<leader>sv', '<cmd>so $MYVIMRC<CR>', "Reload vim config")
 
 -- F3-F11 лучше оставить для дебаггера
-map({ 'n', 'i' }, '<F2>', ":setlocal spell!<cr>", "Toggle spell check")
+map({ 'n', 'i' }, '<F2>', "<cmd>setlocal spell!<cr>", "Toggle spell check")
