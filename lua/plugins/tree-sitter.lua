@@ -9,29 +9,14 @@ return {
     configs.setup({
       -- Парсеры для каждого языка нужно ставить отдельно
       -- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
+      -- В арче tree-sitter-lua - это зависимость neovim, т.е. lua ставить не
+      -- надо
       ensure_installed = {
-        "bash",
-        "c",
-        "cpp",
-        "css",
-        "csv",
         "go",
-        "html",
-        "java",
         "javascript",
-        "json",
-        -- "markdown",
-        "lua",
         "php",
         "python",
-        "rust",
-        "toml",
         "typescript",
-        "vim",
-        "vimdoc",
-        "vue",
-        "xml",
-        "yaml",
       },
       sync_install = false,
       auto_install = true,
