@@ -132,7 +132,7 @@ end
 vim.diagnostic.config({
   virtual_text = {
     prefix = "●",
-    spacing = 4,
+    spacing = 2,
     severity = { min = vim.diagnostic.severity.WARN } -- отображаем только ошибки и предупреждения
   },
   signs = true,
