@@ -3,3 +3,4 @@
 /package.json
 /spell
 /test.*
+.ruff_cache
