@@ -95,7 +95,7 @@ return {
 
       nmap("gd", vim.lsp.buf.definition, "Go to definition")
       nmap("gD", vim.lsp.buf.declaration, "Go to declaration")
-      -- Используются в Telescope 
+      -- Используются в Telescope
       -- nmap("gi", vim.lsp.buf.implementation, "Go to implementation")
       -- nmap("gr", vim.lsp.buf.references, "List references")
       nmap("K", vim.lsp.buf.hover, "Hover documentation")
