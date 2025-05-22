@@ -150,6 +150,6 @@ if vim.fn.has("gui_running") == 1 then
   opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
 end
 
-if vim.g.neovide then
+if vim.fn.has("gui_running") == 1 and vim.g.neovide then
   -- Use ~/.config/neovide/config.toml instead
 end
