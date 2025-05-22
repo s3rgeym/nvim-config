@@ -131,8 +131,8 @@ end
 -- Отображаем диагностические сообщения как виртуальный текст
 vim.diagnostic.config({
   virtual_text = {
-    prefix = "●",
-    spacing = 2,
+    -- prefix = "●",
+    -- spacing = 2,
     severity = { min = vim.diagnostic.severity.WARN } -- отображаем только ошибки и предупреждения
   },
   signs = true,

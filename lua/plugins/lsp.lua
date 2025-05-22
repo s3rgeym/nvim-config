@@ -1,31 +1,5 @@
 -- LSP и автодополнение
 
--- Можно вынести в keymaps
-local on_attach = function(client, bufnr)
-  local function nmap(keys, func, desc)
-    vim.keymap.set('n', keys, func, { desc = "LSP: " .. desc, buffer = bufnr })
-  end
-
-  nmap("gd", vim.lsp.buf.definition, "Go to definition")
-  nmap("gD", vim.lsp.buf.declaration, "Go to declaration")
-  -- Используются в Telescope
-  -- nmap("gi", vim.lsp.buf.implementation, "Go to implementation")
-  -- nmap("gr", vim.lsp.buf.references, "List references")
-  nmap("K", vim.lsp.buf.hover, "Hover documentation")
-  -- На эту клавишу в режиме редактирования по умолчанию уже задано это действие
-  nmap("<C-s>", vim.lsp.buf.signature_help, "Signature help")
-  nmap("<leader>rs", vim.lsp.buf.rename, "Rename symbol")
-  nmap("<leader>ca", vim.lsp.buf.code_action, "Code action")
-  nmap("<leader>fd", function() vim.lsp.buf.format({ async = true }) end, "Format Document")
-  local function jump(c)
-    vim.diagnostic.jump({ count = c, float = true })
-  end
-  -- vim.diagnostic.goto_prev/vim.diagnostic.goto_next устарели
-  nmap("[d", function() jump(-1) end, "Previous diagnostic")
-  nmap("]d", function() jump(1) end, "Next diagnostic")
-  nmap("<leader>e", vim.diagnostic.open_float, "Show diagnostics")
-end
-
 return {
   "hrsh7th/nvim-cmp",
   dependencies = {
@@ -76,6 +50,15 @@ return {
           "i",
           "s",
         }),
+        -- Выбор вариантов стрелками при редактировани мешает
+        ['<Down>'] = cmp.mapping(function(fallback)
+          cmp.close()
+          fallback()
+        end, { "i" }),
+        ['<Up>'] = cmp.mapping(function(fallback)
+          cmp.close()
+          fallback()
+        end, { "i" }),
       }),
     })
 
@@ -116,6 +99,32 @@ return {
       'ruff', -- Не поддерживает автодополнения, поэтому используется только в сочетании с pyright
       'pyright',
     }
+
+    -- Можно вынести в keymaps
+    local on_attach = function(client, bufnr)
+      local function nmap(keys, func, desc)
+        vim.keymap.set('n', keys, func, { desc = "LSP: " .. desc, buffer = bufnr })
+      end
+
+      nmap("gd", vim.lsp.buf.definition, "Go to definition")
+      nmap("gD", vim.lsp.buf.declaration, "Go to declaration")
+      -- Используются в Telescope
+      -- nmap("gi", vim.lsp.buf.implementation, "Go to implementation")
+      -- nmap("gr", vim.lsp.buf.references, "List references")
+      nmap("K", vim.lsp.buf.hover, "Hover documentation")
+      -- На эту клавишу в режиме редактирования по умолчанию уже задано это действие
+      nmap("<C-s>", vim.lsp.buf.signature_help, "Signature help")
+      nmap("<leader>rs", vim.lsp.buf.rename, "Rename symbol")
+      nmap("<leader>ca", vim.lsp.buf.code_action, "Code action")
+      nmap("<leader>fd", function() vim.lsp.buf.format({ async = true }) end, "Format Document")
+      local jump = function(c)
+        vim.diagnostic.jump({ count = c })
+      end
+      -- vim.diagnostic.goto_prev/vim.diagnostic.goto_next устарели
+      nmap("[d", function() jump(-1) end, "Previous diagnostic")
+      nmap("]d", function() jump(1) end, "Next diagnostic")
+      nmap("<leader>e", vim.diagnostic.open_float, "Show diagnostics")
+    end
 
     for _, lsp in ipairs(servers) do
       require('lspconfig')[lsp].setup {

@@ -46,6 +46,12 @@ sudo pacman -S ripgrep
 sudo pacman -S ttf-jetbrains-mono-nerd
 ```
 
+Зависимости python:
+
+```sh
+sudo pacman -S pyright ruff python-debugpy
+```
+
 ## Заметки
 
 ### Использование lazy.nvim
@@ -63,16 +69,10 @@ require("lazy").setup(opts)
   -- Указывается репозиторий плагина на GitHub
   "github_user/repo",
 
-  -- Необязательное поле: зависимости (будут установлены автоматически)
-  dependencies = {
-    "github_user/dependency1",
-    "github_user/dependency2",
-    -- и т.д.
-  },
-
   -- Настройка плагина: вызывается при его загрузке
   -- Можно использовать для ручной инициализации, настройки событий и т.д.
-  config = function()
+  -- В opts содержится значение соответствующего ключа
+  config = function(_, opts)
     local plugin = require("plugin_name")
     plugin.setup({
       option1 = true,
@@ -94,6 +94,14 @@ require("lazy").setup(opts)
   -- Или можно просто указать config = true, если плагин сам настроится при require
   config = true,
 
+  -- Необязательное поле: зависимости (будут установлены автоматически)
+  dependencies = {
+    "github-user/dependency1",
+    -- В зависимости так же можно передавать opts для автоматического вызова setup
+    { "github-user/dependency2", opts = {} },
+    -- и т.д.
+  },
+
   -- Указывает, загружать ли плагин по требованию (true по умолчанию).
   -- Устанавливаем lazy = false, если плагин должен быть загружен сразу (например, тема или ключи)
   lazy = false,
@@ -108,6 +116,9 @@ require("lazy").setup(opts)
   -- Можно указать команду или событие, при котором плагин будет загружен:
   cmd = { "SomeCommand" },
   event = { "BufReadPost", "BufNewFile" },
+
+  -- Так же плагин может загружаться только для определенных типов файлов
+  ft = "python",
 }
 
 -- Альтернатива: можно передать путь к модулю, экспортирующему список плагинов
@@ -116,11 +127,11 @@ require("lazy").setup("path.to.plugins")
 -- Где path/to/plugins.lua может выглядеть как:
 return {
   {
-    "github_user/foo",
+    "github-user/foo",
     opts = {},
   },
   {
-    "github_user/bar",
+    "github-user/bar",
     config = function()
       require("bar").setup()
     end,
@@ -131,13 +142,13 @@ return {
 -- каждый файл экспортирует таблицу(ы) с описанием плагинов:
 -- plugins/foo.lua:
 return {
-  "github_user/foo",
+  "github-user/foo",
   opts = {},
 }
 
 -- plugins/bar.lua:
 return {
-  "github_user/bar",
+  "github-user/bar",
   config = true,
 }
 
@@ -148,7 +159,7 @@ require("lazy").setup({ ... })
 -- Так же приведет к ошибке, так как модуль ленивый
 require("lazy").setup({
   {
-    "github_user/foo",
+    "github-user/foo",
     lazy = true, -- это значение по умолчанию
   },
 })
@@ -157,8 +168,9 @@ local foo = require("foo")
 
 -- Таким образом, самый надежный вариант
 {
-  "github_user/foo",
-  dependencies = { "github_user/bar" },  -- зависимости тоже гарантированно доступны для загрузки
+  "github-user/foo",
+  -- зависимости тоже гарантированно доступны для загрузки
+  dependencies = "github-user/bar",
   config = function()
     local foo = require("foo")
     foo.setup {}
