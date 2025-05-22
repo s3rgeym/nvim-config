@@ -4,8 +4,8 @@ return {
   config = true,
   keys = {
     -- Поиск
-    { "<leader>/",  "<cmd>Telescope live_grep<cr>",             desc = "Find using grep" },
-    { "<leader>f",  "<cmd>Telescope find_files<cr>",            desc = "Find file" },
+    { "<leader>f",  "<cmd>Telescope live_grep<cr>",             desc = "Find using grep" },
+    { "<leader>F",  "<cmd>Telescope find_files<cr>",            desc = "Find file" },
     { "<leader>b",  "<cmd>Telescope buffers<cr>",               desc = "Find buffer" },
 
     -- Работа с LSP
