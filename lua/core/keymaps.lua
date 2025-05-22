@@ -50,11 +50,9 @@ map('n', '<leader>.', '<cmd>luafile $MYVIMRC<CR>', { desc = "Reload config" })
 
 map({ 'n', 'i' }, '<F2>', "<cmd>setlocal spell!<cr>", { desc = "Toggle spellcheck" })
 
-map("n", "<C-`>", "<cmd>split | terminal", { desc = "Open terminal", silent = true })
+map("n", "<C-`>", "<cmd>split | terminal<CR>", { desc = "Open terminal", silent = true })
 map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode", silent = true })
 map("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "Focus left" })
 map("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "Focus down" })
 map("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "Focus up" })
 map("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "Focus right" })
-
-map("i", "<C-/>", "<C-o>gc<CR>", { desc = "Toggle comment", silent = true })
