@@ -40,14 +40,7 @@ return {
       }
     },
   },
-
-  -- Отделение отступов вертикальными символами
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    opts = {},
-  },
-
+  
   -- Тема
   {
     "folke/tokyonight.nvim",
