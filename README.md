@@ -56,9 +56,13 @@ sudo pacman -S ttf-jetbrains-mono-nerd
 sudo pacman -S pyright ruff python-debugpy
 ```
 
-## Заметки
+## Добавление поддержки других языков
 
-### Использование lazy.nvim
+* В `plugins/lsp.lua` добавить языковой сервер.
+* В `plugins/dap.lua` добавить настройки дебаггера для языка X.
+* В `plugins/tree-sitter.lua` добавить язык, так как lsp и dap используют языковые парсеры для определенного функционала.
+
+## Использование lazy.nvim
 
 `lazy.nvim` по умолчанию грузит модули асинхронно. Вот небольшая справка по его использованию:
 
