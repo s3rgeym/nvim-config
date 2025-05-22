@@ -1,7 +1,7 @@
 local M = {}
 
 --- Reloads the Neovim config file based on its extension (.vim or .lua)
-function M.reload_config()
+function M.reload_nvim_config()
   local config = vim.env.MYVIMRC
   if not config or config == '' then
     vim.notify('MYVIMRC is not set', vim.log.levels.ERROR)
