@@ -120,10 +120,9 @@ return {
       local jump = function(c)
         vim.diagnostic.jump({ count = c })
       end
-      -- vim.diagnostic.goto_prev/vim.diagnostic.goto_next устарели
       nmap("[d", function() jump(-1) end, "Previous diagnostic")
       nmap("]d", function() jump(1) end, "Next diagnostic")
-      nmap("<leader>e", vim.diagnostic.open_float, "Show diagnostics")
+      -- nmap("<leader>d", vim.diagnostic.open_float, "Show diagnostics")
     end
 
     for _, lsp in ipairs(servers) do
