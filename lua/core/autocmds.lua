@@ -11,3 +11,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     }
   end,
 })
+
+-- Открываем терминал в режиме вставки
+vim.cmd [[autocmd TermOpen * startinsert]]
