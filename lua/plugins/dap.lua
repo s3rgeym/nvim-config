@@ -52,7 +52,7 @@ return {
   -- sudo pacman -S python-debugpy
   {
     "mfussenegger/nvim-dap-python",
-    dependencies = "mfussenegger/nvim-dap",
+    dependencies = { "mfussenegger/nvim-dap" },
     ft = "python", -- Вызываем только для файлов в формате python
     config = function()
       -- Из-за некродистров с их python3 вместо просто python нужно явно
