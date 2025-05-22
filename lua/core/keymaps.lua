@@ -37,11 +37,6 @@ map('n', '<M-Right>', '<cmd>vertical resize +2<CR>', { desc = "Increase width" }
 map('n', '<M-Down>', '<cmd>resize -2<CR>', { desc = "Decrease height" })
 map('n', '<M-Up>', '<cmd>resize +2<CR>', { desc = "Increase height" })
 
-map('i', "<C-Down>", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
-map('i', "<C-Up>", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
-map('v', "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
-map('v', "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
-
 map("i", "<C-Down>", "<Esc>:m .+1<CR>==gi", { desc = "Move line down" })
 map("i", "<C-Up>", "<Esc>:m .-2<CR>==gi", { desc = "Move line up" })
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
