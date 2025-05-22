@@ -22,6 +22,6 @@ vim.g.mapleader = ' '
 require("lazy").setup("plugins")
 
 -- Настройки должны идти после плагинов
-require("settings")
-require("keymaps")
-require("autocmds")
+require("configs/settings")
+require("configs/keymaps")
+require("configs/autocmds")

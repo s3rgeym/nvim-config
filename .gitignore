@@ -2,5 +2,5 @@
 /package-lock.json
 /package.json
 /spell
-/test.*
 .ruff_cache
+__pycache__
