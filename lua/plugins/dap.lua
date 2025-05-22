@@ -9,9 +9,7 @@ return {
       "theHamsta/nvim-dap-virtual-text",
     },
     config = function()
-      local dap = require("dap")
-
-      local dapui = require("dapui")
+      local dap, dapui = require("dap"), require("dapui")
 
       require("nvim-dap-virtual-text").setup()
       dapui.setup()
@@ -22,6 +20,9 @@ return {
       --   command = '/path/to/your/python',
       --   args = { '-m', 'debugpy.adapter' },
       -- }
+
+      -- Поддержка launch.json
+      require('dap.ext.vscode').load_launchjs()
 
       -- UI авто-открытие/закрытие
       dap.listeners.after.event_initialized["dapui_config"] = function()
