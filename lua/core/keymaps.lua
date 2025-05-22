@@ -1,21 +1,17 @@
--- Базовые сочетания
--- :h vim.keymap.set()
-local map = vim.keymap.set
+map({ 'n', 'i' }, '<C-a>', '<Esc>ggVG', { desc = "Select entire buffer" })
 
-map({ 'n', 'i' }, '<C-a>', '<Esc>ggVG', { desc = "Select all text" })
+map('n', '<C-q>', '<cmd>q<CR>', { desc = "Close window" })
+map('n', '<C-x>', '<cmd>bd<CR>', { desc = "Close buffer" })
 
-map('n', '<C-q>', '<cmd>q<CR>', { desc = "Close current window" })
-map('n', '<C-x>', '<cmd>bd<CR>', { desc = "Delete current buffer" })
--- В Neovim это сочетание уже используется
---  map('', '<C-s>', '<cmd>w<CR>', { desc = "Save file" })
+-- <C-s> is already used in Neovim
+-- map('', '<C-s>', '<cmd>w<CR>', { desc = "Save file" })
 map('n', '<leader>w', '<cmd>w<CR>', { desc = "Save file" })
 
--- Отступы привычнее добавлять с помощью Tab
-map('n', '<Tab>', '>>_', { desc = "Increase indent" })
-map('n', '<S-Tab>', '<<_', { desc = "Decrease indent" })
-map('i', '<S-Tab>', '<C-D>', { desc = "Decrease indent" })
-map('v', '<Tab>', '>gv', { desc = "Increase indent" })
-map('v', '<S-Tab>', '<gv', { desc = "Decrease indent" })
+map('n', '<Tab>', '>>_', { desc = "Indent line" })
+map('n', '<S-Tab>', '<<_', { desc = "Unindent line" })
+map('i', '<S-Tab>', '<C-D>', { desc = "Unindent" })
+map('v', '<Tab>', '>gv', { desc = "Indent selection" })
+map('v', '<S-Tab>', '<gv', { desc = "Unindent selection" })
 
 map('n', '<Esc>', '<cmd>nohlsearch<CR><Esc>', { desc = "Clear search highlight" })
 
@@ -45,16 +41,16 @@ map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 map('n', '<leader><CR>', '<cmd>split<CR>', { desc = "Horizontal split" })
 map('n', '<leader>v', '<cmd>vsplit<CR>', { desc = "Vertical split" })
 
--- nvim автоматически добавляет переменную $MYVIMRC, ее не нужно добавлять
-map('n', '<leader>ev', '<cmd>edit $MYVIMRC<CR>', { desc = "Edit vim config" })
-map('n', '<leader>.', '<cmd>luafile $MYVIMRC<CR>', { desc = "Reload vim config" })
+map('n', '<leader>ev', '<cmd>edit $MYVIMRC<CR>', { desc = "Edit config" })
+map('n', '<leader>.', '<cmd>luafile $MYVIMRC<CR>', { desc = "Reload config" })
 
--- F3-F11 лучше оставить для дебаггера
-map({ 'n', 'i' }, '<F2>', "<cmd>setlocal spell!<cr>", { desc = "Toggle spell check" })
+map({ 'n', 'i' }, '<F2>', "<cmd>setlocal spell!<cr>", { desc = "Toggle spellcheck" })
 
--- Terminal
+map("n", "<C-`>", "<cmd>split | terminal", { desc = "Open terminal", silent = true })
 map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode", silent = true })
-map("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "Move focus left" })
-map("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "Move focus down" })
-map("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "Move focus up" })
-map("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "Move focus right" })
+map("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "Focus left" })
+map("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "Focus down" })
+map("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "Focus up" })
+map("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "Focus right" })
+
+map("i", "<C-/>", "<C-o>gc<CR>", { desc = "Toggle comment", silent = true })
