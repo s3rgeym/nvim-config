@@ -1,10 +1,12 @@
 # Neovim Config
 
+![](https://i.imgur.com/3gxNxkN.png)
+
 ## Описание
 
 Конфиг с настроенным LSP и дебаггером. Vim я не пользуюсь больше и другим не советую из-за политической позиции его разработчиков.
 
-![Fuck you Vim.org](https://i.imgur.com/kBFTJlg.jpeg)
+![](https://i.imgur.com/kBFTJlg.jpeg)
 
 > Fuck u, vim org!
 
