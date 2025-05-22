@@ -3,8 +3,6 @@
 local utils = require("utils")
 local map = vim.keymap.set
 
-map({ 'n', 'i' }, '<C-a>', '<Esc>ggVG', { desc = "Select entire buffer" })
-
 map('n', 'Q', '<cmd>q!<CR>', { desc = "Close current window" })
 -- <C-q> — альтернативное сочетание для блочного выделения. Можно на это
 -- сочетание что-то повесить.
@@ -13,6 +11,8 @@ map({ 'n', 'i' }, '<C-q>', '<Esc><cmd>bd!<CR>', { desc = "Close current buffer" 
 -- <C-s> is already used in Neovim
 -- map('', '<C-s>', '<cmd>w<CR>', { desc = "Save file" })
 map('n', '<leader>w', '<cmd>w<CR>', { desc = "Save file" })
+
+map({ 'n', 'i' }, '<C-a>', '<Esc>ggVG', { desc = "Select entire buffer" })
 
 map('n', '<Tab>', '>>_', { desc = "Indent line" })
 map('n', '<S-Tab>', '<<_', { desc = "Unindent line" })
