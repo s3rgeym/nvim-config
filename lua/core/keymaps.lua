@@ -1,3 +1,7 @@
+-- Базовые сочетания
+-- :h vim.keymap.set()
+local map = vim.keymap.set
+
 map({ 'n', 'i' }, '<C-a>', '<Esc>ggVG', { desc = "Select entire buffer" })
 
 map('n', '<C-q>', '<cmd>q<CR>', { desc = "Close window" })
