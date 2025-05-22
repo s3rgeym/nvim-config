@@ -49,7 +49,7 @@ map('n', '<leader>v', '<cmd>vsplit<CR>', { desc = "Vertical split" })
 map('n', '<leader>ec', '<cmd>edit $MYVIMRC<CR>', { desc = "Edit Neovim config" })
 map('n', '<leader>rc', utils.reload_nvim_config, { desc = "Reload Neovim config" })
 
-map({ 'n', 'i' }, '<F2>', "<cmd>setlocal spell!<cr>", { desc = "Toggle spellcheck" })
+map('n', '<F2>', "<cmd>setlocal spell!<cr>", { desc = "Toggle spellcheck" })
 
 map("n", "<C-`>", "<cmd>split | terminal<CR>", { desc = "Open terminal", silent = true })
 map("t", "<Esc>", "<C-\\><C-n>", { desc = "Escape terminal", silent = true })
