@@ -2,6 +2,8 @@
 
 ## Описание
 
+![Screenshot_20250523_005638](https://gist.github.com/user-attachments/assets/e24e9bd9-d2c5-4fca-a94d-8809a6ff9a92)
+
 Конфиг с настроенным LSP и дебаггером. Vim я не пользуюсь больше и другим не советую из-за политической позиции его разработчиков.
 
 ![Fuck you Vim.org](https://i.imgur.com/kBFTJlg.jpeg)
