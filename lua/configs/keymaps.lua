@@ -47,7 +47,7 @@ map('n', '<leader><CR>', '<cmd>split<CR>', { desc = "Horizontal split" })
 map('n', '<leader>v', '<cmd>vsplit<CR>', { desc = "Vertical split" })
 
 map('n', '<leader>ec', '<cmd>edit $MYVIMRC<CR>', { desc = "Edit Neovim config" })
-map('n', '<leader>rc', utils.reload_config, { desc = "Reload Neovim config" })
+map('n', '<leader>rc', utils.reload_nvim_config, { desc = "Reload Neovim config" })
 
 map({ 'n', 'i' }, '<F2>', "<cmd>setlocal spell!<cr>", { desc = "Toggle spellcheck" })
 
