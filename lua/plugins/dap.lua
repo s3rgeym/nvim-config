@@ -41,10 +41,10 @@ return {
       end
 
       map("n", "<F5>", dap.continue, "Continue debug")
+      map("n", '<F9>', dap.toggle_breakpoint, "Toggle beakpoint")
       map("n", "<F10>", dap.step_over, "Step over")
       map("n", "<F11>", dap.step_into, "Step into")
       map("n", "<F12>", dap.step_out, "Step out")
-      map("n", '<M-b>', dap.toggle_breakpoint, "Toggle beakpoint")
       map({ "n", "v" }, '<M-e>', dapui.eval, "Eval expression")
     end,
   },
