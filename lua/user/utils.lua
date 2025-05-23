@@ -1,5 +1,6 @@
 local M = {}
 
+-- Я не уверен, что она работает
 -- https://www.reddit.com/r/neovim/comments/puuskh/how_to_reload_my_lua_config_while_using_neovim/
 function M.reload_nvim_config()
   for name, _ in pairs(package.loaded) do
