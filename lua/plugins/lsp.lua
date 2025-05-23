@@ -29,7 +29,8 @@ return {
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        ["<Esc>"] = cmp.mapping.abort(),
+        -- <Esc> будет мешать выйти из режима вставки, пока открыто меню
+        ["<C-e>"] = cmp.mapping.abort(),
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
