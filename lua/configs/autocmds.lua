@@ -12,7 +12,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
--- Восстановление последней позиции курсора в файле
+-- Восстановление последней позиции курсора при открытии файла
 vim.api.nvim_create_autocmd("BufReadPost", {
   pattern = "*",
   callback = function()
