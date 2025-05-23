@@ -1,7 +1,6 @@
--- Debugger (от Debug Adapter Protocol)
-
 return {
   {
+    -- от Debug Adapter Protocol
     "mfussenegger/nvim-dap",
     dependencies = {
       "rcarriga/nvim-dap-ui",
