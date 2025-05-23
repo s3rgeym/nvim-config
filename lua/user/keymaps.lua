@@ -1,20 +1,17 @@
--- Базовые сочетания
+-- Тут находятся только базовые сочетания, остальные разбросаны по плагинам и тп
 -- :h vim.keymap.set()
-local utils = require("utils")
+local utils = require("user.utils")
 local map = vim.keymap.set
 
--- <C-q> — альтернативное сочетание для блочного выделения
-map('n', '<C-q>', '<cmd>q!<CR>', { desc = "Close current window" })
-
--- <C-x> — то же для чего-то альтернативное...
-map('n', '<C-x>', '<Esc><cmd>bd!<CR>', { desc = "Close current buffer" })
-
--- <C-s> is already used in Neovim
--- map('', '<C-s>', '<cmd>w<CR>', { desc = "Save file" })
-map('n', '<leader>w', '<cmd>w<CR>', { desc = "Save file" })
+map('n', '<leader>q', '<cmd>q<CR>', { desc = "Quit window" })
+-- Тут такая странная конструкция, чтобы избежать закрытия nvim, если нет
+-- измененных буферов
+map('n', '<leader>x', '<cmd>b#<bar>bd#<CR>', { desc = "Close buffer" })
+map('n', '<leader>w', '<cmd>w<CR>', { desc = "Write file" })
 
 map({ 'n', 'i' }, '<C-a>', '<Esc>ggVG', { desc = "Select entire buffer" })
 
+-- Добавлять отступы удобнее табом
 map('n', '<Tab>', '>>_', { desc = "Indent line" })
 map('n', '<S-Tab>', '<<_', { desc = "Unindent line" })
 map('i', '<S-Tab>', '<C-D>', { desc = "Unindent" })
@@ -49,8 +46,9 @@ map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 map('n', '<leader><CR>', '<cmd>split<CR>', { desc = "Horizontal split" })
 map('n', '<leader>v', '<cmd>vsplit<CR>', { desc = "Vertical split" })
 
-map('n', '<leader>ec', '<cmd>edit $MYVIMRC<CR>', { desc = "Edit Neovim config" })
-map('n', '<leader>rc', utils.reload_nvim_config, { desc = "Reload Neovim config" })
+map('n', '<leader>ev', '<cmd>split $MYVIMRC<CR>', { desc = "Edit Neovim config" })
+-- lazy.nvim все равно не поддерживает перезагрузку конфига
+-- map('n', '<leader>rv', utils.reload_nvim_config, { desc = "Reload Neovim config" })
 
 map('n', '<F2>', "<cmd>setlocal spell!<cr>", { desc = "Toggle spellcheck" })
 

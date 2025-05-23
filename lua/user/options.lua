@@ -112,7 +112,7 @@ opt.completeopt = "menuone,noselect,noinsert"
 opt.pumheight = 15 -- высота всплывающего меню с вариантами для дополнения
 
 -- Таймауйты
-opt.timeoutlen = 500
+opt.timeoutlen = 750
 opt.updatetime = 250
 
 -- spell
