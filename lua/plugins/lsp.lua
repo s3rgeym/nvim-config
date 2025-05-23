@@ -86,7 +86,8 @@ return {
       })
     })
 
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
     -- Не работает
     -- vim.lsp.config("*", {
@@ -113,8 +114,7 @@ return {
       -- nmap("gi", vim.lsp.buf.implementation, "Go to implementation")
       -- nmap("gr", vim.lsp.buf.references, "List references")
       nmap("K", vim.lsp.buf.hover, "Hover documentation")
-      -- На эту клавишу в режиме редактирования по умолчанию уже задано это действие
-      nmap("<C-s>", vim.lsp.buf.signature_help, "Signature help")
+      nmap("gK", vim.lsp.buf.signature_help, "Signature help")
       nmap("<leader>rs", vim.lsp.buf.rename, "Rename symbol")
       nmap("<leader>ca", vim.lsp.buf.code_action, "Code action")
       nmap("<leader>fd", function() vim.lsp.buf.format({ async = true }) end, "Format Document")
