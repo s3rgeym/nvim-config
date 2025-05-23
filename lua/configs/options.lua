@@ -145,10 +145,7 @@ if vim.fn.has("gui_running") == 1 then
   end
 else
   if vim.fn.has('termguicolors') == 1 then
-    local colorterm = os.getenv('COLORTERM') or ''
-    if colorterm:match('truecolor') or colorterm:match('24bit') then
-      opt.termguicolors = true
-    end
+    opt.termguicolors = true
   end
 end
 
