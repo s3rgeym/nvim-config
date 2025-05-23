@@ -127,22 +127,23 @@ end
 -- Отображаем диагностические сообщения как виртуальный текст
 vim.diagnostic.config({
   virtual_text = {
-    prefix = function(diagnostic)
-      if diagnostic.severity == vim.diagnostic.severity.ERROR then
-        return ""  -- Nerd font icon for error
-      elseif diagnostic.severity == vim.diagnostic.severity.WARN then
-        return ""  -- Nerd font icon for warning
-      elseif diagnostic.severity == vim.diagnostic.severity.INFO then
-        return ""  -- Nerd font icon for info
-      else
-        return ""  -- Nerd font icon for hint
-    end,
+    -- prefix = function(diagnostic)
+    --   if diagnostic.severity == vim.diagnostic.severity.ERROR then
+    --     return ""  -- Nerd font icon for error
+    --   elseif diagnostic.severity == vim.diagnostic.severity.WARN then
+    --     return ""  -- Nerd font icon for warning
+    --   elseif diagnostic.severity == vim.diagnostic.severity.INFO then
+    --     return ""  -- Nerd font icon for info
+    --   else
+    --     return ""  -- Nerd font icon for hint
+    --   end
+    -- end,
     -- spacing = 2,
     severity = { min = vim.diagnostic.severity.WARN } -- отображаем только ошибки и предупреждения
   },
   signs = true,
   underline = true,
-  update_in_insert = true,  
+  update_in_insert = true,
 })
 
 -- Цветовая схеме и оформление
