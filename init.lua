@@ -2,6 +2,11 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+local function is_truecolor_supported()
+  local response = vim.fn.systemlist('tput colors')
+  return tonumber(response[1] or '0') >= 256
+end
+
 -- Установка lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -17,6 +22,11 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Клавишу leader надо объявить до загрузки плагинов lazy
 vim.g.mapleader = ' '
+
+-- Некоторые плагины могут неправильно работать, если не установить это значение
+if is_truecolor_supported() then
+  vim.opt.termguicolors = true
+end
 
 -- Загрузка плагинов
 require("lazy").setup("user.plugins")
