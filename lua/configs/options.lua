@@ -137,15 +137,20 @@ vim.diagnostic.config({
 })
 
 -- Цветовая схеме и оформление
-opt.termguicolors = true
-opt.background = "dark"
-vim.cmd [[colorscheme tokyonight-storm]]
-
 if vim.fn.has("gui_running") == 1 then
   opt.guifont = "JetBrainsMono Nerd Font:h12"
   opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
+  if vim.g.neovide then
+    -- Use ~/.config/neovide/config.toml instead
+  end
+else
+  if vim.fn.has('termguicolors') == 1 then
+    local colorterm = os.getenv('COLORTERM') or ''
+    if colorterm:match('truecolor') or colorterm:match('24bit') then
+      opt.termguicolors = true
+    end
+  end
 end
 
-if vim.fn.has("gui_running") == 1 and vim.g.neovide then
-  -- Use ~/.config/neovide/config.toml instead
-end
+opt.background = "dark"
+vim.cmd [[colorscheme tokyonight-storm]]
