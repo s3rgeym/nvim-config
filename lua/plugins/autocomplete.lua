@@ -1,4 +1,4 @@
--- LSP и автодополнение
+-- TODO: разбить на подмодули
 
 return {
   "hrsh7th/nvim-cmp",
@@ -110,9 +110,8 @@ return {
 
       nmap("gd", vim.lsp.buf.definition, "Go to definition")
       nmap("gD", vim.lsp.buf.declaration, "Go to declaration")
-      -- Используются в Telescope
-      -- nmap("gi", vim.lsp.buf.implementation, "Go to implementation")
-      -- nmap("gr", vim.lsp.buf.references, "List references")
+      nmap("gi", vim.lsp.buf.implementation, "Go to implementation")
+      nmap("gr", vim.lsp.buf.references, "List references")
       nmap("K", vim.lsp.buf.hover, "Hover documentation")
       nmap("gK", vim.lsp.buf.signature_help, "Signature help")
       nmap("<leader>rs", vim.lsp.buf.rename, "Rename symbol")
@@ -123,7 +122,7 @@ return {
       end
       nmap("[d", function() jump(-1) end, "Previous diagnostic")
       nmap("]d", function() jump(1) end, "Next diagnostic")
-      -- nmap("<leader>d", vim.diagnostic.open_float, "Show diagnostics")
+      nmap("<leader>d", vim.diagnostic.open_float, "Show diagnostics")
     end
 
     for _, lsp in ipairs(servers) do

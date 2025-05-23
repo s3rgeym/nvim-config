@@ -21,7 +21,7 @@
 Возможно, стоит добавить сочетание для этого... не знаю.
 * Если ввести `g`, то `which-key` покажет все доступные сочетания с `g` в всплывающем окне. Все пользовательские сочетания можно посмотреть с помощью `<leader>?`.
 * Настроен для работы с `Python`.
-* Языковые сервера и пр нужно прописывать в `plugins/lsp.lua`.
+* Языковые сервера и пр нужно прописывать в `plugins/autocomplete.lua`.
 * `plugins/dap.lua` — дебаггер. F9 добавляет breakpoint, F5 — запускает отладку.
   Поддерживаются `.vscode/launch.json`.
 * Добавлен `.luarc.json` для включения автодополнения lua-конфигов nvim ([отсюда](https://lsp-zero.netlify.app/docs/guide/neovim-lua-ls.html)).
@@ -40,10 +40,10 @@ sudo pacman -S neovim
 sudo pacman -S wl-clipboard xclip
 ```
 
-Для поиска текста по регулярному выражению:
+Для поиска (`fzf-lua`):
 
 ```sh
-sudo pacman -S ripgrep
+sudo pacman -S fzf ripgrep fd
 ```
 
 Так же нужен патченный nerd-шрифт, например:
@@ -60,7 +60,7 @@ sudo pacman -S pyright ruff python-debugpy
 
 ## Добавление поддержки других языков
 
-* В `plugins/lsp.lua` добавить языковой сервер.
+* В `plugins/autocomplete.lua` добавить языковой сервер.
 * В `plugins/dap.lua` добавить настройки дебаггера для языка X.
 * В `plugins/tree-sitter.lua` добавить язык, так как lsp и dap используют языковые парсеры для определенного функционала.
 
