@@ -52,14 +52,14 @@ return {
           "s",
         }),
         -- Выбор вариантов стрелками при редактировани мешает
-        ['<Down>'] = cmp.mapping(function(fallback)
-          cmp.close()
-          fallback()
-        end, { "i" }),
-        ['<Up>'] = cmp.mapping(function(fallback)
-          cmp.close()
-          fallback()
-        end, { "i" }),
+        -- ['<Down>'] = cmp.mapping(function(fallback)
+        --   cmp.close()
+        --   fallback()
+        -- end, { "i" }),
+        -- ['<Up>'] = cmp.mapping(function(fallback)
+        --   cmp.close()
+        --   fallback()
+        -- end, { "i" }),
       }),
     })
 
