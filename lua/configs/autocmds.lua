@@ -12,5 +12,15 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
+-- Восстановление последней позиции курсора в файле
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "*",
+  callback = function()
+    if vim.fn.line("'\"") >= 1 and vim.fn.line("'\"") <= vim.fn.line("$") and not vim.bo.filetype:match("commit") then
+      vim.cmd([[normal! g`"]])
+    end
+  end
+})
+
 -- Открываем терминал в режиме вставки
 vim.cmd [[autocmd TermOpen * startinsert]]
