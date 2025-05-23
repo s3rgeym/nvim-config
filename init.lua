@@ -24,7 +24,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ' '
 
 -- Некоторые плагины могут неправильно работать, если не установить это значение
-if is_truecolor_supported() then
+if vim.fn.has('termguicolors') == 1 or is_truecolor_supported() then
   vim.opt.termguicolors = true
 end
 
