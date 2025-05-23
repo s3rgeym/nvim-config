@@ -18,7 +18,7 @@ opt.sidescrolloff = 5 -- Аналог для горизонтальной про
 
 -- Отображение различных элементов
 opt.signcolumn = "yes"
-opt.showcmd = false
+opt.showcmd = true
 opt.laststatus = 3
 opt.showmode = false -- не показывать режим (--INSERT и тп) в самом низу
 
@@ -121,7 +121,7 @@ opt.completeopt = "menuone,noselect,noinsert"
 opt.pumheight = 15 -- высота всплывающего меню с вариантами для дополнения
 
 -- Таймауйты
-opt.timeoutlen = 750
+opt.timeoutlen = 500
 opt.updatetime = 250
 
 -- spell
