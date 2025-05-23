@@ -19,9 +19,9 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ' '
 
 -- Загрузка плагинов
-require("lazy").setup("plugins")
+require("lazy").setup("user.plugins")
 
 -- Настройки должны идти после плагинов
-require("config.options")
-require("config.keymaps")
-require("config.autocmds")
+require("user.options")
+require("user.keymaps")
+require("user.autocmds")

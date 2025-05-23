@@ -11,6 +11,6 @@ return {
     close_if_last_window = true,
   },
   keys = {
-    { "<C-n>", "<cmd>Neotree toggle<CR>", desc = "Toggle Neotree", mode = "n" },
+    { "<leader>n", "<cmd>Neotree toggle<CR>", desc = "Toggle Neotree", mode = "n" },
   },
 }

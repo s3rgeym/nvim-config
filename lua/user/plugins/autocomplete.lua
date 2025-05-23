@@ -86,14 +86,9 @@ return {
       })
     })
 
+    local on_attach = require("user.handlers").on_attach_lsp
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
-    -- Не работает
-    -- vim.lsp.config("*", {
-    --   on_attach = on_attach,
-    --   capabilities = capabilities,
-    -- })
 
     local servers = {
       'lua_ls',
@@ -102,28 +97,15 @@ return {
       'pyright',
     }
 
-    -- Можно вынести в keymaps
-    local on_attach = function(client, bufnr)
-      local function nmap(keys, func, desc)
-        vim.keymap.set('n', keys, func, { desc = "LSP: " .. desc, buffer = bufnr })
-      end
+    -- Пока что новый синтаксис не работает
+    -- vim.lsp.config("*", {
+    --   on_attach = on_attach,
+    --   capabilities = capabilities,
+    -- })
 
-      nmap("gd", vim.lsp.buf.definition, "Go to definition")
-      nmap("gD", vim.lsp.buf.declaration, "Go to declaration")
-      nmap("gi", vim.lsp.buf.implementation, "Go to implementation")
-      nmap("gr", vim.lsp.buf.references, "List references")
-      nmap("K", vim.lsp.buf.hover, "Hover documentation")
-      nmap("gK", vim.lsp.buf.signature_help, "Signature help")
-      nmap("<leader>rs", vim.lsp.buf.rename, "Rename symbol")
-      nmap("<leader>ca", vim.lsp.buf.code_action, "Code action")
-      nmap("<leader>fd", function() vim.lsp.buf.format({ async = true }) end, "Format Document")
-      local jump = function(c)
-        vim.diagnostic.jump({ count = c })
-      end
-      nmap("[d", function() jump(-1) end, "Previous diagnostic")
-      nmap("]d", function() jump(1) end, "Next diagnostic")
-      nmap("<leader>d", vim.diagnostic.open_float, "Show diagnostics")
-    end
+    -- for _, lsp in ipairs(servers) do
+    --   vim.lsp.enable(lsp)
+    -- end
 
     for _, lsp in ipairs(servers) do
       require('lspconfig')[lsp].setup {
@@ -131,5 +113,5 @@ return {
         capabilities = capabilities
       }
     end
-  end,
+  end
 }
