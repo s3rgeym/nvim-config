@@ -1,4 +1,5 @@
 -- Базовые настройки
+-- See <https://neovim.io/doc/user/options.html>
 
 local config_dir = vim.fn.stdpath('config')
 local opt = vim.opt
@@ -46,14 +47,8 @@ opt.autoindent = true
 opt.smartindent = true
 opt.breakindent = true -- при переносе строки добавлять отступы
 opt.textwidth = 80
-opt.colorcolumn = tostring(vim.opt.textwidth:get() + 1)
--- t = true — перенос текста, если тот больше textwidth
-opt.formatoptions = {
-  c = true, -- перенос комментариев
-  q = true, -- разрешить форматирование с gq
-  r = true, -- автоматический перенос при вводе
-  j = true, -- удалять лишние комментарии при объединении строк
-}
+--opt.colorcolumn = tostring(vim.opt.textwidth:get() + 1)
+opt.colorcolumn = "81,121"
 
 -- Поиск
 opt.ignorecase = true
