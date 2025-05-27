@@ -1,16 +1,10 @@
 local M = {}
 
--- Я не уверен, что она работает
--- https://www.reddit.com/r/neovim/comments/puuskh/how_to_reload_my_lua_config_while_using_neovim/
-function M.reload_nvim_config()
-  for name, _ in pairs(package.loaded) do
-    if name:match('^user') then
-      package.loaded[name] = nil
-    end
-  end
-  -- lazy.nvim имеет какие-то проблемы с живой перезагрузкой
-  -- vim.cmd("luafile " .. vim.env.MYVIMRC)
-  vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO)
+function M.map(mode, lhs, rhs, desc, opts)
+  -- :h vim.keymap.set()
+  opts = vim.tbl_extend('force', { silent = true, noremap = true }, opts or {})
+  opts.desc = desc
+  vim.keymap.set(mode, lhs, rhs, opts)
 end
 
 return M

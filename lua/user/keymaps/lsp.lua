@@ -1,8 +1,10 @@
+local map = require("user.utils").map
+
 local M = {}
 
-function M.on_attach_lsp(_, bufnr)
+function M.on_attach(_, bufnr)
   local function nmap(keys, func, desc)
-    vim.keymap.set('n', keys, func, { desc = "LSP: " .. desc, buffer = bufnr })
+    map('n', keys, func, "LSP: " .. desc, { buffer = bufnr })
   end
   -- vim.lsp.buf.definition
   nmap("gd", "<cmd>FzfLua lsp_definitions<CR>", "Go to definition")
