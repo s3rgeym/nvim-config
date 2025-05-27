@@ -47,15 +47,16 @@ opt.smartindent = true
 opt.breakindent = true -- при переносе строки добавлять отступы
 opt.textwidth = 80
 --opt.colorcolumn = tostring(vim.opt.textwidth:get() + 1)
-opt.colorcolumn = "81,121"
+-- граница на textwidth+N
+opt.colorcolumn = "+1,+21"
 opt.formatoptions = {
   c = true,  -- форматировать комментарии по textwidth
   q = true,  -- разрешить gq
   r = true,  -- продолжить комментарий на новой строке
   n = true,  -- распознавать списки
   j = true,  -- удалять лишние комментарии при J
-  l = true,  -- форматировать длинные строки в Insert
-  t = false, -- не переносить текст автоматически (если l=true)
+  l = true,  -- не форматировать длинные строки в Insert
+  t = false, -- не переносить текст автоматически
 }
 
 -- Поиск
