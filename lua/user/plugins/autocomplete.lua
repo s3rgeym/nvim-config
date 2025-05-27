@@ -1,9 +1,6 @@
--- TODO: разбить на подмодули
-
 return {
   "hrsh7th/nvim-cmp",
   dependencies = {
-    "neovim/nvim-lspconfig",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "hrsh7th/cmp-nvim-lua",
@@ -85,33 +82,5 @@ return {
         }
       })
     })
-
-    local on_attach = require("user.keymaps.lsp").on_attach
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
-    local servers = {
-      'lua_ls',
-      'gopls',
-      'ruff', -- Не поддерживает автодополнения, поэтому используется только в сочетании с pyright
-      'pyright',
-    }
-
-    -- Пока что новый синтаксис не работает
-    -- vim.lsp.config("*", {
-    --   on_attach = on_attach,
-    --   capabilities = capabilities,
-    -- })
-
-    -- for _, lsp in ipairs(servers) do
-    --   vim.lsp.enable(lsp)
-    -- end
-
-    for _, lsp in ipairs(servers) do
-      require('lspconfig')[lsp].setup {
-        on_attach = on_attach,
-        capabilities = capabilities
-      }
-    end
   end
 }
