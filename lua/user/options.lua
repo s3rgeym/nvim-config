@@ -54,7 +54,7 @@ opt.formatoptions = {
   r = true,  -- продолжить комментарий на новой строке
   n = true,  -- распознавать списки
   j = true,  -- удалять лишние комментарии при J
-  l = true,  -- не форматировать длинные строки в Insert
+  l = true,  -- форматировать длинные строки в Insert
   t = false, -- не переносить текст автоматически (если l=true)
 }
 
@@ -102,7 +102,7 @@ opt.mousemoveevent = true
 opt.whichwrap = 'h,l,<,>,[,]'
 -- Выделение текста стрелками с зажатым Shifts
 -- Со stopsel выделение блоков (Shit-V) стрелками не будет работать
-opt.keymodel = "startsel,stopsel"
+opt.keymodel = "startsel"
 
 -- Поддержка русского языка ввода
 -- При переключении системной раскладки перестают работать привязки клавиш.
@@ -121,8 +121,8 @@ opt.completeopt = "menuone,noselect,noinsert"
 opt.pumheight = 15 -- высота всплывающего меню с вариантами для дополнения
 
 -- Таймауйты
-opt.timeoutlen = 500
-opt.updatetime = 250
+opt.timeoutlen = 1000 -- для ввода сочетания
+opt.updatetime = 250  -- всплывающие окна
 
 -- spell
 opt.spell = false

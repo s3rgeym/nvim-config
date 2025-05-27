@@ -1,3 +1,5 @@
+local map = require('user.utils').map
+
 return {
   {
     -- от Debug Adapter Protocol
@@ -34,10 +36,6 @@ return {
 
       dap.listeners.before.event_exited["dapui_config"] = function()
         dapui.close()
-      end
-
-      local map = function(mode, keys, func, desc)
-        vim.keymap.set(mode, keys, func, { desc = "DAP: " .. desc })
       end
 
       map("n", "<F5>", dap.continue, "Continue debug")
