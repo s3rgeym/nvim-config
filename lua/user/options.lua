@@ -19,7 +19,7 @@ opt.signcolumn = "yes"
 opt.showcmd = true
 opt.laststatus = 3
 opt.showmode = false      -- не показывать режим (--INSERT и тп) в самом низу
-opt.shortmess:append("I") -- Простите, но мне глубоко поебать на детей Уганды
+opt.shortmess:append("I") -- Простите, но мне глубоко поебать на Уганду
 
 -- Перенос строк
 opt.wrap = true
