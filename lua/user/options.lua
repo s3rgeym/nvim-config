@@ -11,14 +11,15 @@ opt.number = true
 opt.cursorline = true
 
 -- Прокрутка
-opt.scrolloff = 5     -- Сколько строк отображать после курсора при вертикальной прокрутке
-opt.sidescrolloff = 5 -- Аналог для горизонтальной прокрутке (при wrap=true не имеет эффекта)
+opt.scrolloff = 8     -- Сколько строк отображать после курсора при вертикальной прокрутке
+opt.sidescrolloff = 8 -- Аналог для горизонтальной прокрутке (при wrap=true не имеет эффекта)
 
 -- Отображение различных элементов
 opt.signcolumn = "yes"
 opt.showcmd = true
 opt.laststatus = 3
-opt.showmode = false -- не показывать режим (--INSERT и тп) в самом низу
+opt.showmode = false      -- не показывать режим (--INSERT и тп) в самом низу
+opt.shortmess:append("I") -- Простите, но мне глубоко поебать на детей Уганды
 
 -- Перенос строк
 opt.wrap = true
