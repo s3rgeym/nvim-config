@@ -6,23 +6,16 @@
 return {
   -- Этот плагин содержит настройки
   "nvim-treesitter/nvim-treesitter",
+  branch = "master",
+  lazy = false,
   build = ":TSUpdate",
-  branch = "main", -- master заморожен
   config = function()
-    local configs = require("nvim-treesitter.configs")
-
-    configs.setup({
+    require("nvim-treesitter.configs").setup({
       -- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
       -- В арче tree-sitter-lua - это зависимость neovim, т.е. lua ставить не надо
       -- :TSInstall python
       -- Можно предустановить парсеры для treesitter
-      ensure_installed = {
-        "go",
-        "javascript",
-        "php",
-        "python",
-        "typescript",
-      },
+      ensure_installed = { "python" },
       sync_install = false,
       -- Но если включена автоматическая установка, никакие парсеры прописывать
       -- не надо

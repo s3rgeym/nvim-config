@@ -199,5 +199,8 @@ local foo = require("foo")
 Удаление плагинов, кеша и тп:
 
 ```sh
-rm -rf ~/.local/share/nvim
+rm -rf ~/.cache/nvim ~/.local/share/nvim
+
+# fix: module 'nvim-treesitter.configs' not found
+rm lazy-lock.json package*
 ```
