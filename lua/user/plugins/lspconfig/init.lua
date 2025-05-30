@@ -9,16 +9,17 @@ return {
   },
   config = function()
     local on_attach = require("user.plugins.lspconfig.on_attach").on_attach
-    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+    local capabilities = require('cmp_nvim_lsp').default_capabilities(
+      vim.lsp.protocol.make_client_capabilities()
+    )
 
     -- Автоматическая установка и настройка языковых серверов
+    -- Вынес в отдельный файл
     -- require("mason").setup()
     require("mason-lspconfig").setup({
       ensure_installed = { "lua_ls", "gopls", "pyright", "ruff" },
       automatic_installation = true,
     })
-
-    local lspconfig = require("lspconfig")
 
     vim.lsp.config("*", {
       on_attach = on_attach,
