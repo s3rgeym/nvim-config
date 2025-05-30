@@ -1,4 +1,4 @@
-local is_truecolor_supported = require("user.utils").is_truecolor_supported
+local utils = require("user.utils")
 
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
@@ -21,7 +21,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ' '
 
 -- Некоторые плагины могут неправильно работать, если не установить это значение
-if is_truecolor_supported() then
+if utils.is_truecolor_supported() then
   vim.opt.termguicolors = true
 end
 
