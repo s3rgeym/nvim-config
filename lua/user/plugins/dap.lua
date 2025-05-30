@@ -1,13 +1,15 @@
+-- Debug Adapter Protocol
 local map = require('user.utils').map
 
 return {
   {
-    -- от Debug Adapter Protocol
     "mfussenegger/nvim-dap",
     dependencies = {
       "rcarriga/nvim-dap-ui",
       "nvim-neotest/nvim-nio",
       "theHamsta/nvim-dap-virtual-text",
+      "williamboman/mason.nvim",
+      "jay-babu/mason-nvim-dap.nvim",
     },
     config = function()
       local dap, dapui = require("dap"), require("dapui")
@@ -15,12 +17,13 @@ return {
       require("nvim-dap-virtual-text").setup()
       dapui.setup()
 
-      -- Если debugpy установлен, то можно прописать до него путь вместо установкм через mason-nvim-dap
-      -- dap.adapters.python = {
-      --   type = 'executable',
-      --   command = '/path/to/your/python',
-      --   args = { '-m', 'debugpy.adapter' },
-      -- }
+      -- require("mason").setup()
+      -- https://github.com/jay-babu/mason-nvim-dap.nvim/blob/main/lua/mason-nvim-dap/mappings/source.lua
+
+      require("mason-nvim-dap").setup({
+        ensure_installed = { "python" },
+        handlers = {},
+      })
 
       -- Поддержка launch.json
       require('dap.ext.vscode').load_launchjs()
@@ -48,14 +51,14 @@ return {
   },
   -- Автоматическая настройка отладчика для python
   -- sudo pacman -S python-debugpy
-  {
-    "mfussenegger/nvim-dap-python",
-    dependencies = { "mfussenegger/nvim-dap" },
-    ft = "python", -- Вызываем только для файлов в формате python
-    config = function()
-      -- Из-за некродистров с их python3 вместо просто python нужно явно
-      -- указывать executable (с виртуальными окружениями должно работать)
-      require('dap-python').setup("python")
-    end
-  },
+  -- {
+  --   "mfussenegger/nvim-dap-python",
+  --   dependencies = { "mfussenegger/nvim-dap" },
+  --   ft = "python", -- Вызываем только для файлов в формате python
+  --   config = function()
+  --     -- Из-за некродистров с их python3 вместо просто python нужно явно
+  --     -- указывать executable (с виртуальными окружениями должно работать)
+  --     require('dap-python').setup("python")
+  --   end
+  -- },
 }

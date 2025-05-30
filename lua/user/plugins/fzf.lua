@@ -2,7 +2,10 @@ return {
   "ibhagwan/fzf-lua",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   cmd = "FzfLua", -- fix: Not and editor command: FzfLua ...
-  opts = {},
+  config = function()
+    require('fzf-lua').setup()
+    require('fzf-lua').register_ui_select()
+  end,
   keys = {
     { "<leader>/", "<cmd>FzfLua grep_curbuf<CR>", desc = "Grep current buffer" },
     { "<leader>b", "<cmd>FzfLua buffers<CR>",     desc = "Buffers" },

@@ -46,17 +46,16 @@ opt.autoindent = true
 opt.smartindent = true
 opt.breakindent = true -- при переносе строки добавлять отступы
 opt.textwidth = 80
---opt.colorcolumn = tostring(vim.opt.textwidth:get() + 1)
--- граница на textwidth+N
+-- граница на [textwidth]+N
 opt.colorcolumn = "+1,+21"
 opt.formatoptions = {
-  c = true,  -- форматировать комментарии по textwidth
-  q = true,  -- разрешить gq
-  r = true,  -- продолжить комментарий на новой строке
-  n = true,  -- распознавать списки
-  j = true,  -- удалять лишние комментарии при J
-  l = true,  -- не форматировать длинные строки в Insert
-  t = false, -- не переносить текст автоматически
+  c = true, -- форматировать комментарии по textwidth
+  q = true, -- разрешить gq
+  r = true, -- продолжить комментарий на новой строке
+  n = true, -- распознавать списки
+  j = true, -- удалять лишние комментарии при J
+  l = true, -- не форматировать длинные строки в Insert
+  t = true, -- переносить текст (нужно для переноса комментариев)
 }
 
 -- Поиск
@@ -95,6 +94,13 @@ opt.confirm = true
 -- Разделение окон
 opt.splitbelow = true
 opt.splitright = true
+
+-- Фолдинг
+-- `:set foldexpr` должен содержать treesitter по умолчанию
+opt.foldmethod = "expr"
+-- opt.foldtext = ""
+opt.foldlevelstart = 99
+opt.foldenable = true
 
 -- Мышь, перемещение курсора и выделение текста
 opt.mouse = "a"
