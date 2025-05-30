@@ -17,7 +17,7 @@ return {
     -- Вынес в отдельный файл
     -- require("mason").setup()
     require("mason-lspconfig").setup({
-      ensure_installed = { "lua_ls", "gopls", "pyright", "ruff" },
+      ensure_installed = { "pyright", "ruff", "gopls" },
       automatic_installation = true,
     })
 
