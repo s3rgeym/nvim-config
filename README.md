@@ -55,7 +55,7 @@ sudo pacman -S fzf ripgrep fd
 sudo pacman -S ttf-jetbrains-mono-nerd
 ```
 
-Зависимости python:
+Зависимости python, если хочется вручную настроить:
 
 ```sh
 sudo pacman -S pyright ruff python-debugpy
@@ -63,9 +63,8 @@ sudo pacman -S pyright ruff python-debugpy
 
 ## Добавление поддержки других языков
 
-* В `plugins/autocomplete.lua` добавить языковой сервер.
-* В `plugins/dap.lua` добавить настройки дебаггера для языка X.
-* В `plugins/tree-sitter.lua` добавить язык, так как lsp и dap используют языковые парсеры для определенного функционала.
+* В `plugins/lspconfig/init.lua` добавить сервер для языка.
+* В `plugins/dap.lua` добавить дебаггер для него.
 
 ## Использование lazy.nvim
 
@@ -75,7 +74,9 @@ sudo pacman -S pyright ruff python-debugpy
 -- Основной вызов Lazy.nvim
 require("lazy").setup(opts)
 
--- Где opts — это таблица (массив) с описаниями плагинов.
+-- Где opts — это таблица с описаниями плагинов либо путь до модуля, который
+-- возвращает таблицу. Если указан каталог, то будут импортированы все файлы в
+-- нем.
 -- Каждый элемент таблицы описывает один плагин.
 
 {
