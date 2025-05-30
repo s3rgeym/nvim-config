@@ -1,11 +1,8 @@
+local is_truecolor_supported = require("user.utils").is_truecolor_supported
+
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-
-local function is_truecolor_supported()
-  local response = vim.fn.systemlist('tput colors')
-  return tonumber(response[1] or '0') >= 256
-end
 
 -- Установка lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -24,7 +21,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ' '
 
 -- Некоторые плагины могут неправильно работать, если не установить это значение
-if vim.fn.has('termguicolors') == 1 or is_truecolor_supported() then
+if is_truecolor_supported() then
   vim.opt.termguicolors = true
 end
 

@@ -1,7 +1,5 @@
 -- Базовые настройки
 -- See <https://neovim.io/doc/user/options.html>
-
-local config_dir = vim.fn.stdpath('config')
 local opt = vim.opt
 
 -- Нумерация строк
@@ -135,7 +133,8 @@ opt.updatetime = 250  -- всплывающие окна
 opt.spell = false
 opt.spelllang = { "ru", "en" }
 
-local spell_dir = config_dir .. '/spell'
+-- Этот каталог нужно создать
+local spell_dir = vim.fn.stdpath('config') .. '/spell'
 if vim.fn.isdirectory(spell_dir) == 0 then
   vim.fn.mkdir(spell_dir, 'p')
 end
@@ -165,5 +164,10 @@ vim.diagnostic.config({
 -- Цветовая схеме и оформление
 opt.guifont = "JetBrainsMono Nerd Font:h12"
 opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
-opt.background = "dark"
-vim.cmd [[colorscheme tokyonight-storm]]
+
+if opt.termguicolors then
+  opt.background = "dark"
+  vim.cmd [[colorscheme tokyonight-storm]]
+else
+  vim.cmd.colorscheme('desert')
+end
