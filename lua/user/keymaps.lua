@@ -41,7 +41,7 @@ map("i", "<A-k>", "<Esc>:m .-2<CR>==gi", "Move line up")
 map("v", "J", ":m '>+1<CR>gv=gv", "Move selection down")
 map("v", "K", ":m '<-2<CR>gv=gv", "Move selection up")
 
-map('n', '<leader><CR>', '<cmd>split<CR>', "Horizontal split")
+map('n', '<leader>h', '<cmd>split<CR>', "Horizontal split")
 map('n', '<leader>v', '<cmd>vsplit<CR>', "Vertical split")
 
 map('n', '<leader>ev', '<cmd>split $MYVIMRC<CR>', "Edit Neovim config")
