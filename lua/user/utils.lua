@@ -9,11 +9,11 @@ function M.is_truecolor_supported()
     return true
   end
   local colorterm = os.getenv("COLORTERM")
-  if colorterm == "truecolor" or colorterm == "24bit" then
+  if colorterm and colorterm:match("^(truecolor|24bit)$") then
     return true
   end
-  local out = vim.fn.system('tput colors 2>/dev/null')
-  return tonumber(vim.fn.trim(out)) or 0 >= 256
+  local result = vim.fn.system('tput colors 2>/dev/null')
+  return (tonumber(vim.fn.trim(result)) or 0) >= 256
 end
 
 function M.map(mode, lhs, rhs, desc, opts)
