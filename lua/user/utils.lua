@@ -9,7 +9,7 @@ function M.is_truecolor_supported()
     return true
   end
   local colorterm = os.getenv("COLORTERM")
-  if colorterm and colorterm:match("^(truecolor|24bit)$") then
+  if colorterm and colorterm:match("truecolor|24bit") then
     return true
   end
   local result = vim.fn.system('tput colors 2>/dev/null')
