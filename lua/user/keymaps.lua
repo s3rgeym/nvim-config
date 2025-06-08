@@ -9,17 +9,17 @@ map('n', '<leader>w', '<cmd>w<CR>', "Write file")
 
 map({ 'n', 'i' }, '<C-a>', '<Esc>ggVG', "Select entire buffer")
 
--- Добавлять отступы удобнее табом
-map('n', '<Tab>', '>>_', "Indent line")
-map('n', '<S-Tab>', '<<_', "Unindent line")
+-- map('n', '<S-h>', '<cmd>bp<CR>', "Previous buffer")
+-- map('n', '<S-l>', '<cmd>bn<CR>', "Next buffer")
+map('n', '<S-Tab>', '<cmd>bp<CR>', "Previous buffer")
+map('n', '<Tab>', '<cmd>bn<CR>', "Next buffer")
+
+-- Работа с отступами
 map('i', '<S-Tab>', '<C-D>', "Unindent")
 map('v', '<Tab>', '>gv', "Indent selection")
 map('v', '<S-Tab>', '<gv', "Unindent selection")
 
 map('n', '<Esc>', '<cmd>nohlsearch<CR><Esc>', "Clear search highlight")
-
-map('n', '<S-h>', '<cmd>bp<CR>', "Previous buffer")
-map('n', '<S-l>', '<cmd>bn<CR>', "Next buffer")
 
 map('n', '<C-h>', '<C-w>h', "Go to left window")
 map('n', '<C-j>', '<C-w>j', "Go to window below")

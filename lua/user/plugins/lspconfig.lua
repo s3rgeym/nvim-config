@@ -37,14 +37,12 @@ end
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
-    "hrsh7th/cmp-nvim-lsp",
+    "saghen/blink.cmp",
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
   },
   config = function()
-    local capabilities = require('cmp_nvim_lsp').default_capabilities(
-      vim.lsp.protocol.make_client_capabilities()
-    )
+    local capabilities = require('blink.cmp').get_lsp_capabilities()
 
     -- Автоматическая установка и настройка языковых серверов
     -- Вынес в отдельный файл
