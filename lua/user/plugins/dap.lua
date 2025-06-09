@@ -21,7 +21,12 @@ return {
       -- https://github.com/jay-babu/mason-nvim-dap.nvim/blob/main/lua/mason-nvim-dap/mappings/source.lua
 
       require("mason-nvim-dap").setup({
-        ensure_installed = { "python" },
+        ensure_installed = {
+          "python",
+          "delve",
+          "js",
+          "bash",
+        },
         handlers = {},
       })
 
