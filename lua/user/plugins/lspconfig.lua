@@ -25,11 +25,9 @@ local function on_attach(_, bufnr)
   nmap("]d", function() jump(1) end, "Next diagnostic")
   -- nmap("<leader>d", vim.diagnostic.open_float, "Show diagnostics")
   nmap("<leader>d", "<cmd>FzfLua lsp_document_diagnostics<CR>", "Diagnostics (fzf)")
-  nmap("<leader>sd", "<cmd>FzfLua lsp_document_symbols<CR>", "Document symbols")
-  nmap("<leader>sw", "<cmd>FzfLua lsp_workspace_symbols<CR>", "Workspace symbols")
-  -- Используем fq вместо qf так как при использовании последнего можно случайно
-  -- закрыть окно
-  nmap("<leader>fq", "<cmd>FzfLua grep_quickfix<CR>", "Quickfix")
+  nmap("<leader>ds", "<cmd>FzfLua lsp_document_symbols<CR>", "Document symbols")
+  nmap("<leader>dw", "<cmd>FzfLua lsp_workspace_symbols<CR>", "Workspace symbols")
+  nmap("<leader>qf", "<cmd>FzfLua grep_quickfix<CR>", "Quickfix")
 end
 
 -- :help lspconfig-all
