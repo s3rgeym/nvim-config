@@ -33,7 +33,6 @@ local function on_attach(_, bufnr)
 end
 
 -- :help lspconfig-all
--- Список серверов: https://github.com/neovim/nvim-lspconfig/tree/master/lsp
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
@@ -48,7 +47,14 @@ return {
     -- Вынес в отдельный файл
     -- require("mason").setup()
     require("mason-lspconfig").setup({
-      ensure_installed = { "pyright", "ruff", "gopls" },
+      -- Список серверов: https://github.com/neovim/nvim-lspconfig/tree/master/lsp
+      ensure_installed = {
+        "eslint",
+        "gopls",
+        "lua_ls",
+        "pyright",
+        "ruff",
+      },
       automatic_installation = true,
     })
 
