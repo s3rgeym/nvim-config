@@ -4,15 +4,15 @@ local function on_attach(_, bufnr)
   local function nmap(keys, func, desc)
     map('n', keys, func, "LSP: " .. desc, { buffer = bufnr })
   end
-  -- vim.lsp.buf.definition
+  -- nmap("gd", vim.lsp.buf.definition, "Go to definition")
   nmap("gd", "<cmd>FzfLua lsp_definitions<CR>", "Go to definition")
-  -- vim.lsp.buf.declaration
+  -- nmap("gD", vim.lsp.buf.declaration, "Go to declaration")
   nmap("gD", "<cmd>FzfLua lsp_declarations<CR>", "Go to declaration")
-  -- vim.lsp.buf.implementation
+  -- nmap("gi", vim.lsp.buf.implementation, "Go to implementation")
   nmap("gi", "<cmd>FzfLua lsp_implementations<CR>", "Go to implementation")
   -- vim.lsp.buf.references
   nmap("gr", "<cmd>FzfLua lsp_references<CR>", "List references")
-  -- vim.lsp.buf.code_action
+  -- nmap("<leader>ca", vim.lsp.buf.code_action, "Code actions")
   nmap("<leader>ca", "<cmd>FzfLua lsp_code_actions<CR>", "Code actions")
   nmap("<leader>rn", vim.lsp.buf.rename, "Rename")
   nmap("K", vim.lsp.buf.hover, "Hover documentation")
