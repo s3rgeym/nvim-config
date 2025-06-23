@@ -5,7 +5,7 @@ local opt = vim.opt
 -- Нумерация строк
 opt.number = true
 -- Мне не нравится нумерация относительно курсора
---opt.relativenumber = true
+opt.relativenumber = true
 
 -- Подсветка текущей строки
 opt.cursorline = true
@@ -48,13 +48,12 @@ opt.textwidth = 80
 -- граница на [textwidth]+N
 opt.colorcolumn = "+1,+21"
 opt.formatoptions = {
-  c = true, -- форматировать комментарии по textwidth
-  j = true, -- удалять лишние комментарии при J
-  l = true, -- не форматировать длинные строки в Insert
-  n = true, -- распознавать списки
-  q = true, -- разрешить gq
-  r = true, -- продолжить комментарий на новой строке
-  t = true, -- переносить текст (нужно для переноса комментариев)
+  c = true, -- Автоматическое перенос строк в комментариях по textwidth
+  q = true, -- Разрешить форматирование с помощью gq
+  j = true, -- Удалять символ комментария при объединении строк (J)
+  r = true, -- Автоматически продолжать комментарии при нажатии Enter
+  n = true, -- Распознавать нумерованные списки при форматировании
+  l = true, -- Не разрывать длинные строки в режиме вставки
 }
 
 -- Поиск
@@ -140,27 +139,23 @@ if vim.fn.isdirectory(spell_dir) == 0 then
   vim.fn.mkdir(spell_dir, 'p')
 end
 
--- Отображаем диагностические сообщения как виртуальный текст
-vim.diagnostic.config({
-  virtual_text = {
-    -- prefix = function(diagnostic)
-    --   if diagnostic.severity == vim.diagnostic.severity.ERROR then
-    --     return ""  -- Nerd font icon for error
-    --   elseif diagnostic.severity == vim.diagnostic.severity.WARN then
-    --     return ""  -- Nerd font icon for warning
-    --   elseif diagnostic.severity == vim.diagnostic.severity.INFO then
-    --     return ""  -- Nerd font icon for info
-    --   else
-    --     return ""  -- Nerd font icon for hint
-    --   end
-    -- end,
-    -- spacing = 2,
-    severity = { min = vim.diagnostic.severity.WARN } -- отображаем только ошибки и предупреждения
-  },
-  signs = true,
-  underline = true,
-  update_in_insert = false,
+-- Автоперечтение файла при изменении
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+  command = "checktime",
 })
+
+-- Восстановление последней позиции курсора при открытии файла
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "*",
+  callback = function()
+    if vim.fn.line("'\"") >= 1 and vim.fn.line("'\"") <= vim.fn.line("$") and not vim.bo.filetype:match("commit") then
+      vim.cmd([[normal! g`"]])
+    end
+  end
+})
+
+-- Открываем терминал в режиме вставки
+vim.cmd [[autocmd TermOpen * startinsert]]
 
 -- Цветовая схеме и оформление
 opt.guifont = "JetBrainsMono Nerd Font:h12"
