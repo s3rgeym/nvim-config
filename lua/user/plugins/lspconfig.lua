@@ -4,30 +4,21 @@ local function on_attach(_, bufnr)
   local function nmap(keys, func, desc)
     map('n', keys, func, "LSP: " .. desc, { buffer = bufnr })
   end
-  -- nmap("gd", vim.lsp.buf.definition, "Go to definition")
-  nmap("gd", "<cmd>FzfLua lsp_definitions<CR>", "Go to definition")
-  -- nmap("gD", vim.lsp.buf.declaration, "Go to declaration")
-  nmap("gD", "<cmd>FzfLua lsp_declarations<CR>", "Go to declaration")
-  -- nmap("gi", vim.lsp.buf.implementation, "Go to implementation")
-  nmap("gi", "<cmd>FzfLua lsp_implementations<CR>", "Go to implementation")
-  -- vim.lsp.buf.references
-  nmap("gr", "<cmd>FzfLua lsp_references<CR>", "List references")
-  -- nmap("<leader>ca", vim.lsp.buf.code_action, "Code actions")
-  nmap("<leader>ca", "<cmd>FzfLua lsp_code_actions<CR>", "Code actions")
+  nmap("gd", vim.lsp.buf.definition, "Go to definition")
+  nmap("gD", vim.lsp.buf.declaration, "Go to declaration")
+  nmap("gi", vim.lsp.buf.implementation, "Go to implementation")
+  nmap("gr", vim.lsp.buf.references, "List references")
+  nmap("gy", vim.lsp.buf.type_definition, "Type definition")
+  nmap("<leader>ca", vim.lsp.buf.code_action, "Code actions")
   nmap("<leader>rn", vim.lsp.buf.rename, "Rename")
   nmap("K", vim.lsp.buf.hover, "Hover documentation")
   nmap("gK", vim.lsp.buf.signature_help, "Signature help")
-  nmap("<leader>fd", function() vim.lsp.buf.format({ async = true }) end, "Format document")
+  nmap("<leader>d", vim.diagnostic.open_float, "Show diagnostics")
   local function jump(c)
     vim.diagnostic.jump({ count = c })
   end
   nmap("[d", function() jump(-1) end, "Previous diagnostic")
   nmap("]d", function() jump(1) end, "Next diagnostic")
-  -- nmap("<leader>d", vim.diagnostic.open_float, "Show diagnostics")
-  nmap("<leader>d", "<cmd>FzfLua lsp_document_diagnostics<CR>", "Diagnostics (fzf)")
-  nmap("<leader>ds", "<cmd>FzfLua lsp_document_symbols<CR>", "Document symbols")
-  nmap("<leader>dw", "<cmd>FzfLua lsp_workspace_symbols<CR>", "Workspace symbols")
-  nmap("<leader>qf", "<cmd>FzfLua grep_quickfix<CR>", "Quickfix")
 end
 
 -- :help lspconfig-all
@@ -70,5 +61,30 @@ return {
     for _, lsp in ipairs(servers) do
       vim.lsp.enable(lsp)
     end
+
+    -- Настройки диагностики
+    -- Показываем значки
+    vim.diagnostic.config({
+      virtual_text = false,
+      signs = true,
+      update_in_insert = false,
+      float = { border = "rounded" },
+    })
+
+    -- ... и при наведении сообщения
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      callback = function()
+        vim.diagnostic.open_float(nil, { focus = false })
+      end
+    })
+
+    -- Форматирование при сохранении
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      callback = function()
+        vim.lsp.buf.format {
+          async = false
+        }
+      end,
+    })
   end
 }

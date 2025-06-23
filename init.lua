@@ -31,4 +31,3 @@ require("lazy").setup("user.plugins")
 -- Настройки должны идти после плагинов
 require("user.options")
 require("user.keymaps")
-require("user.autocmds")

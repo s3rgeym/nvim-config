@@ -1,11 +1,11 @@
 -- Тут находятся только базовые сочетания, остальные разбросаны по плагинам и тп
 local map = require("user.utils").map
 
-map('n', '<leader>q', '<cmd>q<CR>', "Quit window")
+-- map('n', '<leader>q', '<cmd>q<CR>', "Quit window")
 -- Тут такая странная конструкция, чтобы избежать закрытия nvim, если нет
 -- измененных буферов
-map('n', '<leader>x', '<cmd>b#<bar>bd#<CR>', "Close buffer")
-map('n', '<leader>w', '<cmd>write<CR>', "Write file")
+-- map('n', '<leader>x', '<cmd>b#<bar>bd#<CR>', "Close buffer")
+-- map('n', '<leader>w', '<cmd>write<CR>', "Write file")
 
 map({ 'n', 'i' }, '<C-a>', '<Esc>ggVG', "Select entire buffer")
 
