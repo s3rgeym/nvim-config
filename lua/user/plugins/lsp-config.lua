@@ -1,6 +1,8 @@
+local utils = require('user.utils')
+
 local function on_attach(_, bufnr)
   local function map(keys, func, desc)
-    vim.keymap.set('n', keys, func, { desc = "LSP: " .. desc, buffer = bufnr })
+    utils.map('n', keys, func, "LSP: " .. desc, { buffer = bufnr })
   end
   map("gd", vim.lsp.buf.definition, "Go to definition")
   map("gD", vim.lsp.buf.declaration, "Go to declaration")
