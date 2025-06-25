@@ -32,10 +32,14 @@ local function on_attach(_, bufnr)
   map("K", vim.lsp.buf.hover, "Hover documentation")
   map("gK", vim.lsp.buf.signature_help, "Signature help")
   -- map("<leader>d", vim.diagnostic.open_float, "Show diagnostics")
-  map("<leader>d", function() require("fzf-lua").lsp_document_diagnostics() end, "Document diagnostics")
+  map("<leader>d", function()
+    require("fzf-lua").lsp_document_diagnostics()
+  end, "Document diagnostics")
+
   local function jump(c)
     vim.diagnostic.jump({ count = c })
   end
+
   map("[d", function() jump(-1) end, "Previous diagnostic")
   map("]d", function() jump(1) end, "Next diagnostic")
 
@@ -57,6 +61,7 @@ return {
     "saghen/blink.cmp",
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
+    -- Добавить сюда fzf-lua?
   },
   config = function()
     local capabilities = require('blink.cmp').get_lsp_capabilities()
