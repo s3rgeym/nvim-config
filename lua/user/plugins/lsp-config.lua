@@ -69,20 +69,14 @@ return {
     end
 
     -- Настройки диагностики
-    -- Показываем значки
     vim.diagnostic.config({
       signs = true,
-      float = { border = "rounded" },
+      virtual_text = false,
+      virtual_lines = { current_line = true },
+      -- severity = { min = vim.diagnostic.severity.WARN },
+      update_in_insert = false,
     })
 
-    -- ... и при наведении сообщения
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-      callback = function()
-        vim.diagnostic.open_float(nil, { focus = false })
-      end
-    })
-
-    -- Форматирование при сохранении
     vim.api.nvim_create_autocmd("BufWritePre", {
       callback = function()
         vim.lsp.buf.format {
@@ -90,5 +84,23 @@ return {
         }
       end,
     })
+
+    -- Если хочется в всплывающем окне показывать ошибки
+    -- На CursorMove можно вешать
+    -- -- ... и при наведении сообщения
+    -- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+    --   callback = function()
+    --     vim.diagnostic.open_float(nil, { focus = false })
+    --   end
+    -- })
+    --
+    -- -- Форматирование при сохранении
+    -- vim.api.nvim_create_autocmd("BufWritePre", {
+    --   callback = function()
+    --     vim.lsp.buf.format {
+    --       async = false
+    --     }
+    --   end,
+    -- })
   end
 }

@@ -11,17 +11,18 @@ return {
     close_if_last_window = true,
     filesystem = {
       filtered_items = {
-        visible = true,
-        show_hidden_count = true,
-        hide_dotfiles = false,
-        hide_gitignored = true,
+        close_if_last_window = true,
         hide_by_name = {
           -- add extension names you want to explicitly exclude
           -- '.git',
           -- '.DS_Store',
           -- 'thumbs.db',
         },
+        hide_dotfiles = false,
+        hide_gitignored = true,
         never_show = {},
+        show_hidden_count = true,
+        visible = true,
       },
     },
     event_handlers = {
@@ -31,7 +32,7 @@ return {
           -- auto close
           -- vim.cmd("Neotree close")
           -- OR
-          require("neo-tree.command").execute({ action = "close" })
+          -- require("neo-tree.command").execute({ action = "close" })
         end
       },
     },
