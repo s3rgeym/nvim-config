@@ -1,5 +1,3 @@
-local utils = require("user.utils")
-
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -21,8 +19,8 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Некоторые плагины могут неправильно работать, если не установить это значение
-if utils.is_truecolor_supported() then
+if vim.fn.has('termguicolors') == 1 then
+  -- Некоторые плагины могут неправильно работать, если не установить это значение
   vim.opt.termguicolors = true
 end
 

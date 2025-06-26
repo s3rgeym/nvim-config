@@ -1,5 +1,5 @@
 -- Debug Adapter Protocol
-local map = require('user.utils').map
+local map = require('user.utils').keymap
 
 return {
   {
@@ -46,12 +46,12 @@ return {
         dapui.close()
       end
 
-      map("n", "<F5>", dap.continue, "Continue debug")
-      map("n", '<F9>', dap.toggle_breakpoint, "Toggle beakpoint")
-      map("n", "<F10>", dap.step_over, "Step over")
-      map("n", "<F11>", dap.step_into, "Step into")
-      map("n", "<F12>", dap.step_out, "Step out")
-      map({ "n", "v" }, '<M-e>', dapui.eval, "Eval expression")
+      map("<F5>", dap.continue, "Continue debug")
+      map("<F9>", dap.toggle_breakpoint, "Toggle beakpoint")
+      map("<F10>", dap.step_over, "Step over")
+      map("<F11>", dap.step_into, "Step into")
+      map("<F12>", dap.step_out, "Step out")
+      map("<M-e>", dapui.eval, "Eval expression", { "n", "v" })
     end,
   },
   -- Автоматическая настройка отладчика для python

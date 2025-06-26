@@ -1,11 +1,8 @@
-local utils = require('user.utils')
-
 local function on_attach(_, bufnr)
   local function map(keys, func, desc)
-    utils.map('n', keys, func, "LSP: " .. desc, { buffer = bufnr })
+    vim.keymap.set('n', keys, func, { desc = "LSP: " .. desc, buffer = bufnr })
   end
 
-  -- Стандартные LSP-команды
   map("gd", vim.lsp.buf.definition, "Go to definition")
   map("gD", vim.lsp.buf.declaration, "Go to declaration")
   map("gi", vim.lsp.buf.implementation, "Go to implementation")
@@ -24,8 +21,8 @@ local function on_attach(_, bufnr)
   map("[d", function() jump(-1) end, "Previous diagnostic")
   map("]d", function() jump(1) end, "Next diagnostic")
 
-  map("<leader>ds", vim.lsp.buf.document_symbol, "Document symbols")
-  map("<leader>ws", vim.lsp.buf.workspace_symbol, "Workspace symbols")
+  map("<leader>sd", vim.lsp.buf.document_symbol, "Document symbols")
+  map("<leader>sw", vim.lsp.buf.workspace_symbol, "Workspace symbols")
 end
 
 -- :help lspconfig-all
@@ -73,9 +70,16 @@ return {
     vim.diagnostic.config({
       signs = true,
       virtual_text = false,
-      virtual_lines = { current_line = true },
+      -- Если хочется показывать ошибки в строках под текущей
+      -- virtual_lines = { current_line = true },
       -- severity = { min = vim.diagnostic.severity.WARN },
       update_in_insert = false,
+    })
+
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      callback = function()
+        vim.diagnostic.open_float(nil, { focus = false })
+      end
     })
 
     vim.api.nvim_create_autocmd("BufWritePre", {
@@ -85,23 +89,5 @@ return {
         }
       end,
     })
-
-    -- Если хочется в всплывающем окне показывать ошибки
-    -- На CursorMove можно вешать
-    -- -- ... и при наведении сообщения
-    -- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-    --   callback = function()
-    --     vim.diagnostic.open_float(nil, { focus = false })
-    --   end
-    -- })
-    --
-    -- -- Форматирование при сохранении
-    -- vim.api.nvim_create_autocmd("BufWritePre", {
-    --   callback = function()
-    --     vim.lsp.buf.format {
-    --       async = false
-    --     }
-    --   end,
-    -- })
-  end
+  end,
 }
