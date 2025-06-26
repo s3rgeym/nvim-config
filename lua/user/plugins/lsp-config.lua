@@ -4,37 +4,18 @@ local function on_attach(_, bufnr)
   local function map(keys, func, desc)
     utils.map('n', keys, func, "LSP: " .. desc, { buffer = bufnr })
   end
-  -- map("gd", vim.lsp.buf.definition, "Go to definition")
-  map("gd", function()
-    require("fzf-lua").lsp_definitions()
-  end, "Go to definition")
-  -- map("gD", vim.lsp.buf.declaration, "Go to declaration")
-  map("gD", function()
-    require("fzf-lua").lsp_declarations()
-  end, "Go to declaration")
-  -- map("gi", vim.lsp.buf.implementation, "Go to implementation")
-  map("gi", function()
-    require("fzf-lua").lsp_implementations()
-  end, "Go to implementation")
-  -- map("gr", vim.lsp.buf.references, "List references")
-  map("gr", function()
-    require("fzf-lua").lsp_references()
-  end, "List references")
-  -- map("gy", vim.lsp.buf.type_definition, "Type definition")
-  map("gy", function()
-    require("fzf-lua").lsp_typedefs()
-  end, "Type definition")
-  -- map("<leader>ca", vim.lsp.buf.code_action, "Code actions")
-  map("<leader>ca", function()
-    require("fzf-lua").lsp_code_actions()
-  end, "Code actions")
+
+  -- Стандартные LSP-команды
+  map("gd", vim.lsp.buf.definition, "Go to definition")
+  map("gD", vim.lsp.buf.declaration, "Go to declaration")
+  map("gi", vim.lsp.buf.implementation, "Go to implementation")
+  map("gr", vim.lsp.buf.references, "List references")
+  map("gy", vim.lsp.buf.type_definition, "Type definition")
+  map("<leader>ca", vim.lsp.buf.code_action, "Code actions")
   map("<leader>rn", vim.lsp.buf.rename, "Rename")
   map("K", vim.lsp.buf.hover, "Hover documentation")
   map("gK", vim.lsp.buf.signature_help, "Signature help")
-  -- map("<leader>d", vim.diagnostic.open_float, "Show diagnostics")
-  map("<leader>d", function()
-    require("fzf-lua").lsp_document_diagnostics()
-  end, "Document diagnostics")
+  map("<leader>d", vim.diagnostic.open_float, "Show diagnostics")
 
   local function jump(c)
     vim.diagnostic.jump({ count = c })
@@ -43,15 +24,8 @@ local function on_attach(_, bufnr)
   map("[d", function() jump(-1) end, "Previous diagnostic")
   map("]d", function() jump(1) end, "Next diagnostic")
 
-  map("<leader>ds", function()
-    require("fzf-lua").lsp_document_symbols()
-  end, "Document symbols")
-  map("<leader>ws", function()
-    require("fzf-lua").lsp_workspace_symbols()
-  end, "Workspace symbols")
-  map("<leader>wd", function()
-    require("fzf-lua").lsp_workspace_diagnostics()
-  end, "Workspace diagnostics")
+  map("<leader>ds", vim.lsp.buf.document_symbol, "Document symbols")
+  map("<leader>ws", vim.lsp.buf.workspace_symbol, "Workspace symbols")
 end
 
 -- :help lspconfig-all
@@ -61,7 +35,6 @@ return {
     "saghen/blink.cmp",
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    "ibhagwan/fzf-lua",
   },
   config = function()
     local capabilities = require('blink.cmp').get_lsp_capabilities()
