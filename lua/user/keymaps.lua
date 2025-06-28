@@ -41,13 +41,13 @@ map("J", ":m '>+1<CR>gv=gv", "Move selection down", 'v')
 map("K", ":m '<-2<CR>gv=gv", "Move selection up", 'v')
 
 -- Разбиение окон
-map('<leader>sh', '<cmd>split<CR>', "Horizontal split")
-map('<leader>sv', '<cmd>vsplit<CR>', "Vertical split")
+map('<leader>hs', '<cmd>split<CR>', "Horizontal split")
+map('<leader>vs', '<cmd>vsplit<CR>', "Vertical split")
 
 -- Работа с конфигом
-map('<leader>ev', '<cmd>edit $MYVIMRC<CR>', "Edit Neovim config")
+map('<leader>ev', '<cmd>edit $MYVIMRC<CR>', "Edit Neo[v]im config")
 -- lazy.nvim все равно не поддерживает полную перезагрузку плагинов
-map('<leader>rv', '<cmd>source $MYVIMRC<CR>', "Reload Neovim config")
+map('<leader>sv', '<cmd>source $MYVIMRC<CR>', "Source Neo[v]im config")
 
 -- Spellcheck. Нужен ли?
 map('<leader>sp', "<cmd>setlocal spell!<cr>", "Toggle spellcheck")
