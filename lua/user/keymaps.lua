@@ -1,5 +1,5 @@
 -- Тут находятся только базовые сочетания, остальные разбросаны по плагинам и тп
-local map = require("user.utils").keymap
+local map = require("user.utils").map
 
 -- Работа с окнами
 map('<leader>q', '<cmd>q<CR>', "Quit window")

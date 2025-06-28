@@ -1,5 +1,5 @@
 -- Debug Adapter Protocol
-local map = require('user.utils').keymap
+local map = require('user.utils').map
 
 return {
   {
