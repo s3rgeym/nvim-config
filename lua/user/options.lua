@@ -139,24 +139,6 @@ if vim.fn.isdirectory(spell_dir) == 0 then
   vim.fn.mkdir(spell_dir, 'p')
 end
 
--- Автоперечтение файла при изменении
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
-  command = "checktime",
-})
-
--- Восстановление последней позиции курсора при открытии файла
-vim.api.nvim_create_autocmd("BufReadPost", {
-  pattern = "*",
-  callback = function()
-    if vim.fn.line("'\"") >= 1 and vim.fn.line("'\"") <= vim.fn.line("$") and not vim.bo.filetype:match("commit") then
-      vim.cmd([[normal! g`"]])
-    end
-  end
-})
-
--- Открываем терминал в режиме вставки
-vim.cmd [[autocmd TermOpen * startinsert]]
-
 -- Цветовая схеме и оформление
 opt.guifont = "JetBrainsMono Nerd Font:h12"
 opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
