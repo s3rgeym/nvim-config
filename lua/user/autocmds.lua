@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- Открываем терминал в режиме вставки
-vim.cmd [[autocmd TermOpen * startinsert]]
+vim.cmd("autocmd TermOpen * startinsert")
 
 -- Меняем рабочий каталог при запуске nvim
 vim.api.nvim_create_autocmd("VimEnter", {
