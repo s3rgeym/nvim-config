@@ -1,58 +1,64 @@
 -- These are the core keybindings; others are scattered across plugins, etc.
-local map = require("user.utils").map
+local utils = require("user.utils")
+
+-- "Destructure" the mapping functions for direct use
+local nmap = utils.nmap
+local imap = utils.imap
+local vmap = utils.vmap
+local tmap = utils.tmap
 
 -- General Commands
-map('<leader>q', '<cmd>q<CR>', "Quit window")
-map('<leader>w', '<cmd>write<CR>', "Write file")
-map('<C-a>', 'ggVG', "Select entire buffer")
-map('<Esc>', '<cmd>nohlsearch<CR>', "Clear search highlight")
+nmap('<leader>q', '<cmd>q<CR>', "Quit window")
+nmap('<leader>w', '<cmd>write<CR>', "Write file")
+nmap('<C-a>', 'ggVG', "Select entire buffer")
+nmap('<Esc>', '<cmd>nohlsearch<CR>', "Clear search highlight")
 
 -- Indentation
-map('<S-Tab>', '<C-D>', "Unindent current line", 'i')
-map('<Tab>', '>gv', "Indent selection", 'v')
-map('<S-Tab>', '<gv', "Unindent selection", 'v')
+imap('<S-Tab>', '<C-D>', "Unindent current line")
+vmap('<Tab>', '>gv', "Indent selection")
+vmap('<S-Tab>', '<gv', "Unindent selection")
 
 -- Window Navigation (Splits)
-map('<C-h>', '<C-w>h', "Go to left window")
-map('<C-j>', '<C-w>j', "Go to window below")
-map('<C-k>', '<C-w>k', "Go to window above")
-map('<C-l>', '<C-w>l', "Go to right window")
+nmap('<C-h>', '<C-w>h', "Go to left window")
+nmap('<C-j>', '<C-w>j', "Go to window below")
+nmap('<C-k>', '<C-w>k', "Go to window above")
+nmap('<C-l>', '<C-w>l', "Go to right window")
 
 -- Cycle through windows
-map('<Tab>', '<C-w>w', "Go to next window")
-map('<S-Tab>', '<C-w>W', "Go to previous window")
+nmap('<Tab>', '<C-w>w', "Go to next window")
+nmap('<S-Tab>', '<C-w>W', "Go to previous window")
 
 -- Resize Windows
-map('<A-Left>', '<cmd>vertical resize -2<CR>', "Decrease width")
-map('<A-Right>', '<cmd>vertical resize +2<CR>', "Increase width")
-map('<A-Down>', '<cmd>resize -2<CR>', "Decrease height")
-map('<A-Up>', '<cmd>resize +2<CR>', "Increase height")
+nmap('<A-Left>', '<cmd>vertical resize -2<CR>', "Decrease width")
+nmap('<A-Right>', '<cmd>vertical resize +2<CR>', "Increase width")
+nmap('<A-Down>', '<cmd>resize -2<CR>', "Decrease height")
+nmap('<A-Up>', '<cmd>resize +2<CR>', "Increase height")
 
 -- Buffer Navigation
-map("<C-Left>", "<cmd>bp<CR>", "Previous buffer")
-map("<C-Right>", "<cmd>bn<CR>", "Next buffer")
+nmap("<C-Left>", "<cmd>bp<CR>", "Previous buffer")
+nmap("<C-Right>", "<cmd>bn<CR>", "Next buffer")
 
 -- Move Lines
-map("<C-Up>", ":m '<-2<CR>gv=gv", "Move selection up", 'v')
-map("<C-Down>", ":m '>+1<CR>gv=gv", "Move selection down", 'v')
-map("<C-Up>", "<Esc>:m .-2<CR>==gi", "Move line up", 'i')
-map("<C-Down>", "<Esc>:m .+1<CR>==gi", "Move line down", 'i')
+vmap("<C-Up>", ":m '<-2<CR>gv=gv", "Move selection up")
+vmap("<C-Down>", ":m '>+1<CR>gv=gv", "Move selection down")
+imap("<C-Up>", "<Esc>:m .-2<CR>==gi", "Move line up")
+imap("<C-Down>", "<Esc>:m .+1<CR>==gi", "Move line down")
 
 -- Split Window Creation
-map('<leader>hs', '<cmd>split<CR>', "Horizontal split")
-map('<leader>vs', '<cmd>vsplit<CR>', "Vertical split")
+nmap('<leader>hs', '<cmd>split<CR>', "Horizontal split")
+nmap('<leader>vs', '<cmd>vsplit<CR>', "Vertical split")
 
 -- Config Management
-map('<leader>ev', '<cmd>edit $MYVIMRC<CR>', "Edit NeoVim config")
-map('<leader>sv', '<cmd>source $MYVIMRC<CR>', "Reload NeoVim config")
+nmap('<leader>ev', '<cmd>edit $MYVIMRC<CR>', "Edit NeoVim config")
+nmap('<leader>sv', '<cmd>source $MYVIMRC<CR>', "Reload NeoVim config")
 
 -- Spellcheck Toggle
-map('<leader>sp', "<cmd>setlocal spell!<cr>", "Toggle spellcheck")
+nmap('<leader>sp', "<cmd>setlocal spell!<cr>", "Toggle spellcheck")
 
 -- Terminal Keybindings
-map("<leader>t", "<cmd>split | terminal<CR>", "Open terminal in horizontal split")
-map("<Esc>", "<C-\\><C-n>", "Exit terminal mode", "t")
-map("<C-h>", "<C-\\><C-n><C-w>h", "Exit terminal to left window", "t")
-map("<C-j>", "<C-\\><C-n><C-w>j", "Exit terminal to window below", "t")
-map("<C-k>", "<C-\\><C-n><C-w>k", "Exit terminal to window above", "t")
-map("<C-l>", "<C-\\><C-n><C-w>l", "Exit terminal to right window", "t")
+nmap("<leader>t", "<cmd>split | terminal<CR>", "Open terminal in horizontal split")
+tmap("<Esc>", "<C-\\><C-n>", "Exit terminal mode")
+tmap("<C-h>", "<C-\\><C-n><C-w>h", "Exit terminal to left window")
+tmap("<C-j>", "<C-\\><C-n><C-w>j", "Exit terminal to window below")
+tmap("<C-k>", "<C-\\><C-n><C-w>k", "Exit terminal to window above")
+tmap("<C-l>", "<C-\\><C-n><C-w>l", "Exit terminal to right window")
