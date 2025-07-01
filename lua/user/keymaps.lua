@@ -8,7 +8,6 @@ map('<C-a>', 'ggVG', "Select entire buffer")
 map('<Esc>', '<cmd>nohlsearch<CR>', "Clear search highlight")
 
 -- Indentation
--- 'i' mode for single line; 'v' mode for visual selection
 map('<S-Tab>', '<C-D>', "Unindent current line", 'i')
 map('<Tab>', '>gv', "Indent selection", 'v')
 map('<S-Tab>', '<gv', "Unindent selection", 'v')
@@ -29,15 +28,15 @@ map('<A-Right>', '<cmd>vertical resize +2<CR>', "Increase width")
 map('<A-Down>', '<cmd>resize -2<CR>', "Decrease height")
 map('<A-Up>', '<cmd>resize +2<CR>', "Increase height")
 
+-- Buffer Navigation
+map("<C-Left>", "<cmd>bp<CR>", "Previous buffer")
+map("<C-Right>", "<cmd>bn<CR>", "Next buffer")
+
 -- Move Lines
 map("<C-Up>", ":m '<-2<CR>gv=gv", "Move selection up", 'v')
 map("<C-Down>", ":m '>+1<CR>gv=gv", "Move selection down", 'v')
 map("<C-Up>", "<Esc>:m .-2<CR>==gi", "Move line up", 'i')
 map("<C-Down>", "<Esc>:m .+1<CR>==gi", "Move line down", 'i')
-
--- Buffer Navigation
-map("<C-Left>", "<cmd>bp<CR>", "Previous buffer")
-map("<C-Right>", "<cmd>bn<CR>", "Next buffer")
 
 -- Split Window Creation
 map('<leader>hs', '<cmd>split<CR>', "Horizontal split")
