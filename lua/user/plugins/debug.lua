@@ -51,7 +51,7 @@ return {
       utils.nmap("<F10>", dap.step_over, "Step over")
       utils.nmap("<F11>", dap.step_into, "Step into")
       utils.nmap("<F12>", dap.step_out, "Step out")
-      utils.map("<M-e>", dapui.eval, "Eval expression", { "n", "v" })
+      utils.map({ "n", "v" }, "<M-e>", dapui.eval, "Eval expression")
     end,
   },
   -- Автоматическая настройка отладчика для python
