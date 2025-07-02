@@ -29,10 +29,12 @@ opt.linebreak = true
 opt.list = true
 opt.listchars = {
   tab = '→ ',
+  lead = '·',
   trail = '·',
   nbsp = '␣',
-  extends = '❯',
-  precedes = '❮'
+  extends = '⟩',
+  precedes = '⟨',
+  -- eol = '¬',
 }
 
 -- Отступы и форматирование текста
@@ -55,6 +57,10 @@ opt.formatoptions = {
   n = true, -- Распознавать нумерованные списки при форматировании
   l = true, -- Не разрывать длинные строки в режиме вставки
 }
+
+-- Не имеет эффекта
+-- Максимальный размер строки для подсветки синтаксиса
+opt.synmaxcol = 1024
 
 -- Поиск
 opt.ignorecase = true
