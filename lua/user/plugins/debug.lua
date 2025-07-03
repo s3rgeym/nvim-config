@@ -18,14 +18,12 @@ return {
       dapui.setup()
 
       -- require("mason").setup()
+      -- :MasonInstall и ищем отладчики по debug
       -- https://github.com/jay-babu/mason-nvim-dap.nvim/blob/main/lua/mason-nvim-dap/mappings/source.lua
-
       require("mason-nvim-dap").setup({
         ensure_installed = {
-          "python",
-          "delve",
-          "js",
-          "bash",
+          --"bash",
+          --"python",
         },
         handlers = {},
       })
