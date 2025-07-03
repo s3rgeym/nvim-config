@@ -41,14 +41,27 @@ return {
     -- Автоматическая установка и настройка языковых серверов
     -- Вынес в отдельный файл
     -- require("mason").setup()
+    -- see :Mason
     require("mason-lspconfig").setup({
       -- Список серверов: https://github.com/neovim/nvim-lspconfig/tree/master/lsp
       ensure_installed = {
+        "bashls",
+        "cssls",
+        "denols",
+        "docker_compose_language_service",
+        "dockerls",
         "eslint",
         "gopls",
+        "html",
+        -- "intelephense",
+        -- "java_language_server",
+        "jsonls",
         "lua_ls",
+        "marksman",
         "pyright",
         "ruff",
+        "vimls",
+        "yamlls",
       },
       automatic_installation = true,
     })
