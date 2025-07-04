@@ -1,5 +1,4 @@
 -- Debug Adapter Protocol
-local utils = require('user.utils')
 
 return {
   {
@@ -22,8 +21,7 @@ return {
       -- https://github.com/jay-babu/mason-nvim-dap.nvim/blob/main/lua/mason-nvim-dap/mappings/source.lua
       require("mason-nvim-dap").setup({
         ensure_installed = {
-          --"bash",
-          --"python",
+          "python",
         },
         handlers = {},
       })
@@ -43,13 +41,6 @@ return {
       dap.listeners.before.event_exited["dapui_config"] = function()
         dapui.close()
       end
-
-      utils.nmap("<F5>", dap.continue, "Continue debug")
-      utils.nmap("<F9>", dap.toggle_breakpoint, "Toggle beakpoint")
-      utils.nmap("<F10>", dap.step_over, "Step over")
-      utils.nmap("<F11>", dap.step_into, "Step into")
-      utils.nmap("<F12>", dap.step_out, "Step out")
-      utils.map({ "n", "v" }, "<M-e>", dapui.eval, "Eval expression")
     end,
   },
   -- Автоматическая настройка отладчика для python

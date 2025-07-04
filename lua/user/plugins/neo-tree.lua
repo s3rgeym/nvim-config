@@ -37,7 +37,4 @@ return {
       },
     },
   },
-  keys = {
-    { "<leader>n", "<cmd>Neotree toggle<CR>", desc = "Toggle Neotree", mode = "n" },
-  },
 }
