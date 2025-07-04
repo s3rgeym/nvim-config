@@ -80,30 +80,48 @@ local function jump(c)
 end
 
 wk.add({
-  { "gd",         vim.lsp.buf.definition,       desc = "Go to definition" },
-  { "gD",         vim.lsp.buf.declaration,      desc = "Go to declaration" },
-  { "gi",         vim.lsp.buf.implementation,   desc = "Go to implementation" },
-  { "gr",         vim.lsp.buf.references,       desc = "List references" },
-  { "gy",         vim.lsp.buf.type_definition,  desc = "Type definition" },
-  { "<leader>ca", vim.lsp.buf.code_action,      desc = "Code actions" },
-  { "<leader>rn", vim.lsp.buf.rename,           desc = "Rename" },
-  { "K",          vim.lsp.buf.hover,            desc = "Hover docs" },
-  { "gK",         vim.lsp.buf.signature_help,   desc = "Signature help" },
-  { "<leader>d",  vim.diagnostic.open_float,    desc = "Diagnostics float" },
-  { "[d",         function() jump(-1) end,      desc = "Previous diagnostic" },
-  { "]d",         function() jump(1) end,       desc = "Next diagnostic" },
-  { "<leader>sd", vim.lsp.buf.document_symbol,  desc = "Document symbols" },
-  { "<leader>sw", vim.lsp.buf.workspace_symbol, desc = "Workspace symbols" },
+  -- { "gd",          vim.lsp.buf.definition,       desc = "Go to definition" },
+  -- { "gD",          vim.lsp.buf.declaration,      desc = "Go to declaration" },
+  -- { "gi",          vim.lsp.buf.implementation,   desc = "Go to implementation" },
+  -- { "gr",          vim.lsp.buf.references,       desc = "List references" },
+  -- { "gy",          vim.lsp.buf.type_definition,  desc = "Type definition" },
+  { "<leader>ca",  vim.lsp.buf.code_action,      desc = "Code actions" },
+  { "<leader>rn",  vim.lsp.buf.rename,           desc = "Rename" },
+  { "K",           vim.lsp.buf.hover,            desc = "Hover docs" },
+  { "gK",          vim.lsp.buf.signature_help,   desc = "Signature help" },
+  { "<leader>d",   vim.diagnostic.open_float,    desc = "Diagnostics float" },
+  { "[d",          function() jump(-1) end,      desc = "Previous diagnostic" },
+  { "]d",          function() jump(1) end,       desc = "Next diagnostic" },
+  -- { "<leader>sd",  vim.lsp.buf.document_symbol,  desc = "Document symbols" },
+  -- { "<leader>sw",  vim.lsp.buf.workspace_symbol, desc = "Workspace symbols" },
+})
+
+-- Debugger
+wk.add({
+  { "<F5>",  cmd [[lua require'dap'.continue()]],          desc = "Start debug" },
+  { "<F9>",  cmd [[lua require'dap'.toggle_breakpoint()]], desc = "Toggle breakpoint" },
+  { "<F10>", cmd [[lua require'dap'.step_over()]],         desc = "Step over" },
+  { "<F11>", cmd [[lua require'dap'.step_into()]],         desc = "Step into" },
+  { "<F12>", cmd [[lua require'dap'.step_out()]],          desc = "Step out" },
+  { "<M-e>", cmd [[lua require'dapui'.eval()]],            desc = "Evaluate expression", mode = { "n", "v" } },
 })
 
 -- FzfLua
 wk.add({
-  { "<leader>/", cmd [[FzfLua grep_curbuf]], desc = "Grep current buffer" },
-  { "<leader>b", cmd [[FzfLua buffers]],     desc = "Buffers" },
-  { "<leader>g", cmd [[FzfLua live_grep]],   desc = "Live grep" },
-  { "<leader>F", cmd [[FzfLua files]],       desc = "Find file" },
-  { "<leader>o", cmd [[FzfLua oldfiles]],    desc = "Recent files" },
-  { "<leader>r", cmd [[FzfLua resume]],      desc = "Resume search" },
+  { "<leader>/",   cmd[[FzfLua grep_curbuf]],    desc = "Grep current buffer" },
+  { "<leader>b",   cmd[[FzfLua buffers]],        desc = "Buffers" },
+  { "<leader>g",   cmd[[FzfLua live_grep]],      desc = "Live grep" },
+  { "<leader>F",   cmd[[FzfLua files]],          desc = "Find file" },
+  { "<leader>o",   cmd[[FzfLua oldfiles]],       desc = "Recent files" },
+  { "<leader>r",   cmd[[FzfLua resume]],         desc = "Resume search" },
+  -- LSP
+  { "gd",          cmd[[FzfLua lsp_definitions]], desc = "LSP Definitions (Fzf)" },
+  { "gD",          cmd[[FzfLua lsp_declarations]], desc = "LSP Declarations (Fzf)" },
+  { "gi",          cmd[[FzfLua lsp_implementations]], desc = "LSP Implementations (Fzf)" },
+  { "gr",          cmd[[FzfLua lsp_references]], desc = "LSP References (Fzf)" },
+  { "gy",          cmd[[FzfLua lsp_type_definitions]], desc = "LSP Type Definitions (Fzf)" },
+  { "<leader>sd",  cmd[[FzfLua lsp_document_symbols]], desc = "LSP Document Symbols (Fzf)" },
+  { "<leader>sw",  cmd[[FzfLua lsp_workspace_symbols]], desc = "LSP Workspace Symbols (Fzf)" },
 })
 
 -- grug-far
@@ -123,14 +141,4 @@ wk.add({
     desc = "Search and Replace",
     mode = { "n", "v" },
   },
-})
-
--- Debugger
-wk.add({
-  { "<F5>",  cmd [[lua require'dap'.continue()]],          desc = "Start debug" },
-  { "<F9>",  cmd [[lua require'dap'.toggle_breakpoint()]], desc = "Toggle breakpoint" },
-  { "<F10>", cmd [[lua require'dap'.step_over()]],         desc = "Step over" },
-  { "<F11>", cmd [[lua require'dap'.step_into()]],         desc = "Step into" },
-  { "<F12>", cmd [[lua require'dap'.step_out()]],          desc = "Step out" },
-  { "<M-e>", cmd [[lua require'dapui'.eval()]],            desc = "Evaluate expression", mode = { "n", "v" } },
 })
