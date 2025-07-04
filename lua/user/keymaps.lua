@@ -8,7 +8,7 @@ local function cmd(command)
   return "<Cmd>" .. command .. "<CR>"
 end
 
--- Basic keybindings
+-- Basic mappings
 wk.add({
   {
     mode = { "n", "v" },
