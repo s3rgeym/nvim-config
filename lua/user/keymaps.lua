@@ -1,3 +1,4 @@
+-- Все сочетания лучше держать в одном месте
 local which_key_ok, wk = pcall(require, "which-key")
 if not which_key_ok then
   return
@@ -74,7 +75,6 @@ wk.add({
 })
 
 -- LSP
-
 local function jump(c)
   vim.diagnostic.jump({ count = c })
 end
