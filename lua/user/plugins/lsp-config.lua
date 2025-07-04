@@ -1,8 +1,6 @@
-local utils = require('user.utils')
-
 local function on_attach(_, bufnr)
   local function map(keys, func, desc)
-    utils.nmap(keys, func, "LSP: " .. desc, { buffer = bufnr })
+    vim.keymap.set("n", keys, func, { desc = "LSP: " .. desc, buffer = bufnr })
   end
 
   map("gd", vim.lsp.buf.definition, "Go to definition")
@@ -46,8 +44,8 @@ return {
       -- Используйте :MasonInstall для устнавоки языковых серверов
       ensure_installed = {
         -- "bashls",
-        -- "pyright",
-        -- "ruff",
+        "pyright",
+        "ruff",
         "lua_ls",
         "vimls",
       },
@@ -55,7 +53,7 @@ return {
     })
 
     vim.lsp.config("*", {
-      on_attach = on_attach,
+      -- on_attach = on_attach,
       capabilities = capabilities,
     })
 
