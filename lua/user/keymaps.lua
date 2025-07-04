@@ -53,8 +53,8 @@ wk.add({
   { "<leader>sv", cmd [[vsplit]],                desc = "Vertical split" },
 
   { "<leader>v",  group = "Neovim Configuration" },
-  { "<leader>ve", cmd [[edit $MYVIMRC]],         desc = "Edit config" },
-  { "<leader>vs", cmd [[source $MYVIMRC]],       desc = "Reload config" },
+  { "<leader>ve", cmd [[edit $MYVIMRC]],         desc = "Edit Neo[v]im config" },
+  { "<leader>vs", cmd [[source $MYVIMRC]],       desc = "Source Neo[v]im config" },
 
   -- Terminal
   { "<leader>t",  cmd [[split | terminal]],      desc = "Open terminal" },
@@ -68,7 +68,6 @@ wk.add({
   { "<leader>sp", cmd [[setlocal spell!]],       desc = "Toggle spellcheck" },
 })
 
-
 -- NeoTree
 wk.add({
   { "<leader>n", cmd [[Neotree toggle]], desc = "Toggle NeoTree" },
@@ -76,7 +75,7 @@ wk.add({
 
 -- LSP
 local function jump(c)
-  vim.diagnostic.jump({ count = c })
+  vim.diagnostic.jump({ count = c, float = true })
 end
 
 wk.add({
@@ -106,11 +105,19 @@ wk.add({
   { "<M-e>", cmd [[lua require'dapui'.eval()]],            desc = "Evaluate expression", mode = { "n", "v" } },
 })
 
+wk.add({
+  { "<leader>g",  group = "Git" },
+  { "<leader>gs", cmd [[Git]],        desc = "Git status" },
+  { "<leader>gc", cmd [[Git commit]], desc = "Git commit" },
+  { "<leader>gp", cmd [[Git push]],   desc = "Git push" },
+  { "<leader>gl", cmd [[Git pull]],   desc = "Git pull" },
+})
+
 -- FzfLua
 wk.add({
   { "<leader>/",  cmd [[FzfLua grep_curbuf]],           desc = "Grep current buffer" },
   { "<leader>b",  cmd [[FzfLua buffers]],               desc = "Buffers" },
-  { "<leader>g",  cmd [[FzfLua live_grep]],             desc = "Live grep" },
+  { "<leader>f",  cmd [[FzfLua live_grep]],             desc = "Live grep" },
   { "<leader>F",  cmd [[FzfLua files]],                 desc = "Find file" },
   { "<leader>o",  cmd [[FzfLua oldfiles]],              desc = "Recent files" },
   { "<leader>r",  cmd [[FzfLua resume]],                desc = "Resume search" },
