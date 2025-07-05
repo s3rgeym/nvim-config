@@ -66,29 +66,5 @@ return {
     for _, lsp in ipairs(servers) do
       vim.lsp.enable(lsp)
     end
-
-    -- Настройки диагностики
-    vim.diagnostic.config({
-      signs = true,
-      virtual_text = false,
-      -- Если хочется показывать ошибки в строках под текущей
-      -- virtual_lines = { current_line = true },
-      -- severity = { min = vim.diagnostic.severity.WARN },
-      update_in_insert = false,
-    })
-
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-      callback = function()
-        vim.diagnostic.open_float(nil, { focus = false })
-      end
-    })
-
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      callback = function()
-        vim.lsp.buf.format {
-          async = false
-        }
-      end,
-    })
   end,
 }
