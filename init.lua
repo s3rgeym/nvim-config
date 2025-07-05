@@ -21,7 +21,7 @@ vim.g.maplocalleader = ' '
 
 if vim.fn.has('termguicolors') == 1 then
   -- Некоторые плагины могут неправильно работать, если не установить это значение
-  vim.opt.termgui = true
+  vim.opt.termguicolors = true
 end
 
 -- Загрузка плагинов
