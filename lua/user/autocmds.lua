@@ -24,3 +24,18 @@ vim.api.nvim_create_autocmd("VimEnter", {
     vim.api.nvim_set_current_dir(vim.fn.expand("%:p:h"))
   end,
 })
+
+-- Отображает автоматически сообщения диагностики в всплывающем окне
+-- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+--   callback = function()
+--     vim.diagnostic.open_float(nil, { focus = false })
+--   end
+-- })
+--
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   callback = function()
+--     vim.lsp.buf.format {
+--       async = false
+--     }
+--   end,
+-- })

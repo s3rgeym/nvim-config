@@ -5,7 +5,7 @@ end
 
 local function reload()
   for pkg, _ in pairs(package.loaded) do
-    -- user.plugins.* грузятся laz.nvim, поэтому их исключаем
+    -- user.plugins.* грузятся lazy.nvim динамически, поэтому их исключаем
     if pkg:match("^user") and not pkg:match("^user[%./]plugins") then
       package.loaded[pkg] = nil
     end
@@ -94,7 +94,8 @@ wk.add({
 
 -- LSP
 local function jump(c)
-  vim.diagnostic.jump({ count = c, float = true })
+  -- float=true == open_float
+  vim.diagnostic.jump({ count = c, float = false })
 end
 
 wk.add({
@@ -124,6 +125,10 @@ wk.add({
   { "<M-e>", cmd [[lua require'dapui'.eval()]],            desc = "Evaluate expression", mode = { "n", "v" } },
 })
 
+-- Mason
+wk.add({ "<leader>M", cmd [[Mason]], desc = "Open Mason UI" })
+
+-- Git Integration
 wk.add({
   { "<leader>g",  group = "Git" },
   { "<leader>gs", cmd [[Git]],        desc = "Git status" },

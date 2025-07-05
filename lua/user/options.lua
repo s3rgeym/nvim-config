@@ -145,6 +145,18 @@ if vim.fn.isdirectory(spell_dir) == 0 then
   vim.fn.mkdir(spell_dir, 'p')
 end
 
+-- Настройки диагностики
+vim.diagnostic.config({
+  signs = true,
+  virtual_text = false,
+  -- severity_sort = true,
+  virtual_lines = {
+    current_line = true,
+    severity = vim.diagnostic.severity.WARNING,
+  },
+  update_in_insert = false,
+})
+
 -- Цветовая схеме и оформление
 opt.guifont = "JetBrainsMono Nerd Font:h12"
 opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor20"
