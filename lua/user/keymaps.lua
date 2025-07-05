@@ -19,12 +19,25 @@ if not which_key_ok then
   return
 end
 
+-- which-key
 wk.add({
-  '<leader>?',
-  function()
-    wk.show({ global = true })
-  end,
-  desc = "Show keymaps"
+  {
+    '<leader>?',
+    function()
+      wk.show({ global = true })
+    end,
+    desc = "Show global keymaps"
+  },
+  -- Это один из самых полезных режимов, который, например позволяет менять
+  -- размер окон, перемещать их
+  {
+    "<c-w><leader>",
+    function()
+      -- Кроме сочетания <c-w>w в приницпе ничего не нужно
+      wk.show({ keys = "<c-w>", loop = true })
+    end,
+    desc = "Window Hydra Mode (which-key)",
+  },
 })
 
 -- Basic mappings
@@ -39,22 +52,21 @@ wk.add({
   { "<Esc>",      cmd [[nohlsearch]],            desc = "Clear search highlight" },
 
   -- Window Navigation
-  { "<C-h>",      "<C-w>h",                      desc = "Go to left window" },
-  { "<C-j>",      "<C-w>j",                      desc = "Go to window below" },
-  { "<C-k>",      "<C-w>k",                      desc = "Go to window above" },
-  { "<C-l>",      "<C-w>l",                      desc = "Go to right window" },
-  { "<Tab>",      "<C-w>w",                      desc = "Next window" },
-  { "<S-Tab>",    "<C-w>W",                      desc = "Previous window" },
+  { "<A-Left>",   cmd [[wincmd h]],              desc = "Go to left window" },
+  { "<A-Down>",   cmd [[wincmd j]],              desc = "Go to window below" },
+  { "<A-Up>",     cmd [[wincmd k]],              desc = "Go to window above" },
+  { "<A-Right>",  cmd [[wincmd l]],              desc = "Go to right window" },
 
+  -- Удобнее использовать hydra mode, а эти сочетания использовать в навигации
   -- Resize Windows
-  { "<A-Left>",   cmd [[vertical resize -2]],    desc = "Decrease width" },
-  { "<A-Right>",  cmd [[vertical resize +2]],    desc = "Increase width" },
-  { "<A-Down>",   cmd [[resize -2]],             desc = "Decrease height" },
-  { "<A-Up>",     cmd [[resize +2]],             desc = "Increase height" },
+  -- { "<A-Left>",   cmd [[vertical resize -2]],    desc = "Decrease width" },
+  -- { "<A-Right>",  cmd [[vertical resize +2]],    desc = "Increase width" },
+  -- { "<A-Down>",   cmd [[resize -2]],             desc = "Decrease height" },
+  -- { "<A-Up>",     cmd [[resize +2]],             desc = "Increase height" },
 
   -- Buffer Navigation
-  { "<C-Left>",   cmd [[bp]],                    desc = "Previous buffer" },
-  { "<C-Right>",  cmd [[bn]],                    desc = "Next buffer" },
+  { "<Tab>",      cmd [[bp]],                    desc = "Previous buffer" },
+  { "<S-Tab>",    cmd [[bn]],                    desc = "Next buffer" },
 
   -- Indentation
   { "<S-Tab>",    "<C-D>",                       desc = "Unindent line",         mode = "i" },
@@ -62,10 +74,13 @@ wk.add({
   { "<S-Tab>",    "<gv",                         desc = "Unindent selection",    mode = "v" },
 
   -- Move Lines
-  { "<C-Up>",     "<Esc>:m .-2<CR>==gi",         desc = "Move line up",          mode = "i" },
-  { "<C-Down>",   "<Esc>:m .+1<CR>==gi",         desc = "Move line down",        mode = "i" },
-  { "<C-Up>",     ":m '<-2<CR>gv=gv",            desc = "Move selection up",     mode = "v" },
-  { "<C-Down>",   ":m '>+1<CR>gv=gv",            desc = "Move selection down",   mode = "v" },
+  { "<A-j>",      "<Esc>:m .+1<CR>==",           desc = "Move line down" },
+  { "<A-k>",      "<Esc>:m .-2<CR>==",           desc = "Move line up" },
+  { "<A-j>",      "<Esc>:m .+1<CR>==gi",         desc = "Move line down",        mode = "i" },
+  { "<A-k>",      "<Esc>:m .-2<CR>==gi",         desc = "Move line up",          mode = "i" },
+  { "<A-j>",      ":m '>+1<CR>gv=gv",            desc = "Move selection down",   mode = "v" },
+  { "<A-k>",      ":m '<-2<CR>gv=gv",            desc = "Move selection up",     mode = "v" },
+
 
   { "<leader>s",  group = "Split windows" },
   { "<leader>sh", cmd [[split]],                 desc = "Horizontal split" },
@@ -107,7 +122,7 @@ wk.add({
   { "<leader>ca", vim.lsp.buf.code_action,    desc = "Code actions" },
   { "<leader>rn", vim.lsp.buf.rename,         desc = "Rename" },
   { "K",          vim.lsp.buf.hover,          desc = "Hover docs" },
-  { "gK",         vim.lsp.buf.signature_help, desc = "Signature help" },
+  { "gs",         vim.lsp.buf.signature_help, desc = "Signature help" },
   -- Это сочетание лишнее, но пусть будет
   { "<leader>d",  vim.diagnostic.open_float,  desc = "Diagnostics float" },
   { "[d",         function() jump(-1) end,    desc = "Previous diagnostic" },
