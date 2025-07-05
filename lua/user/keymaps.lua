@@ -129,6 +129,7 @@ wk.add({
 })
 
 -- Mason
+-- Интерфейс для установки различных LSP/дебаггеров и линтеров с форматтерами
 wk.add({ "<leader>M", cmd [[Mason]], desc = "Open Mason UI" })
 
 -- Git Integration
@@ -138,7 +139,11 @@ wk.add({
   { "<leader>ga", cmd [[Git add .]],  desc = "Git add" },
   { "<leader>gc", cmd [[Git commit]], desc = "Git commit" },
   { "<leader>gp", cmd [[Git push]],   desc = "Git push" },
-  { "<leader>gl", cmd [[Git pull]],   desc = "Git pull" },
+  { "<leader>gP", cmd [[Git pull]],   desc = "Git pull" },
+  { "<leader>gw", cmd [[Gwrite]],     desc = "Gwrite" },
+  { "<leader>gr", cmd [[Gread]],      desc = "Gread" },
+  { "<leader>gd", cmd [[Git diff]],   desc = "Git diff" },
+  { "<leader>gl", cmd [[Git log]],    desc = "Git log" },
 })
 
 -- FzfLua
