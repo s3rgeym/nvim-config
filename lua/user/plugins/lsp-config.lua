@@ -11,7 +11,7 @@ local function on_attach(_, bufnr)
   map("<leader>ca", vim.lsp.buf.code_action, "Code actions")
   map("<leader>rn", vim.lsp.buf.rename, "Rename")
   map("K", vim.lsp.buf.hover, "Hover documentation")
-  map("gK", vim.lsp.buf.signature_help, "Signature help")
+  map("gs", vim.lsp.buf.signature_help, "Signature help")
   map("<leader>d", vim.diagnostic.open_float, "Show diagnostics")
 
   local function jump(c)
