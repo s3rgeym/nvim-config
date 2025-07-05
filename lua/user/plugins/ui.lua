@@ -46,7 +46,7 @@ return {
     end,
   },
   {
-    "local/tokyonight.nvim",
+    "folke/tokyonight.nvim",
     priority = 1000,
     lazy = false, -- Загружаем сразу
     opts = {

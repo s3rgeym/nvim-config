@@ -127,7 +127,8 @@ wk.add({
 wk.add({
   { "<leader>g",  group = "Git" },
   { "<leader>gs", cmd [[Git]],        desc = "Git status" },
-  { "<leader>gc", cmd [[Git commit]], desc = "Git commit" },
+  { "<leader>ga", cmd [[Git add .]],  desc = "Git add" },
+  { "<leader>gc", cmd [[Git commit]], desc = "Git commit --interactive" },
   { "<leader>gp", cmd [[Git push]],   desc = "Git push" },
   { "<leader>gl", cmd [[Git pull]],   desc = "Git pull" },
 })
