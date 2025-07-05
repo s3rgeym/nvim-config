@@ -1,18 +1,37 @@
 -- Все сочетания лучше держать в одном месте
+local function cmd(command)
+  return "<Cmd>" .. command .. "<CR>"
+end
+
+local function reload()
+  for pkg, _ in pairs(package.loaded) do
+    -- user.plugins.* грузятся laz.nvim, поэтому их исключаем
+    if pkg:match("^user") and not pkg:match("^user[%./]plugins") then
+      package.loaded[pkg] = nil
+    end
+  end
+
+  dofile(vim.env.MYVIMRC)
+end
+
 local which_key_ok, wk = pcall(require, "which-key")
 if not which_key_ok then
   return
 end
 
-local function cmd(command)
-  return "<Cmd>" .. command .. "<CR>"
-end
+wk.add({
+  '<leader>?',
+  function()
+    wk.show({ global = true })
+  end,
+  desc = "Show keymaps"
+})
 
 -- Basic mappings
 wk.add({
   {
     mode = { "n", "v" },
-    { "<leader>q", cmd [[q]],     desc = "Quit window" },
+    { "<leader>q", cmd [[q]],     desc = "Close window" },
     { "<leader>w", cmd [[write]], desc = "Write file" },
   },
 
@@ -54,7 +73,7 @@ wk.add({
 
   { "<leader>v",  group = "Neovim Configuration" },
   { "<leader>ve", cmd [[edit $MYVIMRC]],         desc = "Edit Neo[v]im config" },
-  { "<leader>vs", cmd [[source $MYVIMRC]],       desc = "Source Neo[v]im config" },
+  { "<leader>vs", reload,                        desc = "Reload Neo[v]im config" },
 
   -- Terminal
   { "<leader>t",  cmd [[split | terminal]],      desc = "Open terminal" },
