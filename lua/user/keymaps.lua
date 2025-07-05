@@ -111,8 +111,8 @@ wk.add({
   { "<leader>d",  vim.diagnostic.open_float,  desc = "Diagnostics float" },
   { "[d",         function() jump(-1) end,    desc = "Previous diagnostic" },
   { "]d",         function() jump(1) end,     desc = "Next diagnostic" },
-  -- { "<leader>sd",  vim.lsp.buf.document_symbol,  desc = "Document symbols" },
-  -- { "<leader>sw",  vim.lsp.buf.workspace_symbol, desc = "Workspace symbols" },
+  -- { "<leader>ls",  vim.lsp.buf.document_symbol,  desc = "Document symbols" },
+  -- { "<leader>lS",  vim.lsp.buf.workspace_symbol, desc = "Workspace symbols" },
 })
 
 -- Debugger
@@ -152,8 +152,8 @@ wk.add({
   { "gi",         cmd [[FzfLua lsp_implementations]],   desc = "LSP Implementations (Fzf)" },
   { "gr",         cmd [[FzfLua lsp_references]],        desc = "LSP References (Fzf)" },
   { "gy",         cmd [[FzfLua lsp_type_definitions]],  desc = "LSP Type Definitions (Fzf)" },
-  { "<leader>sd", cmd [[FzfLua lsp_document_symbols]],  desc = "LSP Document Symbols (Fzf)" },
-  { "<leader>sw", cmd [[FzfLua lsp_workspace_symbols]], desc = "LSP Workspace Symbols (Fzf)" },
+  { "<leader>ls", cmd [[FzfLua lsp_document_symbols]],  desc = "LSP Document Symbols (Fzf)" },
+  { "<leader>lS", cmd [[FzfLua lsp_workspace_symbols]], desc = "LSP Workspace Symbols (Fzf)" },
 })
 
 -- grug-far
