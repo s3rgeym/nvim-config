@@ -123,6 +123,9 @@ require("lazy").setup(plugins)
   cmd = { "SomeCommand" },
   event = { "BufReadPost", "BufNewFile" },
 
+  -- Так же плагин можно загрузить сразу
+  event = "VeryLazy",
+
   -- Так же плагин может загружаться только для определенных типов файлов
   ft = "python",
 }
