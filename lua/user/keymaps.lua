@@ -108,6 +108,7 @@ wk.add({
   { "<leader>rn", vim.lsp.buf.rename,         desc = "Rename" },
   { "K",          vim.lsp.buf.hover,          desc = "Hover docs" },
   { "gK",         vim.lsp.buf.signature_help, desc = "Signature help" },
+  -- Это сочетание лишнее, но пусть будет
   { "<leader>d",  vim.diagnostic.open_float,  desc = "Diagnostics float" },
   { "[d",         function() jump(-1) end,    desc = "Previous diagnostic" },
   { "]d",         function() jump(1) end,     desc = "Next diagnostic" },
@@ -135,7 +136,7 @@ wk.add({
   { "<leader>g",  group = "Git" },
   { "<leader>gs", cmd [[Git]],        desc = "Git status" },
   { "<leader>ga", cmd [[Git add .]],  desc = "Git add" },
-  { "<leader>gc", cmd [[Git commit]], desc = "Git commit --interactive" },
+  { "<leader>gc", cmd [[Git commit]], desc = "Git commit" },
   { "<leader>gp", cmd [[Git push]],   desc = "Git push" },
   { "<leader>gl", cmd [[Git pull]],   desc = "Git pull" },
 })
