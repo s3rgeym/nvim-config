@@ -89,7 +89,7 @@ wk.add({
 
 -- NeoTree
 wk.add({
-  { "<leader>n", cmd [[Neotree toggle]], desc = "Toggle NeoTree" },
+  { "<leader>e", cmd [[Neotree toggle]], desc = "Exporer NeoTree" },
 })
 
 -- LSP
@@ -117,12 +117,14 @@ wk.add({
 
 -- Debugger
 wk.add({
-  { "<F5>",  cmd [[lua require'dap'.continue()]],          desc = "Start debug" },
-  { "<F9>",  cmd [[lua require'dap'.toggle_breakpoint()]], desc = "Toggle breakpoint" },
-  { "<F10>", cmd [[lua require'dap'.step_over()]],         desc = "Step over" },
-  { "<F11>", cmd [[lua require'dap'.step_into()]],         desc = "Step into" },
-  { "<F12>", cmd [[lua require'dap'.step_out()]],          desc = "Step out" },
-  { "<M-e>", cmd [[lua require'dapui'.eval()]],            desc = "Evaluate expression", mode = { "n", "v" } },
+  { "<F5>",    cmd [[lua require'dap'.continue()]],          desc = "Start/Continue debug" },
+  { "<S-F5>",  cmd [[lua require'dap'.stop()]],              desc = "Stop debug" },
+  { "<C-F5>",  cmd [[lua require'dap'.restart()]],           desc = "Restart debug" },
+  { "<F9>",    cmd [[lua require'dap'.toggle_breakpoint()]], desc = "Toggle breakpoint" },
+  { "<F10>",   cmd [[lua require'dap'.step_over()]],         desc = "Step over" },
+  { "<F11>",   cmd [[lua require'dap'.step_into()]],         desc = "Step into" },
+  { "<S-F11>", cmd [[lua require'dap'.step_out()]],          desc = "Step out" },
+  { "<M-e>",   cmd [[lua require'dapui'.eval()]],            desc = "Evaluate expression", mode = { "n", "v" } },
 })
 
 -- Mason

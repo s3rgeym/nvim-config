@@ -25,17 +25,19 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
 })
 
--- Отображает автоматически сообщения диагностики в всплывающем окне
+-- Автоматическое форматирование
+vim.api.nvim_create_autocmd("BufWritePre", {
+  callback = function()
+    vim.lsp.buf.format {
+      async = false
+    }
+  end,
+})
+
+-- Показывать сообщения диагностики в всплывающем окне при наведении курсора
 -- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 --   callback = function()
 --     vim.diagnostic.open_float(nil, { focus = false })
 --   end
 -- })
 --
--- vim.api.nvim_create_autocmd("BufWritePre", {
---   callback = function()
---     vim.lsp.buf.format {
---       async = false
---     }
---   end,
--- })
