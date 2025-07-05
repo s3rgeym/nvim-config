@@ -3,7 +3,7 @@
 return {
   "folke/which-key.nvim",
   -- Позволяет импортировать which-key в любом месте
-  event = "VeryLazy",
+  lazy = false,
   opts = {
     preset = "helix",
     triggers = {
