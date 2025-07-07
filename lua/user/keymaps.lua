@@ -21,7 +21,7 @@ wk.add({
   },
   -- Подсмотреть глобальные сочетание
   {
-    -- Это сочетание бесполезно в i, а в остальных режимах не используется кроме t
+    -- Это сочетание бесполезно в i, а в остальных режимах кроме t не используется
     '<C-\\>',
     wk.show,
     mode = { "n", "i", "v" }, -- можно добавить c, o
@@ -32,7 +32,7 @@ wk.add({
   {
     "<c-w><leader>",
     function()
-      -- Кроме сочетания <c-w>w в приницпе ничего не нужно
+      -- Кроме сочетания <c-w>w в принципе ничего не нужно
       wk.show({ keys = "<c-w>", loop = true })
     end,
     desc = "Window Hydra Mode (which-key)",
@@ -72,7 +72,7 @@ wk.add({
   { "<S-Tab>",    vim.cmd.bprev,                 desc = "Next buffer" },
 
   -- Indentation
-  -- Конликтуют с >}
+  -- Конфликтуют с >}
   -- { ">",          ">>",                          desc = "Indent" },
   -- { "<",          "<<",                          desc = "Unindent" },
   { "<S-Tab>",    "<C-D>",                       desc = "Unindent line",         mode = "i" },
@@ -89,7 +89,7 @@ wk.add({
 
 
   { "<leader>-",  vim.cmd.split,                 desc = "Horizontal split" },
-  { "<leader>\\", vim.cmd.vsplit,                desc = "Vertical split" },
+  { "<leader>|",  vim.cmd.vsplit,                desc = "Vertical split" },
 
   { "<leader>v",  group = "Neovim Configuration" },
   { "<leader>ve", cmd [[edit $MYVIMRC]],         desc = "Edit Neo[v]im config" },
@@ -104,7 +104,7 @@ wk.add({
   { "<C-l>",      [[<C-\><C-n><C-w>l]],          desc = "Terminal: go right",    mode = "t" },
 
   -- Spellcheck
-  { "<leader>sp", cmd [[setlocal spell!]],       desc = "Toggle spellcheck" },
+  { "<leader>ss", cmd [[setlocal spell!]],       desc = "Toggle Spellcheck" },
 })
 
 -- NeoTree
