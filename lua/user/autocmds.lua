@@ -10,7 +10,7 @@ autocmd("BufReadPost", {
   pattern = "*",
   callback = function()
     if vim.fn.line("'\"") >= 1 and vim.fn.line("'\"") <= vim.fn.line("$") and not vim.bo.filetype:match("commit") then
-      vim.cmd([[normal! g`"]])
+      vim.cmd [[normal! g`"]]
     end
   end
 })
@@ -20,14 +20,14 @@ vim.cmd("autocmd TermOpen * startinsert")
 
 -- Меняем рабочий каталог при запуске nvim
 autocmd("VimEnter", {
-  group = vim.api.nvim_create_augroup("ChangeDirOnStartup", { clear = true }),
-  pattern = "*",
-  callback = function()
-    vim.api.nvim_set_current_dir(vim.fn.expand("%:p:h"))
+  callback = function(data)
+    if vim.fn.isdirectory(data.file) == 1 then
+      vim.api.nvim_set_current_dir(data.file)
+    end
   end,
 })
 
--- Автоматическое форматирование
+-- Автоматическое форматирование при сохранении
 autocmd("BufWritePre", {
   callback = function()
     vim.lsp.buf.format {
@@ -43,3 +43,7 @@ autocmd("BufWritePre", {
 --   end
 -- })
 --
+
+-- Автоматическое сохранение и восстановление сессии
+-- https://aymanbagabas.com/blog/2023/04/13/simple-vim-session-management.html
+-- Удалил код из примера, так как он конфликтует с neotree
