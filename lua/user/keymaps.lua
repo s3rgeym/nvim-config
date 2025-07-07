@@ -1,17 +1,8 @@
 -- Все сочетания лучше держать в одном месте
+local utils = require("user.utils")
+
 local function cmd(command)
   return "<Cmd>" .. command .. "<CR>"
-end
-
-local function reload()
-  for pkg, _ in pairs(package.loaded) do
-    -- user.plugins.* грузятся lazy.nvim динамически, поэтому их исключаем
-    if pkg:match("^user") and not pkg:match("^user[%./]plugins") then
-      package.loaded[pkg] = nil
-    end
-  end
-
-  dofile(vim.env.MYVIMRC)
 end
 
 local which_key_ok, wk = pcall(require, "which-key")
@@ -52,68 +43,68 @@ wk.add({
 wk.add({
   {
     mode = { "n", "v" },
-    { "<leader>q", cmd [[q]],     desc = "Close window" },
-    { "<leader>w", cmd [[write]], desc = "Write file" },
+    { "<leader>q", vim.cmd.quit,  desc = "Close window" },
+    { "<leader>w", vim.cmd.write, desc = "Write file" },
   },
 
-  { "<leader>x",  vim.cmd.bdelete,                    desc = "Close buffer" },
+  { "<leader>x",  vim.cmd.bdelete,               desc = "Close buffer" },
 
-  { "<C-a>",      "ggVG",                             desc = "Select entire buffer" },
-  { "<leader>h",  cmd [[nohlsearch]],                 desc = "Clear search highlight" },
+  { "<C-a>",      "ggVG",                        desc = "Select entire buffer" },
+  { "<leader>h",  vim.cmd.nohlsearch,            desc = "Clear search highlight" },
 
   -- Нужно придумать сочетание для этого
-  { "gV",         desc = "Reselect last change/paste" },
+  --{ "gV",         desc = "Reselect last change/paste" },
 
   -- Window Navigation
-  { "<C-h>",      cmd [[wincmd h]],                   desc = "Go to left window" },
-  { "<C-j>",      cmd [[wincmd j]],                   desc = "Go to window below" },
-  { "<C-k>",      cmd [[wincmd k]],                   desc = "Go to window above" },
-  { "<C-l>",      cmd [[wincmd l]],                   desc = "Go to right window" },
+  { "<C-h>",      cmd [[wincmd h]],              desc = "Go to left window" },
+  { "<C-j>",      cmd [[wincmd j]],              desc = "Go to window below" },
+  { "<C-k>",      cmd [[wincmd k]],              desc = "Go to window above" },
+  { "<C-l>",      cmd [[wincmd l]],              desc = "Go to right window" },
 
   -- Resize Windows
-  { "<A-Left>",   cmd [[vertical resize -2]],         desc = "Decrease width" },
-  { "<A-Right>",  cmd [[vertical resize +2]],         desc = "Increase width" },
-  { "<A-Down>",   cmd [[resize -2]],                  desc = "Decrease height" },
-  { "<A-Up>",     cmd [[resize +2]],                  desc = "Increase height" },
+  { "<A-Left>",   cmd [[vertical resize -2]],    desc = "Decrease width" },
+  { "<A-Right>",  cmd [[vertical resize +2]],    desc = "Increase width" },
+  { "<A-Down>",   cmd [[resize -2]],             desc = "Decrease height" },
+  { "<A-Up>",     cmd [[resize +2]],             desc = "Increase height" },
 
   -- Buffer Navigation
-  { "<Tab>",      cmd [[bp]],                         desc = "Previous buffer" },
-  { "<S-Tab>",    cmd [[bn]],                         desc = "Next buffer" },
+  { "<Tab>",      vim.cmd.bnext,                 desc = "Previous buffer" },
+  { "<S-Tab>",    vim.cmd.bprev,                 desc = "Next buffer" },
 
   -- Indentation
   -- Конликтуют с >}
   -- { ">",          ">>",                          desc = "Indent" },
   -- { "<",          "<<",                          desc = "Unindent" },
-  { "<S-Tab>",    "<C-D>",                            desc = "Unindent line",         mode = "i" },
-  { "<Tab>",      ">gv",                              desc = "Indent selection",      mode = "v" },
-  { "<S-Tab>",    "<gv",                              desc = "Unindent selection",    mode = "v" },
+  { "<S-Tab>",    "<C-D>",                       desc = "Unindent line",         mode = "i" },
+  { "<Tab>",      ">gv",                         desc = "Indent selection",      mode = "v" },
+  { "<S-Tab>",    "<gv",                         desc = "Unindent selection",    mode = "v" },
 
   -- Move Lines
-  { "<A-j>",      "<Esc>:m .+1<CR>==",                desc = "Move line down" },
-  { "<A-k>",      "<Esc>:m .-2<CR>==",                desc = "Move line up" },
-  { "<A-j>",      "<Esc>:m .+1<CR>==gi",              desc = "Move line down",        mode = "i" },
-  { "<A-k>",      "<Esc>:m .-2<CR>==gi",              desc = "Move line up",          mode = "i" },
-  { "<A-j>",      ":m '>+1<CR>gv=gv",                 desc = "Move selection down",   mode = "v" },
-  { "<A-k>",      ":m '<-2<CR>gv=gv",                 desc = "Move selection up",     mode = "v" },
+  { "<A-j>",      "<Esc>:m .+1<CR>==",           desc = "Move line down" },
+  { "<A-k>",      "<Esc>:m .-2<CR>==",           desc = "Move line up" },
+  { "<A-j>",      "<Esc>:m .+1<CR>==gi",         desc = "Move line down",        mode = "i" },
+  { "<A-k>",      "<Esc>:m .-2<CR>==gi",         desc = "Move line up",          mode = "i" },
+  { "<A-j>",      ":m '>+1<CR>gv=gv",            desc = "Move selection down",   mode = "v" },
+  { "<A-k>",      ":m '<-2<CR>gv=gv",            desc = "Move selection up",     mode = "v" },
 
 
-  { "<leader>-",  vim.cmd.split,                      desc = "Horizontal split" },
-  { "<leader>\\", vim.cmd.vsplit,                     desc = "Vertical split" },
+  { "<leader>-",  vim.cmd.split,                 desc = "Horizontal split" },
+  { "<leader>\\", vim.cmd.vsplit,                desc = "Vertical split" },
 
   { "<leader>v",  group = "Neovim Configuration" },
-  { "<leader>ve", cmd [[edit $MYVIMRC]],              desc = "Edit Neo[v]im config" },
-  { "<leader>vs", reload,                             desc = "Reload Neo[v]im config" },
+  { "<leader>ve", cmd [[edit $MYVIMRC]],         desc = "Edit Neo[v]im config" },
+  { "<leader>vs", utils.ReloadConfig,            desc = "Reload Neo[v]im config" },
 
   -- Terminal
-  { "<leader>t",  cmd [[split | terminal]],           desc = "Open terminal" },
-  { "<Esc>",      [[<C-\><C-n>]],                     desc = "Exit terminal mode",    mode = "t" },
-  { "<C-h>",      [[<C-\><C-n><C-w>h]],               desc = "Terminal: go left",     mode = "t" },
-  { "<C-j>",      [[<C-\><C-n><C-w>j]],               desc = "Terminal: go down",     mode = "t" },
-  { "<C-k>",      [[<C-\><C-n><C-w>k]],               desc = "Terminal: go up",       mode = "t" },
-  { "<C-l>",      [[<C-\><C-n><C-w>l]],               desc = "Terminal: go right",    mode = "t" },
+  { "<leader>t",  cmd [[split | terminal]],      desc = "Open terminal" },
+  { "<Esc>",      [[<C-\><C-n>]],                desc = "Exit terminal mode",    mode = "t" },
+  { "<C-h>",      [[<C-\><C-n><C-w>h]],          desc = "Terminal: go left",     mode = "t" },
+  { "<C-j>",      [[<C-\><C-n><C-w>j]],          desc = "Terminal: go down",     mode = "t" },
+  { "<C-k>",      [[<C-\><C-n><C-w>k]],          desc = "Terminal: go up",       mode = "t" },
+  { "<C-l>",      [[<C-\><C-n><C-w>l]],          desc = "Terminal: go right",    mode = "t" },
 
   -- Spellcheck
-  { "<leader>sp", cmd [[setlocal spell!]],            desc = "Toggle spellcheck" },
+  { "<leader>sp", cmd [[setlocal spell!]],       desc = "Toggle spellcheck" },
 })
 
 -- NeoTree
@@ -147,14 +138,14 @@ wk.add({
 
 -- Debugger
 wk.add({
-  { "<F5>",    cmd [[lua require'dap'.continue()]],          desc = "Start/Continue debug" },
-  { "<S-F5>",  cmd [[lua require'dap'.stop()]],              desc = "Stop debug" },
-  { "<C-F5>",  cmd [[lua require'dap'.restart()]],           desc = "Restart debug" },
-  { "<F9>",    cmd [[lua require'dap'.toggle_breakpoint()]], desc = "Toggle breakpoint" },
-  { "<F10>",   cmd [[lua require'dap'.step_over()]],         desc = "Step over" },
-  { "<F11>",   cmd [[lua require'dap'.step_into()]],         desc = "Step into" },
-  { "<S-F11>", cmd [[lua require'dap'.step_out()]],          desc = "Step out" },
-  { "<M-e>",   cmd [[lua require'dapui'.eval()]],            desc = "Evaluate expression", mode = { "n", "v" } },
+  { "<F5>",    function() require 'dap'.continue() end,          desc = "Start/Continue debug" },
+  { "<S-F5>",  function() require 'dap'.stop() end,              desc = "Stop debug" },
+  { "<C-F5>",  function() require 'dap'.restart() end,           desc = "Restart debug" },
+  { "<F9>",    function() require 'dap'.toggle_breakpoint() end, desc = "Toggle breakpoint" },
+  { "<F10>",   function() require 'dap'.step_over() end,         desc = "Step over" },
+  { "<F11>",   function() require 'dap'.step_into() end,         desc = "Step into" },
+  { "<S-F11>", function() require 'dap'.step_out() end,          desc = "Step out" },
+  { "<M-e>",   function() require 'dapui'.eval() end,            desc = "Evaluate expression", mode = { "n", "v" } },
 })
 
 -- Mason
