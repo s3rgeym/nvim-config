@@ -137,15 +137,14 @@ wk.add({
 })
 
 -- Debugger
+-- В alacritty/zellij Shift-F5 и тп не работают
 wk.add({
-  { "<F5>",    function() require 'dap'.continue() end,          desc = "Start/Continue debug" },
-  { "<S-F5>",  function() require 'dap'.stop() end,              desc = "Stop debug" },
-  { "<C-F5>",  function() require 'dap'.restart() end,           desc = "Restart debug" },
-  { "<F9>",    function() require 'dap'.toggle_breakpoint() end, desc = "Toggle breakpoint" },
-  { "<F10>",   function() require 'dap'.step_over() end,         desc = "Step over" },
-  { "<F11>",   function() require 'dap'.step_into() end,         desc = "Step into" },
-  { "<S-F11>", function() require 'dap'.step_out() end,          desc = "Step out" },
-  { "<M-e>",   function() require 'dapui'.eval() end,            desc = "Evaluate expression", mode = { "n", "v" } },
+  { "<F5>",  function() require 'dap'.continue() end,          desc = "Start/Continue debug" },
+  { "<F9>",  function() require 'dap'.toggle_breakpoint() end, desc = "Toggle breakpoint" },
+  { "<F10>", function() require 'dap'.step_over() end,         desc = "Step over" },
+  { "<F11>", function() require 'dap'.step_into() end,         desc = "Step into" },
+  { "<F12>", function() require 'dap'.step_out() end,          desc = "Step out" },
+  { "<M-e>", function() require 'dapui'.eval() end,            desc = "Evaluate expression", mode = { "n", "v" } },
 })
 
 -- Mason
