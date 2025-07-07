@@ -113,7 +113,7 @@ opt.mousemoveevent = true
 opt.whichwrap = 'h,l,<,>,[,]'
 -- Выделение текста стрелками с зажатым Shifts
 -- Со stopsel выделение блоков (Shit-V) стрелками не будет работать
-opt.keymodel = "startsel,"
+opt.keymodel = "startsel,stopsel"
 
 -- Поддержка русского языка ввода
 -- При переключении системной раскладки перестают работать привязки клавиш.
@@ -131,9 +131,14 @@ opt.wildignore:append { '*.o', '*.obj', '*.py[co]', '.git/*', '__pycache__/*', '
 opt.completeopt = "menuone,noselect,noinsert"
 opt.pumheight = 15 -- высота всплывающего меню с вариантами для дополнения
 
+-- Сессии
+-- opt.sessionoptions:remove("blank")
+-- А без этой перестает работать подсветка при восстановлении сессии
+opt.sessionoptions:append("localoptions")
+
 -- Таймауйты
-opt.timeoutlen = 1000 -- для ввода сочетания
-opt.updatetime = 250  -- всплывающие окна
+opt.timeoutlen = 500 -- для ввода сочетания
+opt.updatetime = 200 -- всплывающие окна
 
 -- spell
 opt.spell = false
@@ -149,9 +154,10 @@ end
 vim.diagnostic.config({
   signs = true,
   virtual_text = false,
-  -- severity_sort = true,
+  severity_sort = true,
   virtual_lines = {
     current_line = true,
+    ---@diagnostic disable-next-line: undefined-field
     severity = vim.diagnostic.severity.WARNING,
   },
   update_in_insert = false,

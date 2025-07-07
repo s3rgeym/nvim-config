@@ -7,24 +7,15 @@ return {
     "nvim-tree/nvim-web-devicons",
     "MunifTanjim/nui.nvim",
   },
+  -- https://github.com/nvim-neo-tree/neo-tree.nvim/blob/main/lua/neo-tree/defaults.lua
   opts = {
-    close_if_last_window = true,
-    filesystem = {
-      filtered_items = {
-        close_if_last_window = true,
-        hide_by_name = {
-          -- add extension names you want to explicitly exclude
-          -- '.git',
-          -- '.DS_Store',
-          -- 'thumbs.db',
-        },
-        hide_dotfiles = false,
-        hide_gitignored = true,
-        never_show = {},
-        show_hidden_count = true,
-        visible = true,
-      },
+    sources = {
+      "filesystem",
+      "buffers",
+      "git_status",
+      "document_symbols",
     },
+    -- Без автозакрытия в сессии [No Name] появляется
     event_handlers = {
       {
         event = "file_open_requested",
@@ -32,8 +23,13 @@ return {
           -- auto close
           -- vim.cmd("Neotree close")
           -- OR
-          -- require("neo-tree.command").execute({ action = "close" })
+          require("neo-tree.command").execute({ action = "close" })
         end
+      },
+    },
+    filesystem = {
+      filtered_items = {
+        visible = true,
       },
     },
   },

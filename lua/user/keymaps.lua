@@ -19,17 +19,25 @@ if not which_key_ok then
   return
 end
 
--- which-key
+-- which-key — это то ради чего стоит с vim перейти на neovim
 wk.add({
   {
-    '<leader>?',
+    "<leader>?",
     function()
-      wk.show({ global = true })
+      wk.show({ global = false })
     end,
+    desc = "Buffer Local Keymaps (which-key)",
+  },
+  -- Подсмотреть глобальные сочетание
+  {
+    -- Это сочетание бесполезно в i, а в остальных режимах не используется кроме t
+    '<C-\\>',
+    wk.show,
+    mode = { "n", "i", "v" }, -- можно добавить c, o
     desc = "Show global keymaps"
   },
-  -- Это один из самых полезных режимов, который, например позволяет менять
-  -- размер окон, перемещать их
+  -- Это один из самых полезных режимов, который позволяет удобно выполнять
+  -- разные действия над окнами без лишний нажатий клавиш
   {
     "<c-w><leader>",
     function()
@@ -48,58 +56,64 @@ wk.add({
     { "<leader>w", cmd [[write]], desc = "Write file" },
   },
 
-  { "<C-a>",      "ggVG",                        desc = "Select entire buffer" },
-  { "<Esc>",      cmd [[nohlsearch]],            desc = "Clear search highlight" },
+  { "<leader>x",  vim.cmd.bdelete,                    desc = "Close buffer" },
+
+  { "<C-a>",      "ggVG",                             desc = "Select entire buffer" },
+  { "<leader>h",  cmd [[nohlsearch]],                 desc = "Clear search highlight" },
+
+  -- Нужно придумать сочетание для этого
+  { "gV",         desc = "Reselect last change/paste" },
 
   -- Window Navigation
-  { "<A-Left>",   cmd [[wincmd h]],              desc = "Go to left window" },
-  { "<A-Down>",   cmd [[wincmd j]],              desc = "Go to window below" },
-  { "<A-Up>",     cmd [[wincmd k]],              desc = "Go to window above" },
-  { "<A-Right>",  cmd [[wincmd l]],              desc = "Go to right window" },
+  { "<C-h>",      cmd [[wincmd h]],                   desc = "Go to left window" },
+  { "<C-j>",      cmd [[wincmd j]],                   desc = "Go to window below" },
+  { "<C-k>",      cmd [[wincmd k]],                   desc = "Go to window above" },
+  { "<C-l>",      cmd [[wincmd l]],                   desc = "Go to right window" },
 
-  -- Удобнее использовать hydra mode, а эти сочетания использовать в навигации
   -- Resize Windows
-  -- { "<A-Left>",   cmd [[vertical resize -2]],    desc = "Decrease width" },
-  -- { "<A-Right>",  cmd [[vertical resize +2]],    desc = "Increase width" },
-  -- { "<A-Down>",   cmd [[resize -2]],             desc = "Decrease height" },
-  -- { "<A-Up>",     cmd [[resize +2]],             desc = "Increase height" },
+  { "<A-Left>",   cmd [[vertical resize -2]],         desc = "Decrease width" },
+  { "<A-Right>",  cmd [[vertical resize +2]],         desc = "Increase width" },
+  { "<A-Down>",   cmd [[resize -2]],                  desc = "Decrease height" },
+  { "<A-Up>",     cmd [[resize +2]],                  desc = "Increase height" },
 
   -- Buffer Navigation
-  { "<Tab>",      cmd [[bp]],                    desc = "Previous buffer" },
-  { "<S-Tab>",    cmd [[bn]],                    desc = "Next buffer" },
+  { "<Tab>",      cmd [[bp]],                         desc = "Previous buffer" },
+  { "<S-Tab>",    cmd [[bn]],                         desc = "Next buffer" },
 
   -- Indentation
-  { "<S-Tab>",    "<C-D>",                       desc = "Unindent line",         mode = "i" },
-  { "<Tab>",      ">gv",                         desc = "Indent selection",      mode = "v" },
-  { "<S-Tab>",    "<gv",                         desc = "Unindent selection",    mode = "v" },
+  -- Конликтуют с >}
+  -- { ">",          ">>",                          desc = "Indent" },
+  -- { "<",          "<<",                          desc = "Unindent" },
+  { "<S-Tab>",    "<C-D>",                            desc = "Unindent line",         mode = "i" },
+  { "<Tab>",      ">gv",                              desc = "Indent selection",      mode = "v" },
+  { "<S-Tab>",    "<gv",                              desc = "Unindent selection",    mode = "v" },
 
   -- Move Lines
-  { "<A-j>",      "<Esc>:m .+1<CR>==",           desc = "Move line down" },
-  { "<A-k>",      "<Esc>:m .-2<CR>==",           desc = "Move line up" },
-  { "<A-j>",      "<Esc>:m .+1<CR>==gi",         desc = "Move line down",        mode = "i" },
-  { "<A-k>",      "<Esc>:m .-2<CR>==gi",         desc = "Move line up",          mode = "i" },
-  { "<A-j>",      ":m '>+1<CR>gv=gv",            desc = "Move selection down",   mode = "v" },
-  { "<A-k>",      ":m '<-2<CR>gv=gv",            desc = "Move selection up",     mode = "v" },
+  { "<A-j>",      "<Esc>:m .+1<CR>==",                desc = "Move line down" },
+  { "<A-k>",      "<Esc>:m .-2<CR>==",                desc = "Move line up" },
+  { "<A-j>",      "<Esc>:m .+1<CR>==gi",              desc = "Move line down",        mode = "i" },
+  { "<A-k>",      "<Esc>:m .-2<CR>==gi",              desc = "Move line up",          mode = "i" },
+  { "<A-j>",      ":m '>+1<CR>gv=gv",                 desc = "Move selection down",   mode = "v" },
+  { "<A-k>",      ":m '<-2<CR>gv=gv",                 desc = "Move selection up",     mode = "v" },
 
 
-  { "<leader>s",  group = "Split windows" },
-  { "<leader>sh", cmd [[split]],                 desc = "Horizontal split" },
-  { "<leader>sv", cmd [[vsplit]],                desc = "Vertical split" },
+  { "<leader>-",  vim.cmd.split,                      desc = "Horizontal split" },
+  { "<leader>\\", vim.cmd.vsplit,                     desc = "Vertical split" },
 
   { "<leader>v",  group = "Neovim Configuration" },
-  { "<leader>ve", cmd [[edit $MYVIMRC]],         desc = "Edit Neo[v]im config" },
-  { "<leader>vs", reload,                        desc = "Reload Neo[v]im config" },
+  { "<leader>ve", cmd [[edit $MYVIMRC]],              desc = "Edit Neo[v]im config" },
+  { "<leader>vs", reload,                             desc = "Reload Neo[v]im config" },
 
   -- Terminal
-  { "<leader>t",  cmd [[split | terminal]],      desc = "Open terminal" },
-  { "<Esc>",      [[<C-\><C-n>]],                desc = "Exit terminal mode",    mode = "t" },
-  { "<C-h>",      [[<C-\><C-n><C-w>h]],          desc = "Terminal: go left",     mode = "t" },
-  { "<C-j>",      [[<C-\><C-n><C-w>j]],          desc = "Terminal: go down",     mode = "t" },
-  { "<C-k>",      [[<C-\><C-n><C-w>k]],          desc = "Terminal: go up",       mode = "t" },
-  { "<C-l>",      [[<C-\><C-n><C-w>l]],          desc = "Terminal: go right",    mode = "t" },
+  { "<leader>t",  cmd [[split | terminal]],           desc = "Open terminal" },
+  { "<Esc>",      [[<C-\><C-n>]],                     desc = "Exit terminal mode",    mode = "t" },
+  { "<C-h>",      [[<C-\><C-n><C-w>h]],               desc = "Terminal: go left",     mode = "t" },
+  { "<C-j>",      [[<C-\><C-n><C-w>j]],               desc = "Terminal: go down",     mode = "t" },
+  { "<C-k>",      [[<C-\><C-n><C-w>k]],               desc = "Terminal: go up",       mode = "t" },
+  { "<C-l>",      [[<C-\><C-n><C-w>l]],               desc = "Terminal: go right",    mode = "t" },
 
   -- Spellcheck
-  { "<leader>sp", cmd [[setlocal spell!]],       desc = "Toggle spellcheck" },
+  { "<leader>sp", cmd [[setlocal spell!]],            desc = "Toggle spellcheck" },
 })
 
 -- NeoTree
