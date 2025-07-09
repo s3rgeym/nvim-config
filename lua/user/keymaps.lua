@@ -50,10 +50,16 @@ wk.add({
   { "<leader>x",  vim.cmd.bdelete,               desc = "Close buffer" },
 
   { "<C-a>",      "ggVG",                        desc = "Select entire buffer" },
-  { "<leader>h",  vim.cmd.nohlsearch,            desc = "Clear search highlight" },
+  { "<Esc><Esc>", vim.cmd.nohlsearch,            desc = "Clear search highlight" },
 
   -- Нужно придумать сочетание для этого
   --{ "gV",         desc = "Reselect last change/paste" },
+
+  -- Перемещение по перенесенным строкам как по физическим
+  { "k",          "gk",                          silent = true },
+  { "j",          "gj",                          silent = true },
+  { "<Up>",       "gk",                          silent = true },
+  { "<Down>",     "gj",                          silent = true },
 
   -- Window Navigation
   { "<C-h>",      cmd [[wincmd h]],              desc = "Go to left window" },
