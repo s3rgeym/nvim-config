@@ -23,8 +23,7 @@ wk.add({
   {
     '<leader>k',
     function()
-      local mode = vim.fn.input("Enter mode: ")
-      wk.show({ mode = mode })
+      wk.show({ mode = vim.fn.input("Enter mode: ") })
     end,
     desc = "Show All Keymaps (which-key)"
   },
