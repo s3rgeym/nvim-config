@@ -17,7 +17,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Клавишу leader надо объявить до загрузки плагинов lazy
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = vim.g.mapleader
 
 if vim.fn.has('termguicolors') == 1 then
   -- Некоторые плагины могут неправильно работать, если не установить это значение
