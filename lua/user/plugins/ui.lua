@@ -24,6 +24,10 @@ return {
     config = function()
       require('lualine').setup({
         sections = {
+          lualine_c = {
+            'filename',
+            'lsp_status',
+          },
           lualine_x = {
             -- Добавим отображение раскладки
             {

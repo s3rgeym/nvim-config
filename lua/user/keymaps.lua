@@ -79,7 +79,7 @@ wk.add({
 
   -- Indentation
   -- Конфликтуют с >}
-  -- { ">",          ">>",                          desc = "Indent" },
+  -- { ">",         ">>",                          desc = "Indent" },
   -- { "<",          "<<",                          desc = "Unindent" },
   { "<S-Tab>",    "<C-D>",                       desc = "Unindent line",         mode = "i" },
   { "<Tab>",      ">gv",                         desc = "Indent selection",      mode = "v" },
@@ -143,14 +143,15 @@ wk.add({
 })
 
 -- Debugger
--- В alacritty/zellij Shift-F5 и тп не работают
 wk.add({
-  { "<F5>",  function() require 'dap'.continue() end,          desc = "Start/Continue debug" },
-  { "<F9>",  function() require 'dap'.toggle_breakpoint() end, desc = "Toggle breakpoint" },
-  { "<F10>", function() require 'dap'.step_over() end,         desc = "Step over" },
-  { "<F11>", function() require 'dap'.step_into() end,         desc = "Step into" },
-  { "<F12>", function() require 'dap'.step_out() end,          desc = "Step out" },
-  { "<M-e>", function() require 'dapui'.eval() end,            desc = "Evaluate expression", mode = { "n", "v" } },
+  { "<F5>",  function() require 'dap'.continue() end,          desc = "Debug: Start/Continue" },
+  -- Shift-F5 не работает у меня в alacritty/zellij
+  { "<F6>",  function() require 'dap'.terminate() end,         desc = "Debug: Terminate" },
+  { "<F9>",  function() require 'dap'.toggle_breakpoint() end, desc = "Debug: Toggle breakpoint" },
+  { "<F10>", function() require 'dap'.step_over() end,         desc = "Debug: Step over" },
+  { "<F11>", function() require 'dap'.step_into() end,         desc = "Debug: Step into" },
+  { "<F12>", function() require 'dap'.step_out() end,          desc = "Debug: Step out" },
+  { "<M-e>", function() require 'dapui'.eval() end,            desc = "Debug: Evaluate expression", mode = { "n", "v" } },
 })
 
 -- Mason
