@@ -115,7 +115,8 @@ wk.add({
 
 -- NeoTree
 wk.add({
-  { "<C-p>", cmd [[Neotree toggle]], desc = "Toggle NeoTree" },
+  -- { "<C-p>", cmd [[Neotree toggle]], desc = "Toggle NeoTree" },
+  { "<leader>e", cmd [[Neotree toggle]], desc = "Explorer NeoTree" },
 })
 
 -- LSP
