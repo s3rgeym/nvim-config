@@ -21,11 +21,10 @@ wk.add({
   },
   -- Подсмотреть глобальные сочетание
   {
-    -- Это сочетание бесполезно в i, а в остальных режимах кроме t не используется
     '<C-\\>',
     wk.show,
     mode = { "n", "i", "v" }, -- можно добавить c, o
-    desc = "Show global keymaps"
+    desc = "Show all keymaps"
   },
   -- Это один из самых полезных режимов, который позволяет удобно выполнять
   -- разные действия над окнами без лишний нажатий клавиш
@@ -115,7 +114,7 @@ wk.add({
 
 -- NeoTree
 wk.add({
-  { "<leader>e", cmd [[Neotree toggle]], desc = "Exporer NeoTree" },
+  { "<C-p>", cmd [[Neotree toggle]], desc = "Toggle NeoTree" },
 })
 
 -- LSP
