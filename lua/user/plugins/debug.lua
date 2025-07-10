@@ -6,14 +6,12 @@ return {
     dependencies = {
       "rcarriga/nvim-dap-ui",
       "nvim-neotest/nvim-nio",
-      "theHamsta/nvim-dap-virtual-text",
       "williamboman/mason.nvim",
       "jay-babu/mason-nvim-dap.nvim",
     },
     config = function()
       local dap, dapui = require("dap"), require("dapui")
 
-      require("nvim-dap-virtual-text").setup()
       dapui.setup()
 
       -- require("mason").setup()
@@ -23,7 +21,19 @@ return {
         ensure_installed = {
           "python",
         },
-        handlers = {},
+        handlers = {
+          -- python = function(config)
+          --   config.adapters = {
+          --     type = "executable",
+          --     command = "/bin/python",
+          --     args = {
+          --       "-m",
+          --       "debugpy.adapter",
+          --     },
+          --   }
+          --   require('mason-nvim-dap').default_setup(config)
+          -- end,
+        },
       })
 
       -- Поддержка launch.json
@@ -43,16 +53,9 @@ return {
       end
     end,
   },
-  -- Автоматическая настройка отладчика для python
-  -- sudo pacman -S python-debugpy
-  -- {
-  --   "mfussenegger/nvim-dap-python",
-  --   dependencies = { "mfussenegger/nvim-dap" },
-  --   ft = "python", -- Вызываем только для файлов в формате python
-  --   config = function()
-  --     -- Из-за некродистров с их python3 вместо просто python нужно явно
-  --     -- указывать executable (с виртуальными окружениями должно работать)
-  --     require('dap-python').setup("python")
-  --   end
-  -- },
+  -- Это неправильно?
+  {
+    "theHamsta/nvim-dap-virtual-text",
+    opts = {},
+  },
 }
