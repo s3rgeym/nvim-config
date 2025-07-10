@@ -1,6 +1,8 @@
+local g = vim.g
+
 -- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
 
 -- Установка lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -16,8 +18,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Клавишу leader надо объявить до загрузки плагинов lazy
-vim.g.mapleader = ' '
-vim.g.maplocalleader = vim.g.mapleader
+g.mapleader = ' '
+g.maplocalleader = g.mapleader
 
 if vim.fn.has('termguicolors') == 1 then
   -- Некоторые плагины могут неправильно работать, если не установить это значение
