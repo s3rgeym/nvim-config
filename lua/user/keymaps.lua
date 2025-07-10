@@ -13,7 +13,7 @@ end
 -- which-key — это то ради чего стоит с vim перейти на neovim
 wk.add({
   {
-    "<leader>k",
+    "<leader>?",
     function()
       wk.show({ global = false })
     end,
@@ -21,7 +21,7 @@ wk.add({
   },
   -- Подсмотреть глобальные сочетание
   {
-    '<leader>K',
+    '<leader>k',
     function()
       local mode = vim.fn.input("Enter mode: ")
       wk.show({ mode = mode })
