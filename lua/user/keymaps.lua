@@ -13,7 +13,7 @@ end
 -- which-key — это то ради чего стоит с vim перейти на neovim
 wk.add({
   {
-    "<leader>?",
+    "<leader>k",
     function()
       wk.show({ global = false })
     end,
@@ -21,10 +21,12 @@ wk.add({
   },
   -- Подсмотреть глобальные сочетание
   {
-    '<C-\\>',
-    wk.show,
-    mode = { "n", "i", "v" }, -- можно добавить c, o
-    desc = "Show all keymaps"
+    '<leader>K',
+    function()
+      local mode = vim.fn.input("Enter mode: ")
+      wk.show({ mode = mode })
+    end,
+    desc = "Show All Keymaps (which-key)"
   },
   -- Это один из самых полезных режимов, который позволяет удобно выполнять
   -- разные действия над окнами без лишний нажатий клавиш
@@ -67,10 +69,10 @@ wk.add({
   { "<C-l>",      cmd [[wincmd l]],              desc = "Go to right window" },
 
   -- Resize Windows
-  { "<A-Left>",   cmd [[vertical resize -2]],    desc = "Decrease width" },
-  { "<A-Right>",  cmd [[vertical resize +2]],    desc = "Increase width" },
-  { "<A-Down>",   cmd [[resize -2]],             desc = "Decrease height" },
-  { "<A-Up>",     cmd [[resize +2]],             desc = "Increase height" },
+  { "<C-Left>",   cmd [[vertical resize -2]],    desc = "Decrease width" },
+  { "<C-Right>",  cmd [[vertical resize +2]],    desc = "Increase width" },
+  { "<C-Down>",   cmd [[resize -2]],             desc = "Decrease height" },
+  { "<C-Up>",     cmd [[resize +2]],             desc = "Increase height" },
 
   -- Buffer Navigation
   { "<Tab>",      vim.cmd.bnext,                 desc = "Previous buffer" },
@@ -85,12 +87,12 @@ wk.add({
   { "<S-Tab>",    "<gv",                         desc = "Unindent selection",    mode = "v" },
 
   -- Move Lines
-  { "<A-j>",      "<Esc>:m .+1<CR>==",           desc = "Move line down" },
-  { "<A-k>",      "<Esc>:m .-2<CR>==",           desc = "Move line up" },
-  { "<A-j>",      "<Esc>:m .+1<CR>==gi",         desc = "Move line down",        mode = "i" },
-  { "<A-k>",      "<Esc>:m .-2<CR>==gi",         desc = "Move line up",          mode = "i" },
-  { "<A-j>",      ":m '>+1<CR>gv=gv",            desc = "Move selection down",   mode = "v" },
-  { "<A-k>",      ":m '<-2<CR>gv=gv",            desc = "Move selection up",     mode = "v" },
+  { "<M-j>",      "<Esc>:m .+1<CR>==",           desc = "Move line down" },
+  { "<M-k>",      "<Esc>:m .-2<CR>==",           desc = "Move line up" },
+  { "<M-j>",      "<Esc>:m .+1<CR>==gi",         desc = "Move line down",        mode = "i" },
+  { "<M-k>",      "<Esc>:m .-2<CR>==gi",         desc = "Move line up",          mode = "i" },
+  { "<M-j>",      ":m '>+1<CR>gv=gv",            desc = "Move selection down",   mode = "v" },
+  { "<M-k>",      ":m '<-2<CR>gv=gv",            desc = "Move selection up",     mode = "v" },
 
 
   { "<leader>-",  vim.cmd.split,                 desc = "Horizontal split" },

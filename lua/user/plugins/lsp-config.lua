@@ -34,6 +34,19 @@ return {
     "williamboman/mason-lspconfig.nvim",
   },
   config = function()
+    -- Настройки диагностики
+    vim.diagnostic.config({
+      signs = true,
+      virtual_text = false,
+      severity_sort = true,
+      virtual_lines = {
+        current_line = true,
+        ---@diagnostic disable-next-line: undefined-field
+        severity = vim.diagnostic.severity.WARNING,
+      },
+      update_in_insert = false,
+    })
+
     local capabilities = require('blink.cmp').get_lsp_capabilities()
 
     -- Автоматическая установка и настройка языковых серверов
