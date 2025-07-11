@@ -24,15 +24,13 @@ return {
         handlers = {
           python = function(config)
             -- Mason всегда прописывает себя первым в PATH, поэтому в виртуальном окружении не видит модули
-            -- Используем debugpy из виртуального окружения, если то активировано
-            if vim.env.VIRTUAL_ENV then
+            -- Использовать debugpy из активного виртуального окружения, если доступно
+            local venv_python = vim.env.VIRTUAL_ENV and (vim.env.VIRTUAL_ENV .. "/bin/python")
+            if venv_python then
               config.adapters = {
                 type = "executable",
-                command = vim.env.VIRTUAL_ENV .. '/bin/python',
-                args = {
-                  "-m",
-                  "debugpy.adapter",
-                },
+                command = venv_python,
+                args = { "-m", "debugpy.adapter" },
               }
             end
             require('mason-nvim-dap').default_setup(config)
