@@ -139,9 +139,10 @@ wk.add({
   { "<leader>d",  vim.diagnostic.open_float,  desc = "Diagnostics float" },
   { "[d",         function() jump(-1) end,    desc = "Previous diagnostic" },
   { "]d",         function() jump(1) end,     desc = "Next diagnostic" },
-  -- { "<leader>ls",  vim.lsp.buf.document_symbol,  desc = "Document symbols" },
-  -- { "<leader>lS",  vim.lsp.buf.workspace_symbol, desc = "Workspace symbols" },
-  { "<leader>lr", cmd [[LspRestart]],         desc = "Restart LSP" },
+  -- { "<leader>lds",  vim.lsp.buf.document_symbol,  desc = "Document symbols" },
+  -- { "<leader>lws",  vim.lsp.buf.workspace_symbol, desc = "Workspace symbols" },
+  -- { "<leader>lr", cmd [[LspRestart]],         desc = "Restart LSP" },
+  -- { "<leader>li", cmd [[LspInfo]],         desc = "LSP Info" },
 })
 
 -- Debugger
@@ -176,20 +177,20 @@ wk.add({
 
 -- FzfLua
 wk.add({
-  { "<leader>/",  cmd [[FzfLua grep_curbuf]],           desc = "Grep current buffer" },
-  { "<leader>b",  cmd [[FzfLua buffers]],               desc = "Buffers" },
-  { "<leader>f",  cmd [[FzfLua live_grep]],             desc = "Live grep" },
-  { "<leader>F",  cmd [[FzfLua files]],                 desc = "Find file" },
-  { "<leader>o",  cmd [[FzfLua oldfiles]],              desc = "Recent files" },
-  { "<leader>r",  cmd [[FzfLua resume]],                desc = "Resume search" },
+  { "<leader>/",   cmd [[FzfLua grep_curbuf]],           desc = "Grep current buffer" },
+  { "<leader>b",   cmd [[FzfLua buffers]],               desc = "Buffers" },
+  { "<leader>f",   cmd [[FzfLua live_grep]],             desc = "Live grep" },
+  { "<leader>F",   cmd [[FzfLua files]],                 desc = "Find file" },
+  { "<leader>o",   cmd [[FzfLua oldfiles]],              desc = "Recent files" },
+  { "<leader>r",   cmd [[FzfLua resume]],                desc = "Resume search" },
   -- LSP
-  { "gd",         cmd [[FzfLua lsp_definitions]],       desc = "LSP Definitions (Fzf)" },
-  { "gD",         cmd [[FzfLua lsp_declarations]],      desc = "LSP Declarations (Fzf)" },
-  { "gi",         cmd [[FzfLua lsp_implementations]],   desc = "LSP Implementations (Fzf)" },
-  { "gr",         cmd [[FzfLua lsp_references]],        desc = "LSP References (Fzf)" },
-  { "gy",         cmd [[FzfLua lsp_type_definitions]],  desc = "LSP Type Definitions (Fzf)" },
-  { "<leader>ls", cmd [[FzfLua lsp_document_symbols]],  desc = "LSP Document Symbols (Fzf)" },
-  { "<leader>lS", cmd [[FzfLua lsp_workspace_symbols]], desc = "LSP Workspace Symbols (Fzf)" },
+  { "gd",          cmd [[FzfLua lsp_definitions]],       desc = "LSP Definitions (Fzf)" },
+  { "gD",          cmd [[FzfLua lsp_declarations]],      desc = "LSP Declarations (Fzf)" },
+  { "gi",          cmd [[FzfLua lsp_implementations]],   desc = "LSP Implementations (Fzf)" },
+  { "gr",          cmd [[FzfLua lsp_references]],        desc = "LSP References (Fzf)" },
+  { "gy",          cmd [[FzfLua lsp_type_definitions]],  desc = "LSP Type Definitions (Fzf)" },
+  { "<leader>lds", cmd [[FzfLua lsp_document_symbols]],  desc = "LSP Document Symbols (Fzf)" },
+  { "<leader>lws", cmd [[FzfLua lsp_workspace_symbols]], desc = "LSP Workspace Symbols (Fzf)" },
 })
 
 -- grug-far
