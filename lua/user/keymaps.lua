@@ -141,6 +141,7 @@ wk.add({
   { "]d",         function() jump(1) end,     desc = "Next diagnostic" },
   -- { "<leader>lds",  vim.lsp.buf.document_symbol,  desc = "Document symbols" },
   -- { "<leader>lws",  vim.lsp.buf.workspace_symbol, desc = "Workspace symbols" },
+  -- Команды nvim-lspconfig
   -- { "<leader>lr", cmd [[LspRestart]],         desc = "Restart LSP" },
   -- { "<leader>li", cmd [[LspInfo]],         desc = "LSP Info" },
 })
