@@ -141,6 +141,7 @@ wk.add({
   { "]d",         function() jump(1) end,     desc = "Next diagnostic" },
   -- { "<leader>ls",  vim.lsp.buf.document_symbol,  desc = "Document symbols" },
   -- { "<leader>lS",  vim.lsp.buf.workspace_symbol, desc = "Workspace symbols" },
+  { "<leader>lr", cmd [[LspRestart]],         desc = "Restart LSP" },
 })
 
 -- Debugger
