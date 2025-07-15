@@ -77,10 +77,16 @@ wk.add({
   { "<Tab>",      vim.cmd.bnext,                 desc = "Previous buffer" },
   { "<S-Tab>",    vim.cmd.bprev,                 desc = "Next buffer" },
 
+  { "<S-l>",      vim.cmd.bnext,                 desc = "Previous buffer" },
+  { "<S-h>",      vim.cmd.bprev,                 desc = "Next buffer" },
+
+  { "]b",         vim.cmd.bnext,                 desc = "Previous buffer" },
+  { "[b",         vim.cmd.bprev,                 desc = "Next buffer" },
+
   -- Indentation
   -- Конфликтуют с >}
-  -- { ">",         ">>",                          desc = "Indent" },
-  -- { "<",          "<<",                          desc = "Unindent" },
+  { ">",          ">>",                          desc = "Indent" },
+  { "<",          "<<",                          desc = "Unindent" },
   { "<S-Tab>",    "<C-D>",                       desc = "Unindent line",         mode = "i" },
   { "<Tab>",      ">gv",                         desc = "Indent selection",      mode = "v" },
   { "<S-Tab>",    "<gv",                         desc = "Unindent selection",    mode = "v" },
