@@ -27,7 +27,6 @@
 Как использовать:
 
 ```sh
-cd ~/.config
 mv ~/.config/nvim{,.old}
-git clone https://github.com/s3rgeym/nvim-config nvim
+git clone https://github.com/s3rgeym/nvim-config ~/.config/nvim
 ```
