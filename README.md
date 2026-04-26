@@ -32,6 +32,6 @@ mv ~/.config/nvim{,.old}
 git clone https://github.com/s3rgeym/nvim-config ~/.config/nvim
 
 # Либо использование этого через NVIM_APPNAME
-git clone https://github.com/s3rgeym/nvim-config ~/.config/sergeym-nvim
-NVIM_APPNAME=sergeym-nvim nvim
+git clone https://github.com/s3rgeym/nvim-config ~/.config/s3rgeym-nvim
+NVIM_APPNAME=s3rgeym-nvim nvim
 ```
