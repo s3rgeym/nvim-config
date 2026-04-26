@@ -87,17 +87,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local bufnr = args.buf
 
     local function keymap(lhs, rhs, opts, mode)
-      local options = { buffer = bufnr }
-      if type(opts) == 'string' then
-        options.desc = opts
-      else
-        options = vim.tbl_extend('force', options, opts)
-      end
-      vim.keymap.set(mode or 'n', lhs, rhs, options)
+      opts = type(opts) == 'string' and { desc = opts } or opts or {}
+      opts = vim.tbl_extend('force', opts, { buffer = bufnr })
+      vim.keymap.set(mode or 'n', lhs, rhs, opts)
     end
 
     -- https://gist.github.com/MariaSolOs/2e44a86f569323c478e5a078d0cf98cc
     if client:supports_method('textDocument/completion') then
+      -- По умолчанию автодополнение вызывается при вводе ".", но это не очень
+      -- удобно, привычнее когда варианты автоподстановке показываются при вводе
+      -- любого символа (тут только печатные ASCII).
       local chars = {}
       for i = 32, 126 do
         table.insert(chars, string.char(i))
@@ -154,7 +153,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Подсветка упоминаний символа под курсором
     if client:supports_method('textDocument/documentHighlight') then
-      local group = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
+      local group =
+        vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
       vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
         group = group,
