@@ -33,6 +33,7 @@ require('mason-lspconfig').setup({
 })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- blink.cmp больше не нужен!
 -- local ok_blink, blink = pcall(require, 'blink.cmp')
 -- if ok_blink then
 --   capabilities =
@@ -153,16 +154,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Подсветка упоминаний символа под курсором
     if client:supports_method('textDocument/documentHighlight') then
-      local highlight_group =
-        vim.api.nvim_create_augroup('lsp_document_highlight', { clear = false })
-      vim.api.nvim_clear_autocmds({ group = highlight_group, buffer = bufnr })
+      local group = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
+      vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-        group = highlight_group,
+        group = group,
         buffer = bufnr,
         callback = vim.lsp.buf.document_highlight,
       })
       vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-        group = highlight_group,
+        group = group,
         buffer = bufnr,
         callback = vim.lsp.buf.clear_references,
       })
