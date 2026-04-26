@@ -65,6 +65,7 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- Обновление языковых парсеров после обновления Treesitter (могут сломаться без этого)
 vim.api.nvim_create_autocmd('PackChanged', {
   callback = function(ev)
     if ev.data.spec.name == 'nvim-treesitter' then
@@ -74,7 +75,7 @@ vim.api.nvim_create_autocmd('PackChanged', {
 })
 
 require('treesitter-context').setup({
-  max_lines = 3, -- How many lines the window should span. Values <= 0 mean no limit.
+  max_lines = 5, -- How many lines the window should span. Values <= 0 mean no limit.
   mode = 'cursor', -- Line used to calculate context. Choices: 'cursor', 'topline'
 })
 
