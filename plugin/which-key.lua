@@ -11,6 +11,6 @@ wk.setup({
   -- },
 })
 
-require('utils').map('<leader>?', function()
+vim.keymap.set('n', '<leader>?', function()
   wk.show({ global = false })
-end, 'Buffer Local Keymaps (which-key)')
+end, { desc = 'Buffer Local Keymaps (which-key)' })

@@ -2,10 +2,7 @@ vim.pack.add(
   { 'https://github.com/MagicDuck/grug-far.nvim' },
   { confirm = false }
 )
-local map = require('utils').map
-local grug = require('grug-far')
-grug.setup()
-map('<leader>sr', function()
+vim.keymap.set('n', '<leader>sr', function()
   local ext = vim.bo.buftype == '' and vim.fn.expand('%:e')
   grug.open({
     transient = true,
@@ -13,4 +10,4 @@ map('<leader>sr', function()
       filesFilter = ext and '*.' .. ext or nil,
     },
   })
-end, 'Search and Replace')
+end, { desc = 'Search and Replace' })

@@ -37,6 +37,6 @@ conform.setup({
   },
 })
 
-require('utils').map('<leader>cf', function()
+vim.keymap.set('n', '<leader>cf', function()
   conform.format({ lsp_format = 'fallback' })
-end, 'Code Format')
+end, { desc = 'Code Format' })

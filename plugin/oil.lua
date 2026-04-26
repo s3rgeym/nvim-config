@@ -22,5 +22,4 @@ require('oil').setup({
 require('oil-git').setup()
 require('oil-lsp-diagnostics').setup()
 
-local map = require('utils').map
-map('-', '<cmd>Oil<cr>', 'Open parent in Oil')
+vim.keymap.set('n', '-', '<cmd>Oil<cr>', { desc = 'Open parent in Oil' })

@@ -10,48 +10,119 @@ local fzf = require('fzf-lua')
 
 fzf.setup({
   fzf_colors = true,
-  winopts = {
-    border = 'rounded',
-  },
-  preview = {
-    border = 'single',
-  },
+  -- winopts = {
+  --   border = 'rounded',
+  -- },
+  -- preview = {
+  --   border = 'single',
+  -- },
 })
 
 fzf.register_ui_select()
 
-local map = require('utils').map
+vim.keymap.set('n', '<C-g>', '<cmd>FzfLua grep<cr>', { desc = 'Grep' })
+vim.keymap.set('n', '<C-\\>', '<cmd>FzfLua buffers<cr>', { desc = 'Buffers' })
+vim.keymap.set('n', '<C-p>', '<cmd>FzfLua files<cr>', { desc = 'Files' })
 
-map('<C-g>', '<cmd>FzfLua grep<cr>', 'Grep')
-map('<C-\\>', '<cmd>FzfLua buffers<cr>', 'Buffers')
-map('<C-p>', '<cmd>FzfLua files<cr>', 'Files')
-map('<leader>fo', '<cmd>FzfLua oldfiles<cr>', 'Old Files')
-map('<leader>ft', '<cmd>FzfLua colorschemes<cr>', 'Switch Theme')
-map('<leader>fc', '<cmd>FzfLua builtin<cr>', 'FZF Command Palette')
+vim.keymap.set(
+  'n',
+  '<leader>fo',
+  '<cmd>FzfLua oldfiles<cr>',
+  { desc = 'Old Files' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>ft',
+  '<cmd>FzfLua colorschemes<cr>',
+  { desc = 'Switch Theme' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>fc',
+  '<cmd>FzfLua builtin<cr>',
+  { desc = 'FZF Command Palette' }
+)
 
 -- LSP
 -- Переопределение встроенных сочетаний в Neovim 0.10+
-map('gra', '<cmd>FzfLua lsp_code_actions<cr>', 'Code Action', { 'n', 'v' })
-map('grr', '<cmd>FzfLua lsp_references<cr>', 'References')
-map('gri', '<cmd>FzfLua lsp_implementations<cr>', 'Implementations')
-map('grt', '<cmd>FzfLua lsp_typedefs<cr>', 'Type Definition')
+vim.keymap.set(
+  { 'n', 'v' },
+  'gra',
+  '<cmd>FzfLua lsp_code_actions<cr>',
+  { desc = 'Code Action' }
+)
+vim.keymap.set(
+  'n',
+  'grr',
+  '<cmd>FzfLua lsp_references<cr>',
+  { desc = 'References' }
+)
+vim.keymap.set(
+  'n',
+  'gri',
+  '<cmd>FzfLua lsp_implementations<cr>',
+  { desc = 'Implementations' }
+)
+vim.keymap.set(
+  'n',
+  'grt',
+  '<cmd>FzfLua lsp_typedefs<cr>',
+  { desc = 'Type Definition' }
+)
 
-map('<leader>ls', '<cmd>FzfLua lsp_document_symbols<cr>', 'Document Symbols')
-map('<leader>lS', '<cmd>FzfLua lsp_workspace_symbols<cr>', 'Workspace Symbols')
-map(
+vim.keymap.set(
+  'n',
+  '<leader>ls',
+  '<cmd>FzfLua lsp_document_symbols<cr>',
+  { desc = 'Document Symbols' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>lS',
+  '<cmd>FzfLua lsp_workspace_symbols<cr>',
+  { desc = 'Workspace Symbols' }
+)
+vim.keymap.set(
+  'n',
   '<leader>ld',
   '<cmd>FzfLua diagnostics_document<cr>',
-  'Document Diagnostics'
+  { desc = 'Document Diagnostics' }
 )
-map(
+vim.keymap.set(
+  'n',
   '<leader>lD',
   '<cmd>FzfLua diagnostics_workspace<cr>',
-  'Workspace Diagnostics'
+  { desc = 'Workspace Diagnostics' }
 )
-map('<leader>lf', '<cmd>FzfLua lsp_finder<cr>', 'LSP Finder')
+vim.keymap.set(
+  'n',
+  '<leader>lf',
+  '<cmd>FzfLua lsp_finder<cr>',
+  { desc = 'LSP Finder' }
+)
 
 -- Git
-map('<leader>gb', '<cmd>FzfLua git_branches<cr>', 'Git Branches')
-map('<leader>gc', '<cmd>FzfLua git_commits<cr>', 'Git Commits')
-map('<leader>gf', '<cmd>FzfLua git_files<cr>', 'Git Files')
-map('<leader>gs', '<cmd>FzfLua git_status<cr>', 'Git Status')
+vim.keymap.set(
+  'n',
+  '<leader>gb',
+  '<cmd>FzfLua git_branches<cr>',
+  { desc = 'Git Branches' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>gc',
+  '<cmd>FzfLua git_commits<cr>',
+  { desc = 'Git Commits' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>gf',
+  '<cmd>FzfLua git_files<cr>',
+  { desc = 'Git Files' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>gs',
+  '<cmd>FzfLua git_status<cr>',
+  { desc = 'Git Status' }
+)

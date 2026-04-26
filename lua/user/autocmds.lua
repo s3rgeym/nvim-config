@@ -1,17 +1,6 @@
 ---@diagnostic disable: undefined-field
 local group = vim.api.nvim_create_augroup('User', { clear = true })
 
--- vim.api.nvim_create_autocmd("VimEnter", {
---   group = aucmd_group,
---   desc = "Change CWD to project root",
---   callback = function()
---     local root = utils.find_project_root()
---     if root then
---       vim.cmd.cd(root)
---     end
---   end,
--- })
-
 vim.api.nvim_create_autocmd('VimEnter', {
   group = group,
   desc = 'Restore session',
