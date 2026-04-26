@@ -26,8 +26,8 @@ map('<C-g>', '<cmd>FzfLua grep<cr>', 'Grep')
 map('<C-\\>', '<cmd>FzfLua buffers<cr>', 'Buffers')
 map('<C-p>', '<cmd>FzfLua files<cr>', 'Files')
 map('<leader>fo', '<cmd>FzfLua oldfiles<cr>', 'Old Files')
-map('<leader>ft', '<cmd>FzfLua colorschemes<cr>', 'Themes')
-map('<leader>fc', '<cmd>FzfLua builtin<cr>', 'Builtin Commands')
+map('<leader>ft', '<cmd>FzfLua colorschemes<cr>', 'Switch Theme')
+map('<leader>fc', '<cmd>FzfLua builtin<cr>', 'FZF Command Palette')
 
 -- LSP
 -- Переопределение встроенных сочетаний в Neovim 0.10+
