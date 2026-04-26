@@ -145,11 +145,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Включаем Inlay Hints по умолчанию
     if client:supports_method('textDocument/inlayHint') then
       vim.lsp.inlay_hint.enable(true)
-      keymap('<leader>i', function()
+      keymap('<leader>ih', function()
         vim.lsp.inlay_hint.enable(
           not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
         )
-      end, 'Toggle Inlay [H]ints')
+      end, 'Toggle Inlay Hints')
     end
 
     -- Подсветка упоминаний символа под курсором
