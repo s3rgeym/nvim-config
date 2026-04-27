@@ -35,3 +35,6 @@ git clone https://github.com/s3rgeym/nvim-config ~/.config/nvim
 git clone https://github.com/s3rgeym/nvim-config ~/.config/s3rgeym-nvim
 NVIM_APPNAME=s3rgeym-nvim nvim
 ```
+<div align="center">
+<img width="1120" height="788" alt="image" src="https://github.com/user-attachments/assets/e1b2c012-78af-4478-bc5e-e7033da25fc5" />
+</div>
