@@ -85,7 +85,8 @@ o.confirm = true
 -- Отключает modeline во избежание инъекции команд через содержимое файлов
 o.modeline = false
 -- options не сохраняются в сессиях во избежание конфликтов с плагинами
-o.sessionoptions = 'buffers,curdir,tabpages,winsize,help,folds,localoptions'
+o.sessionoptions =
+  'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal'
 -- Хранит позицию курсора, метки и регистры между сессиями
 o.shada = "!,'100,<1000,s10,h"
 
