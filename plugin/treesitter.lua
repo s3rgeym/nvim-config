@@ -1,12 +1,13 @@
--- Нужев утилита nvim-treesitter-cli... Можно через mason установить.
+-- Нужна утилита nvim-treesitter-cli... Можно через mason установить.
 vim.pack.add({
+  -- !!! nvim-treesitter заброшен, а значит должен быть заменен
   'https://github.com/nvim-treesitter/nvim-treesitter',
   'https://github.com/nvim-treesitter/nvim-treesitter-context',
   'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
 }, { confirm = false })
 
 local ts = require('nvim-treesitter')
-local languages = {
+local ensure_installed = {
   'bash',
   'c',
   'cmake',
@@ -46,14 +47,13 @@ ts.setup({})
 -- If the issue persists, run :checkhealth nvim-treesitter to diagnose.
 
 -- Use :TSInstall for manuall install languages
-ts.install(languages)
+ts.install(ensure_installed)
 
 -- Treesitter features for installed languages must be enabled manually
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = languages,
   callback = function()
     -- Enable native Neovim treesitter highlighting
-    vim.treesitter.start()
+    pcall(vim.treesitter.start)
 
     -- Configure code folding
     vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'

@@ -23,24 +23,24 @@ fzf.register_ui_select()
 vim.keymap.set('n', '<C-g>', '<cmd>FzfLua grep<cr>', { desc = 'Grep' })
 vim.keymap.set('n', '<C-\\>', '<cmd>FzfLua buffers<cr>', { desc = 'Buffers' })
 vim.keymap.set('n', '<C-p>', '<cmd>FzfLua files<cr>', { desc = 'Files' })
-
 vim.keymap.set(
   'n',
-  '<leader>fo',
+  -- Сам разработчик советует использовать <C-k>, но все это сочетание используют для выбора окон
+  '<leader>k',
+  '<cmd>FzfLua builtin<cr>',
+  { desc = 'FZF Command Palette' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>o',
   '<cmd>FzfLua oldfiles<cr>',
   { desc = 'Old Files' }
 )
 vim.keymap.set(
   'n',
-  '<leader>ft',
+  '<leader>t',
   '<cmd>FzfLua colorschemes<cr>',
-  { desc = 'Switch Theme' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>fc',
-  '<cmd>FzfLua builtin<cr>',
-  { desc = 'FZF Command Palette' }
+  { desc = 'FZF Themes' }
 )
 
 -- LSP
@@ -69,7 +69,6 @@ vim.keymap.set(
   '<cmd>FzfLua lsp_typedefs<cr>',
   { desc = 'Type Definition' }
 )
-
 vim.keymap.set(
   'n',
   '<leader>ls',

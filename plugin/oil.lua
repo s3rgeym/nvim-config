@@ -19,6 +19,7 @@ require('oil').setup({
     show_hidden = true,
   },
 })
+
 require('oil-git').setup()
 require('oil-lsp-diagnostics').setup()
 

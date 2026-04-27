@@ -65,8 +65,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   desc = 'Clear formatoptions',
   callback = function()
     -- По дефолту что-то типа ljcqrt
-    -- vim.opt_local.formatoptions = { j = true, q = true }
-    vim.opt_local.formatoptions = { c = true, q = true }
+    vim.opt_local.formatoptions = { j = true, q = true }
   end,
 })
 
