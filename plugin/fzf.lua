@@ -36,6 +36,7 @@ vim.keymap.set(
   '<cmd>FzfLua oldfiles<cr>',
   { desc = 'Old Files' }
 )
+-- Можно удалить, так как смена тем требуется не часто
 vim.keymap.set(
   'n',
   '<leader>t',
