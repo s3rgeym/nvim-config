@@ -1,4 +1,3 @@
--- Сочетания объявляются через keys в lazy, не через which-key
 local map = vim.keymap.set
 
 -- General
@@ -67,7 +66,7 @@ map('v', '<S-Tab>', '<gv', { desc = 'Decrease Indent' })
 map('n', 'H', '^', { desc = 'Move to line start' })
 map('n', 'L', 'g_', { desc = 'Move to line end' })
 
-map('n', '<cr>', '<C-]>', { desc = 'Help' })
+-- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
 -- map('n', '<leader>cd', '<cmd>lcd %:p:h<cr><cmd>pwd<cr>', { desc = 'Change Directory' })
 -- map('n', '<leader>cD', '<cmd>cd %:p:h<cr><cmd>pwd<cr>', { desc = 'Change Directory Globaly' })
