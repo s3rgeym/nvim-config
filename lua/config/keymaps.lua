@@ -4,10 +4,11 @@ local map = vim.keymap.set
 map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 -- map('n', "<leader>Q", "<cmd>qa!<cr>", { desc = "Quit All" })
 -- map('n', "<leader>x", "<cmd>x<cr>", { desc = "Save and Quit" })
--- Лучше использовать :%y, :%d
--- map('n', '<leader>a', 'ggVG', { desc = 'Select All' })
+
+-- <leader>a я под плагины оставил
+-- Еще часто <leader>sa и gA назначают, но это нажатие 3-х клавиш вместо 5
+map('n', '<A-a>', 'ggVG', { desc = 'Select All' })
 map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
--- gA может конфликтовать
 -- map('n', '<leader>p', 'ggVGp', { desc = 'Replace All with Clipboard' })
 -- map('v', '<leader>p', '"_dP', { desc = 'Paste without yankin' })
 -- Удалить выделение в черную дыру и вставить из регистра
@@ -72,22 +73,24 @@ map('n', 'L', 'g_', { desc = 'Move to line end' })
 -- map('n', '<leader>cD', '<cmd>cd %:p:h<cr><cmd>pwd<cr>', { desc = 'Change Directory Globaly' })
 
 -- Replace text
--- map(
---   'n',
---   '<leader>r',
---   [[:%s/\<<C-r><C-w>\>//gI<Left><Left><Left>]],
---   { desc = 'Replace word under cursor' }
--- )
--- map(
---   'v',
---   '<leader>r',
---   [["hy:%s/<C-r>h//gI<Left><Left><Left>]],
---   { desc = 'Replace selection' }
--- )
+-- Эти сочетания возможно лишние. На r что-нибудь из плагинов можно повесить
+map(
+  'n',
+  '<leader>r',
+  [[:%s/\<<C-r><C-w>\>//gI<Left><Left><Left>]],
+  { desc = 'Replace word under cursor' }
+)
+map(
+  'v',
+  '<leader>r',
+  [["hy:%s/<C-r>h//gI<Left><Left><Left>]],
+  { desc = 'Replace selection' }
+)
 
 -- Config
-map('n', '<leader>,', '<cmd>edit $MYVIMRC<cr>', { desc = 'Edit Vim Config' })
---map('n', '', '<cmd>restart<cr>', { desc = 'Restart Vim' })
+map('n', '<leader>e', '<cmd>edit $MYVIMRC<cr>', { desc = 'Edit Vim Config' })
+-- Еще можно сессию перед перезапуском сохранять, а после ее загружать чтобы сохранить расположение окон
+map('n', '<leader>R', '<cmd>restart<cr>', { desc = 'Restart Vim' })
 
 -- Session
 map('n', '<leader>ss', '<cmd>mksession!<cr>', { desc = 'Save Session' })
