@@ -114,20 +114,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.lsp.completion.get()
       end, 'Trigger Completion', 'i')
 
-      -- keymap('/', function()
-      --   return pumvisible() and '<C-e>' or '/'
-      -- end, { expr = true }, 'i')
+      -- Закрыть меню и отменить подстановку
+      -- Можно на / повесить
+      keymap('<Esc>', function()
+        return pumvisible() and '<C-e>' or '<Esc>'
+      end, { expr = true }, 'i')
 
+      -- Вызываем автодополнение по Ctrl-N
+      keymap('<C-n>', function()
+        return pumvisible() and '<C-n>' or '<C-x><C-o>'
+      end, { expr = true }, 'i')
+
+      -- Я не уверен, что эти табы нужны
       keymap('<Tab>', function()
         return pumvisible() and '<C-n>' or '<Tab>'
       end, { expr = true }, 'i')
 
       keymap('<S-Tab>', function()
         return pumvisible() and '<C-p>' or '<S-Tab>'
-      end, { expr = true }, 'i')
-
-      keymap('<Esc>', function()
-        return pumvisible() and '<C-c>' or '<Esc>'
       end, { expr = true }, 'i')
     end
 
