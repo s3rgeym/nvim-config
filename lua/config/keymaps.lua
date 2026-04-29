@@ -21,11 +21,11 @@ map('n', '<Tab>', vim.cmd.bnext, { desc = 'Next Buffer' })
 map('n', '<S-Tab>', vim.cmd.bprev, { desc = 'Previous Buffer' })
 map('n', '<BS>', '<C-^>', { desc = 'Alternate Buffer' })
 -- Эти сочетания нужны очень редко, я бы задумался об их необходимости
-map('n', '<leader>bd', '<cmd>bp | bd #<cr>', { desc = 'Delete Buffer' })
+map('n', '<leader>x', '<cmd>bp <bar> bd #<cr>', { desc = 'Delete Buffer' })
 map(
   'n',
-  '<leader>bD',
-  '<cmd>%bd | e # | bd #<cr>',
+  '<leader>X',
+  '<cmd>%bd <bar> e # <bar> bd #<cr>',
   { desc = 'Delete Other Buffers' }
 )
 

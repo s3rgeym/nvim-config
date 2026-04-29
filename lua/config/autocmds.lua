@@ -60,12 +60,14 @@ vim.api.nvim_create_autocmd(
   }
 )
 
+-- Настройки форматирования можно переопределить в after/plugin, но так
+-- универсальнее
 vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   group = group,
   desc = 'Clear formatoptions',
   callback = function()
-    -- По дефолту что-то типа ljcqrt
-    vim.opt_local.formatoptions = { j = true, q = true }
+    -- По дефолту что-то типа ljcqrt.
+    vim.opt_local.formatoptions = { c = true, q = true, j = true, n = true }
   end,
 })
 

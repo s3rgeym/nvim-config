@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   end,
 })
 
--- Применяем тему после загрузки всех плагинов из rtp/plugin и rtp/after/plugin
+-- Применяем тему после загрузки всех плагинов
 vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
     local cs = load_theme() or fallback

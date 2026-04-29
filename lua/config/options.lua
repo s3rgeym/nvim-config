@@ -25,8 +25,8 @@ if vim.fn.has('termguicolors') == 1 then
 end
 
 -- Cursor
-o.scrolloff = 8
-o.sidescrolloff = 8
+o.scrolloff = 3
+o.sidescrolloff = 3
 o.whichwrap = 'h,l,<,>,[,]'
 o.mouse = 'a'
 
@@ -49,7 +49,7 @@ o.textwidth = 80
 o.list = true
 o.listchars:append({
   extends = '↪',
-  lead = '·',
+  -- lead = '·',
   nbsp = '␣',
   precedes = '↩',
   tab = '→ ',
@@ -69,6 +69,7 @@ o.wildignore:append({
 })
 
 -- Completion
+-- Без popup нативный lsp не показываются документацию
 o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
 o.backspace = { 'indent', 'eol', 'start' }
 -- o.pummaxwidth = 40
