@@ -1,5 +1,5 @@
 -- Позволяет работать с файлами в обычном буфере как с текстом
--- Можно так же попобовать альтернативу в виде mini-files
+-- Можно также попробовать альтернативу в виде mini-files
 vim.pack.add({
   'https://github.com/stevearc/oil.nvim',
   'https://github.com/nvim-tree/nvim-web-devicons',

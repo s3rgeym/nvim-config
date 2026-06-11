@@ -44,7 +44,8 @@ o.autoindent = true
 o.smartindent = true
 o.textwidth = 80
 -- opt.joinspaces = false
--- Не имеет эффекта в арче, так как устанавливается через плагины после загрузки init.lua
+-- Не имеет эффекта в арче, так как устанавливается через плагины после
+-- загрузки init.lua
 -- opt.formatoptions = { j = true, q = true }
 o.list = true
 o.listchars:append({
@@ -55,6 +56,7 @@ o.listchars:append({
   tab = '→ ',
   trail = '·',
 })
+o.synmaxcol = 255
 
 -- Search
 o.ignorecase = true
@@ -69,10 +71,11 @@ o.wildignore:append({
 })
 
 -- Completion
--- Без popup нативный lsp не показываются документацию
+-- Без popup нативный LSP не показывает документацию
 o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
 o.backspace = { 'indent', 'eol', 'start' }
--- o.pummaxwidth = 40
+o.pumwidth = 20
+o.pummaxwidth = 60
 o.pumborder = 'rounded'
 
 -- Files

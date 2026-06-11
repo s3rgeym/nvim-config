@@ -20,26 +20,29 @@ fzf.setup({
 
 fzf.register_ui_select()
 
-vim.keymap.set('n', '<C-g>', '<cmd>FzfLua grep<cr>', { desc = 'Grep' })
-vim.keymap.set('n', '<C-\\>', '<cmd>FzfLua buffers<cr>', { desc = 'Buffers' })
+vim.keymap.set('n', '<C-g>', '<cmd>FzfLua live_grep<cr>', { desc = 'Grep' })
+-- Я заменил рекомендованное <C-\\>
+vim.keymap.set('n', '<C-;>', '<cmd>FzfLua buffers<cr>', { desc = 'Buffers' })
 vim.keymap.set('n', '<C-p>', '<cmd>FzfLua files<cr>', { desc = 'Files' })
 vim.keymap.set(
   'n',
-  -- Сам разработчик советует использовать <C-k>, но все это сочетание используют для выбора окон
-  '<leader>k',
+  -- Сам разработчик советует использовать <C-k>, но это сочетание
+  -- используется для выбора окон
+  '<leader>fc',
   '<cmd>FzfLua builtin<cr>',
-  { desc = 'FZF Command Palette' }
+  { desc = 'FZF Commands' }
 )
 vim.keymap.set(
   'n',
-  '<leader>o',
+  '<leader>fr',
   '<cmd>FzfLua oldfiles<cr>',
-  { desc = 'Old Files' }
+  { desc = 'Recent Files' }
 )
+vim.keymap.set('n', '<leader>fj', '<cmd>FzfLua jumps<cr>', { desc = 'Jumps' })
 -- Можно удалить, так как смена тем требуется не часто
 vim.keymap.set(
   'n',
-  '<leader>t',
+  '<leader>ft',
   '<cmd>FzfLua colorschemes<cr>',
   { desc = 'FZF Themes' }
 )
@@ -70,6 +73,8 @@ vim.keymap.set(
   '<cmd>FzfLua lsp_typedefs<cr>',
   { desc = 'Type Definition' }
 )
+
+-- Прочие сочетания для LSP
 vim.keymap.set(
   'n',
   '<leader>ls',

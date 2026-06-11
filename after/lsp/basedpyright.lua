@@ -7,8 +7,9 @@ return {
         typeCheckingMode = 'basic',
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
-        -- Режим диагностики: "workspace" - проверяет все файлы в рабочей области,
-        -- в отличие от "openFilesOnly", который проверяет только открытые файлы.
+        -- Режим диагностики: "workspace" проверяет все файлы
+        -- в рабочей области, в отличие от "openFilesOnly",
+        -- который проверяет только открытые файлы.
         diagnosticMode = 'workspace',
         -- Настройки встроенных подсказок (inlay hints) в редакторе.
         inlayHints = {

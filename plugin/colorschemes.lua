@@ -9,4 +9,6 @@ vim.pack.add({
   'https://github.com/Mofiqul/dracula.nvim',
   'https://github.com/Mofiqul/vscode.nvim',
   'https://github.com/sainnhe/gruvbox-material',
+  'https://github.com/projekt0n/github-nvim-theme',
+  'https://github.com/rebelot/kanagawa.nvim',
 }, { confirm = false, load = false })

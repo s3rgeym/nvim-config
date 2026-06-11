@@ -22,35 +22,16 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
   end,
 })
 
--- Из ChatGPT
-vim.api.nvim_create_autocmd('BufReadPre', {
-  callback = function(args)
-    local stat = vim.loop.fs_stat(args.file)
-    if stat and stat.size > 1024 * 1024 then
-      vim.b.large_file = true
-      vim.cmd('syntax off')
-    end
-  end,
-})
-
-vim.api.nvim_create_autocmd('BufReadPost', {
-  callback = function()
-    if vim.b.large_file then
-      pcall(vim.treesitter.stop)
-    end
-  end,
-})
-
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  pattern = '*.json',
-  desc = 'Enable json comments',
-  callback = function()
-    vim.bo.filetype = 'jsonc'
-  end,
-})
+-- vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+--   pattern = '*.json',
+--   desc = 'Enable json comments',
+--   callback = function()
+--     vim.bo.filetype = 'jsonc'
+--   end,
+-- })
 
 -- Чтобы вручную не вводить :e!
--- Я не уверен что тут нужен BufEnter
+-- Я не уверен, что тут нужен BufEnter
 vim.api.nvim_create_autocmd(
   { 'BufEnter', 'CursorHold', 'CursorHoldI', 'FocusGained' },
   {
@@ -60,7 +41,7 @@ vim.api.nvim_create_autocmd(
   }
 )
 
--- Настройки форматирования можно переопределить в after/plugin, но так
+-- Настройки форматирования можно переопределить в plugin/*.lua, но так
 -- универсальнее
 vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   group = group,
@@ -103,11 +84,15 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 --   end,
 -- })
 
+-- highlights yanked text
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = group,
   desc = 'Highlight yanked text',
   callback = function()
-    vim.highlight.on_yank({ timeout = 200 })
+    vim.highlight.on_yank({
+      higroup = 'IncSearch',
+      timeout = 40,
+    })
   end,
 })
 

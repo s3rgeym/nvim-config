@@ -1,5 +1,5 @@
--- Настройки самих плагинов лежат в after/plugin, так как файлы там грузятся
--- самыми последними
+-- Настройки самих плагинов лежат в plugin/ и загружаются стандартным
+-- механизмом Neovim
 require('config.options')
 require('config.keymaps')
 require('config.autocmds')

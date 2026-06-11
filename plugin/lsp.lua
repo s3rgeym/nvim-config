@@ -7,7 +7,7 @@ vim.pack.add({
 
 require('mason').setup()
 
--- Конфиги самих языковых серверов в ~/.config/nvim/after/lsp. Они рекуривно
+-- Конфиги самих языковых серверов в ~/.config/nvim/after/lsp. Они рекурсивно
 -- объединяются со встроенными.
 -- Полностью переопределить конфиги можно в ~/.config/nvim/lsp.
 require('mason-lspconfig').setup({
@@ -43,7 +43,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- Настройки для всех серверов
 vim.lsp.config('*', { capabilities = capabilities })
 
--- jsonls специфичные настройки
+-- Специфичные настройки jsonls
 vim.lsp.config('jsonls', {
   settings = {
     json = {
@@ -86,7 +86,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     local bufnr = args.buf
 
-    local function keymap(lhs, rhs, opts, mode)
+    local function map(lhs, rhs, opts, mode)
       opts = type(opts) == 'string' and { desc = opts } or opts or {}
       opts = vim.tbl_extend('force', opts, { buffer = bufnr })
       vim.keymap.set(mode or 'n', lhs, rhs, opts)
@@ -95,7 +95,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- https://gist.github.com/MariaSolOs/2e44a86f569323c478e5a078d0cf98cc
     if client:supports_method('textDocument/completion') then
       -- По умолчанию автодополнение вызывается при вводе ".", но это не очень
-      -- удобно, привычнее когда варианты автоподстановке показываются при вводе
+      -- удобно, привычнее когда варианты автоподстановки показываются при вводе
       -- любого символа (тут только печатные ASCII).
       local chars = {}
       for i = 32, 126 do
@@ -106,49 +106,53 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 
-      keymap('<cr>', function()
+      map('<cr>', function()
         return pumvisible() and '<C-y>' or '<cr>'
       end, { expr = true }, 'i')
 
-      keymap('<C-Space>', function()
+      map('<C-Space>', function()
         vim.lsp.completion.get()
       end, 'Trigger Completion', 'i')
 
       -- Закрыть меню и отменить подстановку
-      -- Можно на / повесить
-      keymap('<Esc>', function()
-        return pumvisible() and '<C-e>' or '<Esc>'
+      -- Можно на <Esc> повесить
+      map('/', function()
+        return pumvisible() and '<C-e>' or '/'
       end, { expr = true }, 'i')
 
       -- Вызываем автодополнение по Ctrl-N
-      keymap('<C-n>', function()
+      map('<C-n>', function()
         return pumvisible() and '<C-n>' or '<C-x><C-o>'
       end, { expr = true }, 'i')
 
       -- Я не уверен, что эти табы нужны
-      keymap('<Tab>', function()
+      map('<Tab>', function()
         return pumvisible() and '<C-n>' or '<Tab>'
       end, { expr = true }, 'i')
 
-      keymap('<S-Tab>', function()
+      map('<S-Tab>', function()
         return pumvisible() and '<C-p>' or '<S-Tab>'
       end, { expr = true }, 'i')
     end
 
-    keymap('K', vim.lsp.buf.hover, 'Show Documentation')
-    keymap('<C-k>', vim.lsp.buf.signature_help, 'Signature Help', 'i')
-    keymap('gl', vim.diagnostic.open_float, 'Line Diagnostics')
-    keymap('[d', function()
+    -- Это сочетание не всегда связано с LSP по умолчанию, поэтому его нужно
+    -- прописать явно
+    map('gd', vim.lsp.buf.definition, 'Go to definition')
+    map('gD', vim.lsp.buf.declaration, 'Go to declaration')
+    map('K', vim.lsp.buf.hover, 'Show Documentation')
+    map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help', 'i')
+    map('gl', vim.diagnostic.open_float, 'Line Diagnostics')
+    map('[d', function()
       vim.diagnostic.jump({ count = -1 })
     end, 'Prev Diagnostic')
-    keymap(']d', function()
+    map(']d', function()
       vim.diagnostic.jump({ count = 1 })
     end, 'Next Diagnostic')
 
     -- Включаем Inlay Hints по умолчанию
     if client:supports_method('textDocument/inlayHint') then
       vim.lsp.inlay_hint.enable(true)
-      keymap('<leader>ih', function()
+      map('<leader>ih', function()
         vim.lsp.inlay_hint.enable(
           not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
         )

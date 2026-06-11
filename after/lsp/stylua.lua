@@ -5,7 +5,8 @@ return {
     --   -- Тип отступа: "Spaces" (пробелы) или "Tabs" (табы).
     --   indent_type = "Spaces",
     --   indent_width = 2,
-    --   -- Стиль кавычек: "AutoPreferSingle", "AutoPreferDouble", "AlwaysSingle", "AlwaysDouble".
+    --   -- Стиль кавычек: "AutoPreferSingle", "AutoPreferDouble",
+    --   -- "AlwaysSingle", "AlwaysDouble".
     --   quote_style = "AutoPreferSingle",
     --   call_parentheses = "Always",
     -- },
