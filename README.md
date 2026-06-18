@@ -61,6 +61,15 @@ git clone https://github.com/s3rgeym/nvim-config ~/.config/s3rgeym-nvim
 NVIM_APPNAME=s3rgeym-nvim nvim
 ```
 
+После первого запуска рекомендуется:
+
+1. Установить LSP‑серверы и инструменты через `:Mason`
+2. Установить все Tree‑sitter парсеры командой:
+
+```vim
+:TSInstall all
+```
+
 ## Секреты
 
 Для хранения локальных токенов и приватных ключей используется файл
