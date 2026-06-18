@@ -7,15 +7,15 @@ map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 -- Как вариант можно использовать <A-a>
 -- vim.keymap.set('n', '<C-a>', 'ggVG"+y', { desc = 'Select All' })
 -- <leader>a для aerial.nvim
-map('n', '<leader>y', '<cmd>%y+<cr>', { desc = 'Copy all' })
+map('n', '<leader>y', '<cmd>%y+<cr>', { desc = 'Copy entire buffer' })
 map(
   'n',
   '<leader>p',
   '<cmd>%delete _ | put +<CR>', -- ggVG"_dP
-  { desc = 'Replace Buffer with the clipboard' }
+  { desc = 'Replace buffer with clipboard' }
 )
 map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
-map('n', '<Esc>', '<cmd>noh<cr><esc>', { desc = 'Clear hlsearch' })
+map('n', '<Esc>', '<cmd>noh<cr><esc>', { desc = 'Clear search highlight' })
 
 -- Buffers
 -- <Tab> в терминалах возвращает тот же самый код, что и CTRL-I, поэтому его
@@ -27,30 +27,30 @@ map('n', '<Esc>', '<cmd>noh<cr><esc>', { desc = 'Clear hlsearch' })
 map('n', '<leader>bp', vim.cmd.bprev, { desc = 'Previous Buffer' })
 map('n', '<leader>bn', vim.cmd.bnext, { desc = 'Next Buffer' })
 -- Эти сочетания нужны очень редко, я бы задумался об их необходимости
-map('n', '<leader>bd', '<cmd>bp <bar> bd #<cr>', { desc = 'delete buffer' })
+map('n', '<leader>bd', '<cmd>bp <bar> bd #<cr>', { desc = 'Delete current buffer' })
 map(
   'n',
   '<leader>bd',
   '<cmd>%bd <bar> e # <bar> bd #<cr>',
-  { desc = 'delete other buffers' }
+  { desc = 'Delete other buffers' }
 )
 
 -- windows
-map('n', '<c-k>', '<cmd>wincmd k<cr>', { desc = 'window up' })
-map('n', '<c-j>', '<cmd>wincmd j<cr>', { desc = 'window down' })
-map('n', '<c-h>', '<cmd>wincmd h<cr>', { desc = 'window left' })
-map('n', '<c-l>', '<cmd>wincmd l<cr>', { desc = 'window right' })
-map('n', '<a-up>', '<cmd>resize +2<cr>', { desc = 'increase height' })
-map('n', '<a-down>', '<cmd>resize -2<cr>', { desc = 'decrease height' })
-map('n', '<a-left>', '<cmd>vertical resize -2<cr>', { desc = 'decrease width' })
+map('n', '<c-k>', '<cmd>wincmd k<cr>', { desc = 'Focus window up' })
+map('n', '<c-j>', '<cmd>wincmd j<cr>', { desc = 'Focus window down' })
+map('n', '<c-h>', '<cmd>wincmd h<cr>', { desc = 'Focus window left' })
+map('n', '<c-l>', '<cmd>wincmd l<cr>', { desc = 'Focus window right' })
+map('n', '<a-up>', '<cmd>resize +2<cr>', { desc = 'Increase height' })
+map('n', '<a-down>', '<cmd>resize -2<cr>', { desc = 'Decrease height' })
+map('n', '<a-left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease width' })
 map(
   'n',
   '<a-right>',
   '<cmd>vertical resize +2<cr>',
-  { desc = 'increase width' }
+  { desc = 'Increase width' }
 )
-map('n', '<leader>h', vim.cmd.split, { desc = 'horizontal split' })
-map('n', '<leader>v', vim.cmd.vsplit, { desc = 'vertical split' })
+map('n', '<leader>h', vim.cmd.split, { desc = 'Horizontal split' })
+map('n', '<leader>v', vim.cmd.vsplit, { desc = 'Vertical split' })
 
 -- lines
 -- движение по переносам
@@ -79,9 +79,9 @@ map('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
 
 -- Indent
 -- C-u в insert удаляет до начала строки, эффективно убирая отступ
-map('i', '<S-Tab>', '<C-u>', { desc = 'Remove Line Indent' })
-map('v', '<Tab>', '>gv', { desc = 'Increase Indent' })
-map('v', '<S-Tab>', '<gv', { desc = 'Decrease Indent' })
+map('i', '<S-Tab>', '<C-u>', { desc = 'Remove line indent' })
+map('v', '<Tab>', '>gv', { desc = 'Increase indent' })
+map('v', '<S-Tab>', '<gv', { desc = 'Decrease indent' })
 
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
@@ -104,32 +104,32 @@ map(
   'n',
   '<leader>rw',
   [[:%s/\<<C-r><C-w>\>//gI<Left><Left><Left>]],
-  { desc = 'Replace word under cursor' }
+  { desc = 'Replace word under cursor (global)' }
 )
 map(
   'v',
   '<leader>rs',
   [["hy:%s/<C-r>h//gI<Left><Left><Left>]],
-  { desc = 'Replace selection' }
+  { desc = 'Replace selection (global)' }
 )
 
 -- Config
-map('n', '<leader>e', '<cmd>tabedit $MYVIMRC<cr>', { desc = 'Edit Vim Config' })
+map('n', '<leader>e', '<cmd>tabedit $MYVIMRC<cr>', { desc = 'Edit Neovim config' })
 -- Еще можно сохранять сессию перед перезапуском, а после загружать ее,
 -- чтобы сохранить расположение окон
-map('n', '<leader>R', '<cmd>restart<cr>', { desc = 'Restart Vim' })
+map('n', '<leader>R', '<cmd>restart<cr>', { desc = 'Restart Neovim' })
 
 -- Session
-map('n', '<leader>ss', '<cmd>mksession!<cr>', { desc = 'Save Session' })
-map('n', '<leader>ls', '<cmd>source Session.vim<cr>', { desc = 'Load Session' })
+map('n', '<leader>ss', '<cmd>mksession!<cr>', { desc = 'Save session' })
+map('n', '<leader>ls', '<cmd>source Session.vim<cr>', { desc = 'Load session' })
 
 vim.api.nvim_create_user_command('PackUpdate', function()
   print('Updating packages...')
   vim.pack.update()
   print('Packages updated!')
-end, { desc = 'Update all packages' })
+end, { desc = 'Update packages' })
 
-map('n', '<leader>U', '<cmd>PackUpdate<cr>', { desc = 'Update all packages' })
+map('n', '<leader>U', '<cmd>PackUpdate<cr>', { desc = 'Update packages' })
 
 -- Удаляем встроенные сочетания
 -- for _, mapping in ipairs({ 'gra', 'gri', 'grn', 'grt' }) do
