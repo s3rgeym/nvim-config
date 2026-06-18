@@ -125,3 +125,13 @@ vim.api.nvim_create_autocmd('VimResized', {
 --   desc = "Terminal insert mode",
 --   command = "startinsert",
 -- })
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = group,
+  pattern = { 'markdown', 'text', 'gitcommit' },
+  desc = 'Enable word wrapping for text-like files',
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+  end,
+})

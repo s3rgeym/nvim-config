@@ -24,17 +24,19 @@ vim.keymap.set('n', '<C-g>', '<cmd>FzfLua live_grep<cr>', { desc = 'Grep' })
 -- Я заменил рекомендованное <C-\\>
 vim.keymap.set('n', '<C-;>', '<cmd>FzfLua buffers<cr>', { desc = 'Buffers' })
 vim.keymap.set('n', '<C-p>', '<cmd>FzfLua files<cr>', { desc = 'Files' })
+
+-- Прочие сочетания с f от fzf
 vim.keymap.set(
   'n',
   -- Сам разработчик советует использовать <C-k>, но это сочетание
   -- используется для выбора окон
-  '<leader>fc',
+  '<leader>fk',
   '<cmd>FzfLua builtin<cr>',
   { desc = 'FZF Commands' }
 )
 vim.keymap.set(
   'n',
-  '<leader>fr',
+  '<leader>fo',
   '<cmd>FzfLua oldfiles<cr>',
   { desc = 'Recent Files' }
 )
@@ -46,6 +48,7 @@ vim.keymap.set(
   '<cmd>FzfLua colorschemes<cr>',
   { desc = 'FZF Themes' }
 )
+vim.keymap.set('n', '<leader>fr', '<cmd>FZF resume<cr>', { desc = 'Resume' })
 
 -- LSP
 -- Переопределение встроенных сочетаний в Neovim 0.10+

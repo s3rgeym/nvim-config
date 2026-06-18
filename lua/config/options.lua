@@ -31,8 +31,9 @@ o.whichwrap = 'h,l,<,>,[,]'
 o.mouse = 'a'
 
 -- Text
-o.wrap = true
-o.linebreak = true
+-- o.wrap = true
+-- o.linebreak = true
+o.wrap = false
 o.breakindent = true
 o.showbreak = '↪ '
 o.expandtab = true

@@ -1,6 +1,7 @@
--- Нужна утилита tree-sitter-cli... Можно через mason установить.
+-- Нужна утилита tree-sitter-cli, которую можно уст-ть ч-з :Mason.
 vim.pack.add({
-  -- !!! nvim-treesitter заброшен, а значит должен быть заменен
+  -- Этот плагин можно выбросить, тк treesitter давно является встроенным, если
+  -- не нужен функционал nvim-treesitter-textobjects и др. зависимых плаг-ов
   'https://github.com/nvim-treesitter/nvim-treesitter',
   'https://github.com/nvim-treesitter/nvim-treesitter-context',
   'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',

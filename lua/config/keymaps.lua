@@ -4,18 +4,17 @@ local map = vim.keymap.set
 map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 -- map('n', "<leader>Q", "<cmd>qa!<cr>", { desc = "Quit All" })
 -- map('n', "<leader>x", "<cmd>x<cr>", { desc = "Save and Quit" })
-
--- Большинство не исользуют для этого сочетания, так как с помощью :%y можно
--- быстрее все копировать и др. команды типа :%p, :%d
 -- Как вариант можно использовать <A-a>
 -- vim.keymap.set('n', '<C-a>', 'ggVG"+y', { desc = 'Select All' })
 -- <leader>a для aerial.nvim
-map('n', '<leader>sa', 'ggVG', { desc = 'Select All' })
+map('n', '<leader>y', '<cmd>%y+<cr>', { desc = 'Copy all' })
+map(
+  'n',
+  '<leader>p',
+  '<cmd>%delete _ | put +<CR>', -- ggVG"_dP
+  { desc = 'Replace Buffer with the clipboard' }
+)
 map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
--- map('n', '<leader>p', 'ggVGp', { desc = 'Replace All with Clipboard' })
--- map('v', '<leader>p', '"_dP', { desc = 'Paste without yanking' })
--- Удалить выделение в черную дыру и вставить из регистра
--- map('n', '<leader>y', ':%y+<cr>', { desc = 'Yank All' })
 map('n', '<Esc>', '<cmd>noh<cr><esc>', { desc = 'Clear hlsearch' })
 
 -- Buffers
@@ -99,34 +98,30 @@ map('v', '<S-Tab>', '<gv', { desc = 'Decrease Indent' })
 --   { desc = 'Change Directory Globally' }
 -- )
 
--- Replace text
+-- Очень сложно весь этот набор клавиш запомнить, поэтому эти сочетания очень
+-- полезны
 map(
   'n',
-  '<leader>sw',
+  '<leader>rw',
   [[:%s/\<<C-r><C-w>\>//gI<Left><Left><Left>]],
   { desc = 'Replace word under cursor' }
 )
 map(
   'v',
-  '<leader>sw',
+  '<leader>rs',
   [["hy:%s/<C-r>h//gI<Left><Left><Left>]],
   { desc = 'Replace selection' }
 )
 
 -- Config
-map(
-  'n',
-  '<leader>ev',
-  '<cmd>tabedit $MYVIMRC<cr>',
-  { desc = 'Edit Vim Config' }
-)
+map('n', '<leader>e', '<cmd>tabedit $MYVIMRC<cr>', { desc = 'Edit Vim Config' })
 -- Еще можно сохранять сессию перед перезапуском, а после загружать ее,
 -- чтобы сохранить расположение окон
-map('n', '<leader>rv', '<cmd>restart<cr>', { desc = 'Restart Vim' })
+map('n', '<leader>R', '<cmd>restart<cr>', { desc = 'Restart Vim' })
 
 -- Session
 map('n', '<leader>ss', '<cmd>mksession!<cr>', { desc = 'Save Session' })
-map('n', '<leader>sl', '<cmd>source Session.vim<cr>', { desc = 'Open Session' })
+map('n', '<leader>ls', '<cmd>source Session.vim<cr>', { desc = 'Load Session' })
 
 vim.api.nvim_create_user_command('PackUpdate', function()
   print('Updating packages...')
@@ -134,7 +129,7 @@ vim.api.nvim_create_user_command('PackUpdate', function()
   print('Packages updated!')
 end, { desc = 'Update all packages' })
 
-map('n', '<leader>pu', '<cmd>PackUpdate<cr>', { desc = 'Update all packages' })
+map('n', '<leader>U', '<cmd>PackUpdate<cr>', { desc = 'Update all packages' })
 
 -- Удаляем встроенные сочетания
 -- for _, mapping in ipairs({ 'gra', 'gri', 'grn', 'grt' }) do
