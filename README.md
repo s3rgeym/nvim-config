@@ -61,6 +61,19 @@ git clone https://github.com/s3rgeym/nvim-config ~/.config/s3rgeym-nvim
 NVIM_APPNAME=s3rgeym-nvim nvim
 ```
 
+## Секреты
+
+Для хранения локальных токенов и приватных ключей используется файл
+`lua/config/secrets.lua`, который **не должен попадать в репозиторий**.
+
+После клонирования создайте его из примера:
+
+```sh
+cp lua/secrets.lua.example lua/config/secrets.lua
+```
+
+И заполните необходимыми значениями. Файл добавлен в `.gitignore`.
+
 ## Особенности
 
 - Глобальный `statusline` (`laststatus=3`)
