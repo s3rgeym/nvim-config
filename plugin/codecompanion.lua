@@ -12,11 +12,11 @@ require('codecompanion').setup({
       ollama = function()
         return require('codecompanion.adapters').extend('ollama', {
           env = {
-            url = secrets.remote_ollama.base_url,
+            url = secrets.ollama.base_url,
           },
           schema = {
             model = {
-              default = secrets.remote_ollama.model,
+              default = secrets.ollama.model,
             },
           },
         })
