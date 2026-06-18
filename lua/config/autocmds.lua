@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
 
 vim.api.nvim_create_autocmd('VimLeavePre', {
   group = group,
-  desc = 'Session save',
+  desc = 'Save session on exit',
   callback = function()
     if vim.v.this_session ~= '' then
       vim.cmd('mksession! ' .. vim.fn.fnameescape(vim.v.this_session))
@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
 
 -- vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 --   pattern = '*.json',
---   desc = 'Enable json comments',
+--   desc = 'Treat JSON as JSONC',
 --   callback = function()
 --     vim.bo.filetype = 'jsonc'
 --   end,
@@ -36,7 +36,7 @@ vim.api.nvim_create_autocmd(
   { 'BufEnter', 'CursorHold', 'CursorHoldI', 'FocusGained' },
   {
     group = group,
-    desc = 'Sync file changes',
+    desc = 'Check for external file changes',
     command = "if mode() != 'c' | checktime | endif",
   }
 )
@@ -45,7 +45,7 @@ vim.api.nvim_create_autocmd(
 -- универсальнее
 vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   group = group,
-  desc = 'Clear formatoptions',
+  desc = 'Set buffer format options',
   callback = function()
     -- По дефолту что-то типа ljcqrt.
     vim.opt_local.formatoptions = { c = true, q = true, j = true, n = true }
@@ -66,14 +66,14 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 -- vim.api.nvim_create_autocmd("BufReadCmd", {
 --   group = aucmd_group,
 --   pattern = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" },
---   desc = "Open in external viewer",
+--   desc = 'Open images in external viewer',
 --   command = "exe 'silent !display <afile> &' | b# | bw! #",
 -- })
 
 -- Мне оно больше мешает
 -- vim.api.nvim_create_autocmd('BufWritePre', {
 --   group = group,
---   desc = 'Create missing directories',
+--   desc = 'Create parent directories on save',
 --   callback = function(event)
 --     -- Буферы с именами типа oil://
 --     if event.match:match('^%w+://') then
@@ -84,7 +84,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 --   end,
 -- })
 
--- highlights yanked text
+-- Highlight yanked text
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = group,
   desc = 'Highlight yanked text',
@@ -98,7 +98,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 vim.api.nvim_create_autocmd('FileType', {
   group = group,
-  desc = "Close with 'q'",
+  desc = "Close special buffers with 'q'",
   pattern = { 'help', 'checkhealth', 'qf', 'man', 'lspinfo' },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -122,14 +122,14 @@ vim.api.nvim_create_autocmd('VimResized', {
 -- Я встроенным терминалом не пользуюсь
 -- vim.api.nvim_create_autocmd("TermOpen", {
 --   group = group,
---   desc = "Terminal insert mode",
+--   desc = 'Start terminal in insert mode',
 --   command = "startinsert",
 -- })
 
 vim.api.nvim_create_autocmd('FileType', {
   group = group,
   pattern = { 'markdown', 'text', 'gitcommit' },
-  desc = 'Enable word wrapping for text-like files',
+  desc = 'Enable wrapping for text files',
   callback = function()
     vim.opt_local.wrap = true
     vim.opt_local.linebreak = true
