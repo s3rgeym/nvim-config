@@ -1,5 +1,8 @@
 # Neovim 0.12+ Config
 
+<img width="1120" height="788" alt="image" src="https://github.com/user-attachments/assets/e1b2c012-78af-4478-bc5e-e7033da25fc5" />
+<img width="1120" height="788" alt="image" src="https://github.com/user-attachments/assets/1591d239-b094-4036-8819-6c9e8c4cc454" />
+
 Минималистичный, быстрый и предсказуемый конфиг для **Neovim 0.12+**, построенный на нативных возможностях редактора.
 
 Без внешних менеджеров плагинов. Без тяжёлых фреймворков. Без лишней магии.
@@ -161,8 +164,3 @@ after/lsp/       # точечные настройки языковых серв
 **Tree-sitter** уже встроен в Neovim, а `nvim-treesitter` в конфиге
 используется в первую очередь для удобной установки и обновления парсеров,
 а не ради базовой подсветки.
-
-## Скриншоты
-
-<img width="1120" height="788" alt="image" src="https://github.com/user-attachments/assets/e1b2c012-78af-4478-bc5e-e7033da25fc5" />
-<img width="1120" height="788" alt="image" src="https://github.com/user-attachments/assets/1591d239-b094-4036-8819-6c9e8c4cc454" />
