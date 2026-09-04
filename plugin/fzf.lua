@@ -6,9 +6,9 @@ vim.pack.add({
   'https://github.com/nvim-tree/nvim-web-devicons',
 }, { confirm = false })
 
-local fzf = require('fzf-lua')
+local fzfLua = require('fzf-lua')
 
-fzf.setup({
+fzfLua.setup({
   fzf_colors = true,
   -- winopts = {
   --   border = 'rounded',
@@ -18,21 +18,19 @@ fzf.setup({
   -- },
 })
 
-fzf.register_ui_select()
+fzfLua.register_ui_select()
 
-vim.keymap.set('n', '<C-g>', '<cmd>FzfLua live_grep<cr>', { desc = 'Grep' })
--- Я заменил рекомендованное <C-\\>
-vim.keymap.set('n', '<C-;>', '<cmd>FzfLua buffers<cr>', { desc = 'Buffers' })
+-- TODO: использовать вызов методов модуля вместо
 vim.keymap.set('n', '<C-p>', '<cmd>FzfLua files<cr>', { desc = 'Files' })
-
--- Прочие сочетания с f от fzf
+vim.keymap.set('n', '<C-g>', '<cmd>FzfLua live_grep<cr>', { desc = 'Grep' })
+vim.keymap.set('n', '<C-\\>', '<cmd>FzfLua buffers<cr>', { desc = 'Buffers' })
 vim.keymap.set(
   'n',
   -- Сам разработчик советует использовать <C-k>, но это сочетание
   -- используется для выбора окон
-  '<leader>fk',
+  '<leader>fc',
   '<cmd>FzfLua builtin<cr>',
-  { desc = 'FZF Commands' }
+  { desc = 'Commands' }
 )
 vim.keymap.set(
   'n',
@@ -40,15 +38,13 @@ vim.keymap.set(
   '<cmd>FzfLua oldfiles<cr>',
   { desc = 'Recent Files' }
 )
-vim.keymap.set('n', '<leader>fj', '<cmd>FzfLua jumps<cr>', { desc = 'Jumps' })
--- Можно удалить, так как смена тем требуется не часто
 vim.keymap.set(
   'n',
   '<leader>ft',
   '<cmd>FzfLua colorschemes<cr>',
-  { desc = 'FZF Themes' }
+  { desc = 'Themes' }
 )
-vim.keymap.set('n', '<leader>fr', '<cmd>FZF resume<cr>', { desc = 'Resume' })
+vim.keymap.set('n', '<leader>fr', '<cmd>FzfLua resume<cr>', { desc = 'Resume' })
 
 -- LSP
 -- Переопределение встроенных сочетаний в Neovim 0.10+
@@ -134,3 +130,12 @@ vim.keymap.set(
   '<cmd>FzfLua git_status<cr>',
   { desc = 'Git Status' }
 )
+
+-- Прочее
+-- Заменяем дополнение файлов
+vim.keymap.set({ 'i' }, '<C-x><C-f>', function()
+  fzfLua.complete_file({
+    cmd = 'rg --files',
+    winopts = { preview = { hidden = true } },
+  })
+end, { silent = true, desc = 'Fuzzy complete file' })

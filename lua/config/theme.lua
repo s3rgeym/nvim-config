@@ -1,37 +1,43 @@
+-- Автоматически сохраняет и загружает цветовую схему,
+-- установленную через :colorscheme.
 local theme_file = vim.fn.stdpath('config') .. '/theme.json'
 local fallback = 'habamax'
 
 local function load_theme()
   local f = io.open(theme_file, 'r')
   if not f then
-    return nil
+    return
   end
-  local content = f:read('*a')
+
+  local ok, data = pcall(vim.json.decode, f:read('*a'))
   f:close()
-  local ok, data = pcall(vim.json.decode, content)
-  return ok and data.colorscheme or nil
+
+  return ok and type(data) == 'table' and data.colorscheme or nil
 end
 
 local function save_theme(theme)
   local json = vim.fn.json_encode({ colorscheme = theme })
-  vim.fn.writefile({ json }, theme_file)
+  pcall(vim.fn.writefile, { json }, theme_file)
 end
 
--- Автоматическое сохранение темы при ее установке
 vim.api.nvim_create_autocmd('ColorScheme', {
+  desc = 'Save selected color scheme to JSON file',
   callback = function(args)
-    if args.match ~= load_theme() then
-      save_theme(args.match)
-    end
+    save_theme(args.match)
   end,
 })
 
--- Применяем тему после загрузки всех плагинов
+-- VimEnter необходим, так как плагины из ~/.config/nvim/plugin
+-- загружаются после init.lua. Поэтому пользовательская тема может
+-- быть применена только после того, как все плагины добавили свои темы.
 vim.api.nvim_create_autocmd('VimEnter', {
+  desc = 'Load saved color scheme after all plugins are loaded',
   callback = function()
-    local cs = load_theme() or fallback
-    if not pcall(vim.cmd.colorscheme, cs) then
-      pcall(vim.cmd.colorscheme, fallback)
+    local theme = load_theme() or fallback
+
+    if not pcall(vim.cmd.colorscheme, theme) then
+      vim.cmd.colorscheme(fallback)
+      save_theme(fallback)
     end
   end,
 })

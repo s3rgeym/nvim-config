@@ -1,61 +1,91 @@
+-- Alt + стрелки, f, g, h,j, k, l исп-ся в Zellij, поэтому их использование
+-- нежелательно!
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 local map = vim.keymap.set
 
 -- General
 map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 -- map('n', "<leader>Q", "<cmd>qa!<cr>", { desc = "Quit All" })
--- map('n', "<leader>x", "<cmd>x<cr>", { desc = "Save and Quit" })
+-- map('n', '<leader>x', '<cmd>x<cr>', { desc = 'Save and Quit' })
 -- Как вариант можно использовать <A-a>
 -- vim.keymap.set('n', '<C-a>', 'ggVG"+y', { desc = 'Select All' })
 -- <leader>a для aerial.nvim
+
 map('n', '<leader>y', '<cmd>%y+<cr>', { desc = 'Copy entire buffer' })
-map(
-  'n',
-  '<leader>p',
-  '<cmd>%delete _ | put +<CR>', -- ggVG"_dP
-  { desc = 'Replace buffer with clipboard' }
-)
+
+map('n', '<leader>p', 'ggVG"+p', {
+  desc = 'Replace buffer with clipboard',
+})
+
+-- Спорное сочетанияе
+map({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without copying' })
+
+-- <C-w>c
+-- map('n', '<leader>bc', vim.cmd.close, { desc = 'Close buffer' })
+
 map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
 map('n', '<Esc>', '<cmd>noh<cr><esc>', { desc = 'Clear search highlight' })
 
 -- Buffers
 -- <Tab> в терминалах возвращает тот же самый код, что и CTRL-I, поэтому его
--- переопределение может сломать навигацию по истории
+-- переопределение может сломать навигацию по истории, так что для
+-- универсальности их лучше не использовать
 -- map('n', '<C-i>', '<C-i>')
 -- map('n', '<Tab>', vim.cmd.bnext, { desc = 'Next Buffer' })
 -- map('n', '<S-Tab>', vim.cmd.bprev, { desc = 'Previous Buffer' })
 -- map('n', '<BS>', '<C-^>', { desc = 'Alternate Buffer' })
-map('n', '<leader>bp', vim.cmd.bprev, { desc = 'Previous Buffer' })
-map('n', '<leader>bn', vim.cmd.bnext, { desc = 'Next Buffer' })
+-- map('n', '<leader>bn', vim.cmd.bnext, { desc = 'Next Buffer' })
+-- map('n', '<leader>bp', vim.cmd.bprev, { desc = 'Previous Buffer' })
+-- H и L служат для перехода в начало и конец буфера
+map('n', 'H', vim.cmd.bprev, { desc = 'Previous Buffer' })
+map('n', 'L', vim.cmd.bnext, { desc = 'Next Buffer' })
 -- Эти сочетания нужны очень редко, я бы задумался об их необходимости
-map('n', '<leader>bd', '<cmd>bp <bar> bd #<cr>', { desc = 'Delete current buffer' })
 map(
   'n',
-  '<leader>bd',
+  '<leader>x',
+  '<cmd>bp <bar> bd #<cr>',
+  { desc = 'Delete current buffer' }
+)
+map(
+  'n',
+  '<leader>X',
   '<cmd>%bd <bar> e # <bar> bd #<cr>',
   { desc = 'Delete other buffers' }
 )
 
 -- windows
-map('n', '<c-k>', '<cmd>wincmd k<cr>', { desc = 'Focus window up' })
-map('n', '<c-j>', '<cmd>wincmd j<cr>', { desc = 'Focus window down' })
-map('n', '<c-h>', '<cmd>wincmd h<cr>', { desc = 'Focus window left' })
-map('n', '<c-l>', '<cmd>wincmd l<cr>', { desc = 'Focus window right' })
-map('n', '<a-up>', '<cmd>resize +2<cr>', { desc = 'Increase height' })
-map('n', '<a-down>', '<cmd>resize -2<cr>', { desc = 'Decrease height' })
-map('n', '<a-left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease width' })
+map('n', '<C-k>', '<cmd>wincmd k<cr>', { desc = 'Focus window up' })
+map('n', '<C-j>', '<cmd>wincmd j<cr>', { desc = 'Focus window down' })
+map('n', '<C-h>', '<cmd>wincmd h<cr>', { desc = 'Focus window left' })
+map('n', '<C-l>', '<cmd>wincmd l<cr>', { desc = 'Focus window right' })
+
+map('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase height' })
+map('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease height' })
+map('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease width' })
 map(
   'n',
-  '<a-right>',
+  '<C-Right>',
   '<cmd>vertical resize +2<cr>',
   { desc = 'Increase width' }
 )
+
 map('n', '<leader>h', vim.cmd.split, { desc = 'Horizontal split' })
 map('n', '<leader>v', vim.cmd.vsplit, { desc = 'Vertical split' })
 
+-- Tabs
+map('n', '<leader>tn', vim.cmd.tabnew, { desc = 'New tab' })
+map('n', '<leader>tc', vim.cmd.tabclose, { desc = 'Close tab' })
+map('n', '<A-0>', vim.cmd.tablast, { desc = 'Go to last tab' })
+for i = 1, 9 do
+  map('n', '<a-' .. i .. '>', i .. 'gt', { desc = 'Go to Tab ' .. i })
+end
+
 -- lines
 -- движение по переносам
-map({ 'n', 'x' }, '<up>', 'gk')
-map({ 'n', 'x' }, '<down>', 'gj')
+map({ 'n', 'x' }, '<Up>', 'gk')
+map({ 'n', 'x' }, '<Down>', 'gj')
 -- в режиме редактирования раздражает отображение ошибок из-за скрытого
 -- переключения режимов
 -- map('i', "<up>", "<c-o>gk")
@@ -72,10 +102,11 @@ map(
   "v:count == 0 ? 'gk' : 'k'",
   { expr = true, silent = true }
 )
-map('n', '<A-k>', '<cmd>m .-2<CR>==', { desc = 'Move Line Up' })
-map('n', '<A-j>', '<cmd>m .+1<CR>==', { desc = 'Move Line Down' })
-map('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
-map('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
+
+map('n', 'K', '<cmd>m .-2<CR>==', { desc = 'Move Line Up' })
+map('n', 'J', '<cmd>m .+1<CR>==', { desc = 'Move Line Down' })
+map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
+map('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
 
 -- Indent
 -- C-u в insert удаляет до начала строки, эффективно убирая отступ
@@ -98,40 +129,49 @@ map('v', '<S-Tab>', '<gv', { desc = 'Decrease indent' })
 --   { desc = 'Change Directory Globally' }
 -- )
 
--- Очень сложно весь этот набор клавиш запомнить, поэтому эти сочетания очень
--- полезны
+-- Полезные сочетания для замены текста, если не используется grug-far
 map(
   'n',
-  '<leader>rw',
+  '<leader>sr',
   [[:%s/\<<C-r><C-w>\>//gI<Left><Left><Left>]],
-  { desc = 'Replace word under cursor (global)' }
+  { desc = 'Search and replace' }
 )
 map(
   'v',
-  '<leader>rs',
+  '<leader>sr',
   [["hy:%s/<C-r>h//gI<Left><Left><Left>]],
-  { desc = 'Replace selection (global)' }
+  { desc = 'Search and replace' }
 )
 
 -- Config
-map('n', '<leader>e', '<cmd>tabedit $MYVIMRC<cr>', { desc = 'Edit Neovim config' })
+map(
+  'n',
+  '<leader>ev',
+  '<cmd>tabedit $MYVIMRC<cr>',
+  { desc = 'Edit Neovim config' }
+)
 -- Еще можно сохранять сессию перед перезапуском, а после загружать ее,
 -- чтобы сохранить расположение окон
-map('n', '<leader>R', '<cmd>restart<cr>', { desc = 'Restart Neovim' })
+map('n', '<leader>rv', '<cmd>restart<cr>', { desc = 'Restart Neovim' })
 
 -- Session
 map('n', '<leader>ss', '<cmd>mksession!<cr>', { desc = 'Save session' })
-map('n', '<leader>ls', '<cmd>source Session.vim<cr>', { desc = 'Load session' })
+map('n', '<leader>sl', '<cmd>source Session.vim<cr>', { desc = 'Load session' })
 
-vim.api.nvim_create_user_command('PackUpdate', function()
-  print('Updating packages...')
-  vim.pack.update()
-  print('Packages updated!')
-end, { desc = 'Update packages' })
+-- Сомнительно
+map('n', '<leader>tw', '<cmd>setlocal wrap!<cr>', { desc = 'Toggle Wrap' })
 
-map('n', '<leader>U', '<cmd>PackUpdate<cr>', { desc = 'Update packages' })
+map('n', '<leader>u', function()
+  if not package.loaded['undotree'] then
+    vim.pack.add('undotree')
+  end
+  require('undotree').toggle()
+end, { desc = 'Undotree Toggle' })
+
+map('n', '<leader>U', vim.pack.update, { desc = 'Update packages' })
 
 -- Удаляем встроенные сочетания
 -- for _, mapping in ipairs({ 'gra', 'gri', 'grn', 'grt' }) do
 --   vim.keymap.del('n', mapping)
 -- end
+-- print('keymaps loaded!')

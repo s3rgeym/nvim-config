@@ -20,7 +20,7 @@ conform.setup({
     bash = { 'shfmt' },
     javascript = { 'biome' },
     typescript = { 'biome' },
-    vue = { 'biome' },
+    vue = { 'prettier' },
     json = { 'biome' },
     jsonc = { 'biome' },
     html = { 'prettier' },
@@ -35,6 +35,18 @@ conform.setup({
   },
   formatters = {
     shfmt = { prepend_args = { '-i', '2', '-ci', '-s' } },
+    prettier = {
+      prepend_args = {
+        '--semi',
+        'false',
+        '--single-quote',
+        'true',
+        '--tab-width',
+        '2',
+        '--use-tabs',
+        'false',
+      },
+    },
   },
 })
 

@@ -48,7 +48,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   desc = 'Set buffer format options',
   callback = function()
     -- По дефолту что-то типа ljcqrt.
-    vim.opt_local.formatoptions = { c = true, q = true, j = true, n = true }
+    vim.opt_local.formatoptions = { c = true, j = true, q = true }
   end,
 })
 
@@ -135,3 +135,4 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.linebreak = true
   end,
 })
+-- print('automcds loaded!')

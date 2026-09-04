@@ -7,29 +7,45 @@ vim.pack.add({
 local secrets = require('secrets')
 
 require('codecompanion').setup({
-  adapters = {
-    http = {
-      ollama = function()
-        return require('codecompanion.adapters').extend('ollama', {
-          env = {
-            url = secrets.ollama.base_url,
-          },
-          schema = {
-            model = {
-              default = secrets.ollama.model,
-            },
-          },
-        })
-      end,
-    },
-  },
+  -- adapters = {
+  --   http = {
+  --     ollama = function()
+  --       return require('codecompanion.adapters').extend('ollama', {
+  --         env = {
+  --           url = secrets.ollama.base_url,
+  --         },
+  --         schema = {
+  --           model = {
+  --             default = secrets.ollama.model,
+  --           },
+  --         },
+  --       })
+  --     end,
+  --   },
+  -- },
+  --
+  -- strategies = {
+  --   chat = {
+  --     adapter = 'ollama',
+  --   },
+  --   inline = {
+  --     adapter = 'ollama',
+  --   },
+  -- },
 
   strategies = {
+    -- gemini-2.5-pro
     chat = {
-      adapter = 'ollama',
+      adapter = {
+        name = 'gemini',
+        model = 'gemini-3.5-flash',
+      },
     },
     inline = {
-      adapter = 'ollama',
+      adapter = {
+        name = 'gemini',
+        model = 'gemini-3.5-flash',
+      },
     },
   },
 

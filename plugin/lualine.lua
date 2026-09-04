@@ -3,13 +3,6 @@ vim.pack.add({
   'https://github.com/nvim-tree/nvim-web-devicons',
 }, { confirm = false })
 
-local function keymap()
-  if vim.opt.iminsert:get() > 0 and vim.b.keymap_name ~= '' then
-    return '\u{f11c} ' .. vim.b.keymap_name
-  end
-  return ''
-end
-
 -- Тема устанавливается по VimEnter чтобы темы, установленные через плагины,
 -- успели загрузиться
 vim.api.nvim_create_autocmd('VimEnter', {
@@ -19,6 +12,12 @@ vim.api.nvim_create_autocmd('VimEnter', {
     require('lualine').setup({
       options = {
         globalstatus = true,
+        -- В консоли Linux пустые квадраты вместо иконок
+        -- icons_enabled = vim.env.TERM == "linux",
+        -- component_separators = { left = '│', right = '│' },
+        -- section_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
       },
       sections = {
         lualine_a = { 'mode' },
@@ -29,13 +28,16 @@ vim.api.nvim_create_autocmd('VimEnter', {
             'diagnostics',
             sources = { 'nvim_diagnostic' },
           },
+          vim.ui.progress_status,
         },
         lualine_c = { { 'filename', path = 0 } },
         lualine_x = {
-          keymap,
+          function()
+            return vim.opt.iminsert:get() > 0 and vim.b.keymap_name or ''
+          end,
           'lsp_status',
-          'encoding',
-          'fileformat',
+          --'encoding',
+          --'fileformat',
           'filetype',
         },
         lualine_y = { 'progress' },

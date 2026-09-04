@@ -54,27 +54,39 @@ vim.lsp.config('jsonls', {
   },
 })
 
--- Включаем сервера
+-- Включаем сервера вручную (эта утилита ставится вместе с растом и ставить ее
+-- отдельно через Mason лишне)
 vim.lsp.enable({ 'rust_analyzer' })
 
 -- Настройка внешнего вида диагностики
 vim.diagnostic.config({
   virtual_text = false,
-  virtual_lines = { current_line = true, only_current_line = true },
   underline = true,
   severity_sort = true,
+  float = {
+    border = 'rounded',
+    source = 'if_many',
+    focusable = false,
+  },
 })
+
+-- Автоматически открывать float при остановке курсора
+vim.api.nvim_create_autocmd('CursorHold', {
+  callback = function()
+    vim.diagnostic.open_float(nil, { focusable = false })
+  end,
+})
+
+-- Задержка перед срабатыванием CursorHold (в миллисекундах)
+vim.opt.updatetime = 300
 
 local function pumvisible()
   return tonumber(vim.fn.pumvisible()) ~= 0
 end
 
 local function feedkeys(keys)
-  vim.api.nvim_feedkeys(
-    vim.api.nvim_replace_termcodes(keys, true, false, true),
-    'n',
-    true
-  )
+  local termocodes = vim.api.nvim_replace_termcodes(keys, true, false, true)
+  vim.api.nvim_feedkeys(termocodes, 'n', true)
 end
 
 -- https://mintlify.wiki/neovim/neovim/lsp/completion
@@ -125,7 +137,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
         return pumvisible() and '<C-n>' or '<C-x><C-o>'
       end, { expr = true }, 'i')
 
-      -- Я не уверен, что эти табы нужны
+      -- Сниппеты по дефолту работают и специальных сочетаний для них не нужно
+      -- https://neovim.io/doc/user/lua/#vim.snippet.jump()
+      -- Сложно привыкнуть к <C-n>/<C-p>
       map('<Tab>', function()
         return pumvisible() and '<C-n>' or '<Tab>'
       end, { expr = true }, 'i')
@@ -137,22 +151,31 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Это сочетание не всегда связано с LSP по умолчанию, поэтому его нужно
     -- прописать явно
+
     map('gd', vim.lsp.buf.definition, 'Go to definition')
     map('gD', vim.lsp.buf.declaration, 'Go to declaration')
-    map('K', vim.lsp.buf.hover, 'Show Documentation')
+    -- map('gl', vim.diagnostic.open_float, 'Line Diagnostics')
     map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help', 'i')
-    map('gl', vim.diagnostic.open_float, 'Line Diagnostics')
-    map('[d', function()
-      vim.diagnostic.jump({ count = -1 })
-    end, 'Prev Diagnostic')
-    map(']d', function()
-      vim.diagnostic.jump({ count = 1 })
-    end, 'Next Diagnostic')
+    -- Сочетания типа K, [d, ]d теперь по дефолту, а для <leader>ca есть gra
+    -- map('K', vim.lsp.buf.hover, 'Show Documentation')
+    -- Переход только по warning и error
+    -- map('[d', function()
+    --   vim.diagnostic.jump({
+    --     count = -1,
+    --     severity = { min = vim.diagnostic.severity.WARN },
+    --   })
+    -- end, 'Prev Warning/Error')
+    -- map(']d', function()
+    --   vim.diagnostic.jump({
+    --     count = 1,
+    --     severity = { min = vim.diagnostic.severity.WARN },
+    --   })
+    -- end, 'Next Warning/Error')
 
     -- Включаем Inlay Hints по умолчанию
     if client:supports_method('textDocument/inlayHint') then
       vim.lsp.inlay_hint.enable(true)
-      map('<leader>ih', function()
+      map('<leader>th', function()
         vim.lsp.inlay_hint.enable(
           not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
         )
@@ -178,12 +201,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+-- Через fzf удобнее это делать
 -- Неудобно, что при выборе части пути, его автодополнение завершается
-vim.api.nvim_create_autocmd('CompleteDone', {
-  callback = function()
-    local e = vim.v.event
-    if e.complete_type == 'files' and e.reason == 'accept' then
-      feedkeys('<C-x><C-f>')
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd('CompleteDone', {
+--   callback = function()
+--     local e = vim.v.event
+--     if e.complete_type == 'files' and e.reason == 'accept' then
+--       feedkeys('<C-x><C-f>')
+--     end
+--   end,
+-- })
