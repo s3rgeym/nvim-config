@@ -82,8 +82,11 @@ for i = 1, 9 do
   map('n', '<a-' .. i .. '>', i .. 'gt', { desc = 'Go to Tab ' .. i })
 end
 
--- lines
--- движение по переносам
+-- Вместо v лучше всегда использовать x, если не предполагается работа в режиме Select.
+-- v включает режим визуального выделения (Visual) и режим замены выделения (Select).
+-- x работает только в визуальном режиме (Visual).
+
+-- движение по переносам строк
 map({ 'n', 'x' }, '<Up>', 'gk')
 map({ 'n', 'x' }, '<Down>', 'gj')
 -- в режиме редактирования раздражает отображение ошибок из-за скрытого
@@ -103,16 +106,17 @@ map(
   { expr = true, silent = true }
 )
 
+-- Перемещение строк
 map('n', 'K', '<cmd>m .-2<CR>==', { desc = 'Move Line Up' })
 map('n', 'J', '<cmd>m .+1<CR>==', { desc = 'Move Line Down' })
-map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
-map('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
+map('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
+map('x', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
 
 -- Indent
 -- C-u в insert удаляет до начала строки, эффективно убирая отступ
 map('i', '<S-Tab>', '<C-u>', { desc = 'Remove line indent' })
-map('v', '<Tab>', '>gv', { desc = 'Increase indent' })
-map('v', '<S-Tab>', '<gv', { desc = 'Decrease indent' })
+map('x', '<Tab>', '>gv', { desc = 'Increase indent' })
+map('x', '<S-Tab>', '<gv', { desc = 'Decrease indent' })
 
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
