@@ -3,7 +3,8 @@
 
 -- Вместо v лучше всегда использовать x, если не предполагается работа в режиме Select.
 -- v включает режим визуального выделения (Visual) и режим замены выделения (Select).
--- x работает только в визуальном режиме (Visual).
+-- x работает только в визуальном режиме (Visual), что предотвращает случайный перехват
+-- клавиш в режиме Select.
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -143,7 +144,7 @@ map(
   { desc = 'Search and replace' }
 )
 map(
-  'v',
+  'x',
   '<leader>sr',
   [["hy:%s/<C-r>h//gI<Left><Left><Left>]],
   { desc = 'Search and replace' }
