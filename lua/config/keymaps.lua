@@ -78,6 +78,8 @@ map('n', '<leader>v', vim.cmd.vsplit, { desc = 'Vertical split' })
 map('n', '<leader>tn', vim.cmd.tabnew, { desc = 'New tab' })
 map('n', '<leader>tc', vim.cmd.tabclose, { desc = 'Close tab' })
 map('n', '<A-0>', vim.cmd.tablast, { desc = 'Go to last tab' })
+
+-- Выбор таба с помощью Alt+1..9
 for i = 1, 9 do
   map('n', '<a-' .. i .. '>', i .. 'gt', { desc = 'Go to Tab ' .. i })
 end
