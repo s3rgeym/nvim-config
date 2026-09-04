@@ -1,5 +1,9 @@
 -- Alt + стрелки, f, g, h,j, k, l исп-ся в Zellij, поэтому их использование
 -- нежелательно!
+
+-- Вместо v лучше всегда использовать x, если не предполагается работа в режиме Select.
+-- v включает режим визуального выделения (Visual) и режим замены выделения (Select).
+-- x работает только в визуальном режиме (Visual).
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -20,7 +24,7 @@ map('n', '<leader>p', 'ggVG"+p', {
 })
 
 -- Спорное сочетанияе
-map({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without copying' })
+map({ 'n', 'x' }, '<leader>d', '"_d', { desc = 'Delete without copying' })
 
 -- <C-w>c
 -- map('n', '<leader>bc', vim.cmd.close, { desc = 'Close buffer' })
@@ -83,10 +87,6 @@ map('n', '<A-0>', vim.cmd.tablast, { desc = 'Go to last tab' })
 for i = 1, 9 do
   map('n', '<a-' .. i .. '>', i .. 'gt', { desc = 'Go to Tab ' .. i })
 end
-
--- Вместо v лучше всегда использовать x, если не предполагается работа в режиме Select.
--- v включает режим визуального выделения (Visual) и режим замены выделения (Select).
--- x работает только в визуальном режиме (Visual).
 
 -- движение по переносам строк
 map({ 'n', 'x' }, '<Up>', 'gk')
