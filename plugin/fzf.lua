@@ -1,3 +1,4 @@
+-- sudo pacman -S fzf
 -- Многофункциональный плагин на основе fzf
 -- Лучше задать через .fzfrc
 -- vim.env.FZF_DEFAULT_OPTS = '--layout=reverse'

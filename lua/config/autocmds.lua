@@ -126,6 +126,8 @@ vim.api.nvim_create_autocmd('VimResized', {
 --   command = "startinsert",
 -- })
 
+-- Глобально word wrap отключен, но в некоторых текстовых форматах без него
+-- сложно
 vim.api.nvim_create_autocmd('FileType', {
   group = group,
   pattern = { 'markdown', 'text', 'gitcommit' },
@@ -133,6 +135,8 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function()
     vim.opt_local.wrap = true
     vim.opt_local.linebreak = true
+    vim.opt_local.breakindent = true
+    vim.opt_local.showbreak = '↪ '
   end,
 })
 -- print('automcds loaded!')

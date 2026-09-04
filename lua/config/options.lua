@@ -3,51 +3,51 @@
 -- vim.opt, но из-за того, что порядок задания значений не соблюдается,
 -- возникают странные баги
 
-local o = vim.opt
+local opt = vim.opt
 
 -- Interface
-o.number = true
-o.relativenumber = true
-o.cursorline = true
-o.signcolumn = 'yes'
-o.laststatus = 3
-o.shortmess:append('I')
-o.conceallevel = 0
+opt.number = true
+opt.relativenumber = true
+opt.cursorline = true
+opt.signcolumn = 'yes'
+opt.laststatus = 3
+opt.shortmess:append('I')
+opt.conceallevel = 0
 -- opt.showmode = false
 -- opt.showtabline = 2
+-- Красная линия
+-- opt.colorcolumn = '+1'
 
 -- Включается автоматически, но требутся явная установка для некоторых плагинов
 if vim.fn.has('termguicolors') == 1 then
-  o.termguicolors = true
+  opt.termguicolors = true
 end
 
 -- Cursor
-o.scrolloff = 8
-o.sidescrolloff = 8
-o.whichwrap = 'h,l,<,>,[,]'
-o.mouse = 'a'
+opt.scrolloff = 8
+opt.sidescrolloff = 8
+opt.whichwrap = 'h,l,<,>,[,]'
+opt.mouse = 'a'
 
 -- Text
--- Нейродебил пиздит, что все отключают эту настройку, а я не знаю как без нее в
--- принципе обходиться
-o.wrap = true
-o.linebreak = true
-o.breakindent = true
-o.showbreak = '↪ '
-o.expandtab = true
-o.tabstop = 4
-o.shiftwidth = 2
-o.softtabstop = 2
-o.smarttab = true
-o.autoindent = true
-o.smartindent = true
-o.textwidth = 80
+opt.wrap = false
+-- opt.linebreak = true
+-- opt.breakindent = true
+-- opt.showbreak = '↪ '
+opt.expandtab = true
+opt.tabstop = 4
+opt.shiftwidth = 2
+opt.softtabstop = 2
+opt.smarttab = true
+opt.autoindent = true
+opt.smartindent = true
+-- opt.textwidth = 80
 -- opt.joinspaces = false
 -- Не имеет эффекта в арче, так как устанавливается через плагины после
 -- загрузки init.lua
 -- opt.formatoptions = { j = true, q = true }
-o.list = true
-o.listchars:append({
+opt.list = true
+opt.listchars:append({
   extends = '↪',
   -- lead = '·',
   nbsp = '␣',
@@ -55,62 +55,62 @@ o.listchars:append({
   tab = '→ ',
   trail = '·',
 })
-o.synmaxcol = 255
+opt.synmaxcol = 255
 
 -- Search
 -- Эти 4 настройки включены по дефолту
-o.ignorecase = true
-o.smartcase = true
-o.hlsearch = true
-o.incsearch = true
+opt.ignorecase = true
+opt.smartcase = true
+opt.hlsearch = true
+opt.incsearch = true
 
-o.inccommand = 'split'
-o.wildignorecase = true
-o.wildignore:append({
+opt.inccommand = 'split'
+opt.wildignorecase = true
+opt.wildignore:append({
   '*/.git/*',
   '*/node_modules/*',
 })
 
 -- Completion
+opt.backspace = { 'indent', 'eol', 'start' }
 -- Без popup нативный LSP не показывает документацию
-o.backspace = { 'indent', 'eol', 'start' }
-o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
-o.pumborder = 'rounded'
-o.pummaxwidth = 60
+opt.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
+opt.pumborder = 'rounded'
+opt.pummaxwidth = 60
 -- o.pumwidth = 20
-o.winborder = 'rounded'
+opt.winborder = 'rounded'
 
 -- Files
-o.clipboard = 'unnamedplus'
-o.swapfile = false
-o.backup = false
-o.undofile = true
-o.hidden = true -- дефолт
-o.autoread = true -- дефолт
-o.confirm = true
+opt.clipboard = 'unnamedplus'
+opt.swapfile = false
+opt.backup = false
+opt.undofile = true
+opt.hidden = true -- дефолт
+opt.autoread = true -- дефолт
+opt.confirm = true
 -- Отключает modeline во избежание инъекции команд через содержимое файлов
-o.modeline = false
+opt.modeline = false
 -- options не сохраняются в сессиях во избежание конфликтов с плагинами
-o.sessionoptions =
+opt.sessionoptions =
   'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal'
 -- Хранит позицию курсора, метки и регистры между сессиями
-o.shada = "!,'100,<1000,s10,h"
+opt.shada = "!,'100,<1000,s10,h"
 
 -- Windows
-o.splitbelow = true
-o.splitright = true
+opt.splitbelow = true
+opt.splitright = true
 
 -- Performance
-o.updatetime = 200
-o.timeoutlen = 500
+opt.updatetime = 200
+opt.timeoutlen = 500
 
 -- Русская раскладка
 -- Переключение встроенной раскладки через <C-^>
-o.keymap = 'russian-jcukenwin'
-o.iminsert = 0
-o.imsearch = -1
+opt.keymap = 'russian-jcukenwin'
+opt.iminsert = 0
+opt.imsearch = -1
 -- Сочетания клавиш работают при любой активной раскладке
-o.langmap =
+opt.langmap =
   [[ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz]]
 
 -- print('options loaded!')
