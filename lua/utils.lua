@@ -1,8 +1,12 @@
 local M = {}
 
-function M.feedkeys(keys)
+function M.is_empty(s)
+  return s == nil or s == ''
+end
+
+function M.feedkeys(keys, mode)
   local termocodes = vim.api.nvim_replace_termcodes(keys, true, false, true)
-  vim.api.nvim_feedkeys(termocodes, 'n', true)
+  vim.api.nvim_feedkeys(termocodes, mode or 'n', true)
 end
 
 return M
