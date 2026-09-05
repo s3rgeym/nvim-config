@@ -132,11 +132,10 @@ vim.keymap.set(
   { desc = 'Git Status' }
 )
 
--- Прочее
--- Заменяем дополнение файлов
-vim.keymap.set({ 'i' }, '<C-x><C-f>', function()
-  fzfLua.complete_file({
-    cmd = 'rg --files',
-    winopts = { preview = { hidden = true } },
-  })
-end, { silent = true, desc = 'Fuzzy complete file' })
+-- Можно для дополнения файлов использовать fzf
+-- vim.keymap.set({ 'i' }, '<C-x><C-f>', function()
+--   fzfLua.complete_file({
+--     cmd = 'rg --files',
+--     winopts = { preview = { hidden = true } },
+--   })
+-- end, { silent = true, desc = 'Fuzzy complete file' })

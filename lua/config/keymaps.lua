@@ -32,6 +32,9 @@ map({ 'n', 'x' }, '<leader>d', '"_d', { desc = 'Delete without copying' })
 -- map('n', '<leader>bc', vim.cmd.close, { desc = 'Close buffer' })
 
 map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
+
+-- Esc ничего не делает в нормальном режиме в Neovim. Я не помню почему в Vim
+-- на него нельзя было повесить очистку экрана
 map('n', '<Esc>', '<cmd>noh<cr><esc>', { desc = 'Clear search highlight' })
 
 -- Buffers

@@ -1,3 +1,5 @@
+-- local feedkeys = require('utils').feedkeys
+
 vim.pack.add({
   'https://github.com/neovim/nvim-lspconfig',
   'https://github.com/mason-org/mason.nvim',
@@ -55,7 +57,7 @@ vim.lsp.config('jsonls', {
 })
 
 -- Включаем сервера вручную (эта утилита ставится вместе с растом и ставить ее
--- отдельно через Mason лишне)
+-- отдельно через Mason лишнее)
 vim.lsp.enable({ 'rust_analyzer' })
 
 -- Настройка внешнего вида диагностики
@@ -80,15 +82,6 @@ vim.api.nvim_create_autocmd('CursorHold', {
 -- Задержка перед срабатыванием CursorHold (в миллисекундах)
 vim.opt.updatetime = 300
 
-local function pumvisible()
-  return tonumber(vim.fn.pumvisible()) ~= 0
-end
-
-local function feedkeys(keys)
-  local termocodes = vim.api.nvim_replace_termcodes(keys, true, false, true)
-  vim.api.nvim_feedkeys(termocodes, 'n', true)
-end
-
 -- https://mintlify.wiki/neovim/neovim/lsp/completion
 local lsp_group = vim.api.nvim_create_augroup('lsp', { clear = true })
 
@@ -98,18 +91,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     local bufnr = args.buf
 
-    local function map(lhs, rhs, opts, mode)
+    local function map(mode, lhs, rhs, opts)
       opts = type(opts) == 'string' and { desc = opts } or opts or {}
-      opts = vim.tbl_extend('force', opts, { buffer = bufnr })
-      vim.keymap.set(mode or 'n', lhs, rhs, opts)
+      opts.buffer = bufnr
+      vim.keymap.set(mode, lhs, rhs, opts)
     end
 
-    -- https://gist.github.com/MariaSolOs/2e44a86f569323c478e5a078d0cf98cc
+    -- По умолчанию автодополнение вызывается при вводе ".", но это не очень
+    -- удобно, привычнее когда варианты автоподстановки показываются при вводе
+    -- любого символа (тут только печатные ASCII).
     if client:supports_method('textDocument/completion') then
-      -- По умолчанию автодополнение вызывается при вводе ".", но это не очень
-      -- удобно, привычнее когда варианты автоподстановки показываются при вводе
-      -- любого символа (тут только печатные ASCII).
       local chars = {}
+
       for i = 32, 126 do
         table.insert(chars, string.char(i))
       end
@@ -118,64 +111,52 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 
-      map('<cr>', function()
-        return pumvisible() and '<C-y>' or '<cr>'
-      end, { expr = true }, 'i')
+      map('i', '<cr>', function()
+        return vim.fn.pumvisible() == 1 and '<C-y>' or '<cr>'
+      end, { expr = true })
 
-      map('<C-Space>', function()
+      map('i', '<C-Space>', function()
         vim.lsp.completion.get()
-      end, 'Trigger Completion', 'i')
+      end, 'Trigger Completion')
 
       -- Закрыть меню и отменить подстановку
       -- Можно на <Esc> повесить
-      map('/', function()
-        return pumvisible() and '<C-e>' or '/'
-      end, { expr = true }, 'i')
+      map('i', '/', function()
+        return vim.fn.pumvisible() == 1 and '<C-e>' or '/'
+      end, { expr = true })
 
       -- Вызываем автодополнение по Ctrl-N
-      map('<C-n>', function()
-        return pumvisible() and '<C-n>' or '<C-x><C-o>'
-      end, { expr = true }, 'i')
+      map('i', '<C-n>', function()
+        return vim.fn.pumvisible() == 1 and '<C-n>' or '<C-x><C-o>'
+      end, { expr = true })
 
       -- Сниппеты по дефолту работают и специальных сочетаний для них не нужно
       -- https://neovim.io/doc/user/lua/#vim.snippet.jump()
       -- Сложно привыкнуть к <C-n>/<C-p>
-      map('<Tab>', function()
-        return pumvisible() and '<C-n>' or '<Tab>'
-      end, { expr = true }, 'i')
+      map('i', '<Tab>', function()
+        return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>'
+      end, { expr = true })
 
-      map('<S-Tab>', function()
-        return pumvisible() and '<C-p>' or '<S-Tab>'
-      end, { expr = true }, 'i')
+      map('i', '<S-Tab>', function()
+        return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
+      end, { expr = true })
     end
+
+    -- Сочетания типа K, [d, ]d теперь по дефолту, а для <leader>ca есть gra
 
     -- Это сочетание не всегда связано с LSP по умолчанию, поэтому его нужно
     -- прописать явно
-
-    map('gd', vim.lsp.buf.definition, 'Go to definition')
-    map('gD', vim.lsp.buf.declaration, 'Go to declaration')
-    -- map('gl', vim.diagnostic.open_float, 'Line Diagnostics')
-    map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help', 'i')
-    -- Сочетания типа K, [d, ]d теперь по дефолту, а для <leader>ca есть gra
-    -- map('K', vim.lsp.buf.hover, 'Show Documentation')
-    -- Переход только по warning и error
-    -- map('[d', function()
-    --   vim.diagnostic.jump({
-    --     count = -1,
-    --     severity = { min = vim.diagnostic.severity.WARN },
-    --   })
-    -- end, 'Prev Warning/Error')
-    -- map(']d', function()
-    --   vim.diagnostic.jump({
-    --     count = 1,
-    --     severity = { min = vim.diagnostic.severity.WARN },
-    --   })
-    -- end, 'Next Warning/Error')
+    map('n', 'gd', vim.lsp.buf.definition, 'Go to definition')
+    map('n', 'gD', vim.lsp.buf.declaration, 'Go to declaration')
+    -- map('n', 'gl', vim.diagnostic.open_float, 'Line Diagnostics')
+    map('i', '<C-k>', vim.lsp.buf.signature_help, 'Signature Help')
 
     -- Включаем Inlay Hints по умолчанию
     if client:supports_method('textDocument/inlayHint') then
       vim.lsp.inlay_hint.enable(true)
-      map('<leader>th', function()
+
+      -- А нужна ли вообще возможность отключать их?
+      map('n', '<leader>th', function()
         vim.lsp.inlay_hint.enable(
           not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
         )
@@ -186,12 +167,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
     if client:supports_method('textDocument/documentHighlight') then
       local group =
         vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
-      vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
+
+      vim.api.nvim_clear_autocmds({
+        group = group,
+        buffer = bufnr,
+      })
+
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
         group = group,
         buffer = bufnr,
         callback = vim.lsp.buf.document_highlight,
       })
+
       vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
         group = group,
         buffer = bufnr,
@@ -200,14 +187,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
-
--- Через fzf удобнее это делать
--- Неудобно, что при выборе части пути, его автодополнение завершается
--- vim.api.nvim_create_autocmd('CompleteDone', {
---   callback = function()
---     local e = vim.v.event
---     if e.complete_type == 'files' and e.reason == 'accept' then
---       feedkeys('<C-x><C-f>')
---     end
---   end,
--- })
