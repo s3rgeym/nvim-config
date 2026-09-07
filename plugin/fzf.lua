@@ -43,6 +43,7 @@ vim.keymap.set('n', '<leader>fc', fzf_lua.builtin, { desc = 'FZF Commands' })
 vim.keymap.set('n', '<leader>fk', fzf_lua.keymaps, { desc = 'FZF Keymaps' })
 vim.keymap.set('n', '<leader>fj', fzf_lua.jumps, { desc = 'FZF Jumplist' })
 vim.keymap.set('n', '<leader>fm', fzf_lua.marks, { desc = 'FZF Marks' })
+-- В Neovim 0.12+ есть встроенный модуль undotree, но он хуже
 vim.keymap.set('n', '<leader>fu', fzf_lua.undotree, { desc = 'FZF Undotree' })
 vim.keymap.set('n', '<leader>ft', fzf_lua.colorschemes, { desc = 'FZF Themes' })
 
