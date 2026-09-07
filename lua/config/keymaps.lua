@@ -141,15 +141,17 @@ map(
 )
 
 -- Config
+-- В VS Code м сножестве других программ используется `Ctrl-,`
 map(
   'n',
-  '<leader>ev',
+  '<leader>,',
   '<cmd>tabedit $MYVIMRC<cr>',
   { desc = 'Edit Neovim config' }
 )
 -- Еще можно сохранять сессию перед перезапуском, а после загружать ее,
 -- чтобы сохранить расположение окон
-map('n', '<leader>rv', '<cmd>restart<cr>', { desc = 'Restart Neovim' })
+-- <leader>r оставим под плагины...
+map('n', '<leader>R', '<cmd>restart<cr>', { desc = 'Restart Neovim' })
 
 -- Session
 map('n', '<leader>ss', '<cmd>mksession!<cr>', { desc = 'Save session' })
@@ -159,6 +161,6 @@ map('n', '<leader>sl', '<cmd>source Session.vim<cr>', { desc = 'Load session' })
 map('n', '<leader>tw', '<cmd>setlocal wrap!<cr>', { desc = 'Toggle Wrap' })
 
 -- Управление плагинами
-map('n', '<leader>pu', function()
+map('n', '<leader>U', function()
   vim.pack.update({ force = true })
 end, { desc = 'Update plugins' })
