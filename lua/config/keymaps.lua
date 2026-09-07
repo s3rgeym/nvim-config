@@ -14,9 +14,9 @@ local map = vim.keymap.set
 map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
 -- <C-a> я использую для увеличения версий
-map('n', '<leader>sa', 'ggVG', { desc = 'Select all' })
--- Не сохраняем удаляемый текст в буфер
-map({ 'n', 'x' }, 'x', '"_x')
+-- map('n', '<leader>a', 'ggVG', { desc = 'Select all' })
+-- Можно на d просто повесить
+map({ 'n', 'x' }, '<leader>d', '"_d', { desc = 'Delete without yanking' })
 -- <C-w>c
 -- map('n', '<leader>bc', vim.cmd.close, { desc = 'Close buffer' })
 -- Esc ничего не делает в нормальном режиме в Neovim. Я не помню почему в Vim
