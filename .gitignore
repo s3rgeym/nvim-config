@@ -1,3 +1,4 @@
 Session.vim
 /nvim-pack-lock.json
 /lua/secrets.lua
+*.bak
