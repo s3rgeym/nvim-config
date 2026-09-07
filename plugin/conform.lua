@@ -3,10 +3,7 @@
 -- :MasonInstall ruff stylua biome prettier shellcheck shfmt
 -- Если мы форматируем через conform, то настройки, заданные в конфигах lsp не
 -- применяются!!!
-vim.pack.add(
-  { 'https://github.com/stevearc/conform.nvim' },
-  { confirm = false }
-)
+vim.pack.add({ 'https://github.com/stevearc/conform.nvim' })
 
 local conform = require('conform')
 

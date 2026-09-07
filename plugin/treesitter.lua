@@ -5,7 +5,7 @@ vim.pack.add({
   'https://github.com/nvim-treesitter/nvim-treesitter',
   'https://github.com/nvim-treesitter/nvim-treesitter-context',
   'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
-}, { confirm = false })
+})
 
 local ts = require('nvim-treesitter')
 ts.setup({})
@@ -134,10 +134,9 @@ vim.keymap.set({ 'x', 'o' }, 'as', function()
     'locals'
   )
 end)
-
--- vim.keymap.set("n", "<leader>a", function()
---   require("nvim-treesitter-textobjects.swap").swap_next "@parameter.inner"
--- end)
--- vim.keymap.set("n", "<leader>A", function()
---   require("nvim-treesitter-textobjects.swap").swap_previous "@parameter.outer"
--- end)
+vim.keymap.set('n', '<leader>a', function()
+  require('nvim-treesitter-textobjects.swap').swap_next '@parameter.inner'
+end)
+vim.keymap.set('n', '<leader>A', function()
+  require('nvim-treesitter-textobjects.swap').swap_previous '@parameter.outer'
+end)

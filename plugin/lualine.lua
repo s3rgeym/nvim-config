@@ -1,7 +1,7 @@
 vim.pack.add({
   'https://github.com/nvim-lualine/lualine.nvim',
   'https://github.com/nvim-tree/nvim-web-devicons',
-}, { confirm = false })
+})
 
 -- Тема устанавливается по VimEnter чтобы темы, установленные через плагины,
 -- успели загрузиться

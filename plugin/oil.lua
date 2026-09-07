@@ -5,7 +5,7 @@ vim.pack.add({
   'https://github.com/nvim-tree/nvim-web-devicons',
   'https://github.com/benomahony/oil-git.nvim',
   'https://github.com/JezerM/oil-lsp-diagnostics.nvim',
-}, { confirm = false })
+})
 
 require('oil').setup({
   default_file_explorer = true,

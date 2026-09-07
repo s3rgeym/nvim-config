@@ -112,5 +112,3 @@ opt.imsearch = -1
 -- Сочетания клавиш работают при любой активной раскладке
 opt.langmap =
   [[ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz]]
-
--- print('options loaded!')

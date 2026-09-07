@@ -1,11 +1,11 @@
--- local feedkeys = require('utils').feedkeys
+local utils = require('utils')
 
 vim.pack.add({
   'https://github.com/neovim/nvim-lspconfig',
   'https://github.com/mason-org/mason.nvim',
   'https://github.com/williamboman/mason-lspconfig.nvim',
   'https://github.com/b0o/schemastore.nvim',
-}, { confirm = false })
+})
 
 require('mason').setup()
 
@@ -122,23 +122,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
       -- Закрыть меню и отменить подстановку
       -- Можно на <Esc> повесить
       map('i', '/', function()
-        return vim.fn.pumvisible() == 1 and '<C-e>' or '/'
+        return utils.pumvisible() and '<C-e>' or '/'
       end, { expr = true })
 
       -- Вызываем автодополнение по Ctrl-N
       map('i', '<C-n>', function()
-        return vim.fn.pumvisible() == 1 and '<C-n>' or '<C-x><C-o>'
+        return utils.pumvisible() and '<C-n>' or '<C-x><C-o>'
       end, { expr = true })
 
       -- Сниппеты по дефолту работают и специальных сочетаний для них не нужно
       -- https://neovim.io/doc/user/lua/#vim.snippet.jump()
       -- Сложно привыкнуть к <C-n>/<C-p>
       map('i', '<Tab>', function()
-        return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>'
+        return utils.pumvisible() and '<C-n>' or '<Tab>'
       end, { expr = true })
 
       map('i', '<S-Tab>', function()
-        return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
+        return utils.pumvisible() and '<C-p>' or '<S-Tab>'
       end, { expr = true })
     end
 

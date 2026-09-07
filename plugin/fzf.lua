@@ -5,11 +5,11 @@
 vim.pack.add({
   'https://github.com/ibhagwan/fzf-lua',
   'https://github.com/nvim-tree/nvim-web-devicons',
-}, { confirm = false })
+}, {})
 
-local fzfLua = require('fzf-lua')
+local fzf_lua = require('fzf-lua')
 
-fzfLua.setup({
+fzf_lua.setup({
   fzf_colors = true,
   -- winopts = {
   --   border = 'rounded',
@@ -19,123 +19,60 @@ fzfLua.setup({
   -- },
 })
 
-fzfLua.register_ui_select()
+fzf_lua.register_ui_select()
 
--- TODO: использовать вызов методов модуля вместо
-vim.keymap.set('n', '<C-p>', '<cmd>FzfLua files<cr>', { desc = 'Files' })
-vim.keymap.set('n', '<C-g>', '<cmd>FzfLua live_grep<cr>', { desc = 'Grep' })
-vim.keymap.set('n', '<C-\\>', '<cmd>FzfLua buffers<cr>', { desc = 'Buffers' })
-vim.keymap.set(
-  'n',
-  -- Сам разработчик советует использовать <C-k>, но это сочетание
-  -- используется для выбора окон
-  '<leader>fc',
-  '<cmd>FzfLua builtin<cr>',
-  { desc = 'Commands' }
-)
+-- Я решил не вешать ничего на сочетания типа <C-g>, <C-p> и тп, как советует
+-- разработчик
+vim.keymap.set('n', '<leader>ff', fzf_lua.files, { desc = 'FZF Files' })
+vim.keymap.set('n', '<leader>fg', fzf_lua.live_grep, { desc = 'FZF Grep' })
+vim.keymap.set('n', '<leader>fb', fzf_lua.buffers, { desc = 'FZF Buffers' })
 vim.keymap.set(
   'n',
   '<leader>fo',
-  '<cmd>FzfLua oldfiles<cr>',
-  { desc = 'Recent Files' }
+  fzf_lua.oldfiles,
+  { desc = 'FZF Recent Files' }
 )
+vim.keymap.set('n', '<leader>fr', fzf_lua.resume, { desc = 'FZF Resume' })
 vim.keymap.set(
   'n',
-  '<leader>ft',
-  '<cmd>FzfLua colorschemes<cr>',
-  { desc = 'Themes' }
+  '<leader>fd',
+  fzf_lua.diagnostics_workspace,
+  { desc = 'FZF Workspace Diagnostics' }
 )
-vim.keymap.set('n', '<leader>fr', '<cmd>FzfLua resume<cr>', { desc = 'Resume' })
+vim.keymap.set('n', '<leader>fc', fzf_lua.builtin, { desc = 'FZF Commands' })
+vim.keymap.set('n', '<leader>fk', fzf_lua.keymaps, { desc = 'FZF Keymaps' })
+vim.keymap.set('n', '<leader>fj', fzf_lua.jumps, { desc = 'FZF Jumplist' })
+vim.keymap.set('n', '<leader>fm', fzf_lua.marks, { desc = 'FZF Marks' })
+vim.keymap.set('n', '<leader>fu', fzf_lua.undotree, { desc = 'FZF Undotree' })
+vim.keymap.set('n', '<leader>ft', fzf_lua.colorschemes, { desc = 'FZF Themes' })
 
--- LSP
 -- Переопределение встроенных сочетаний в Neovim 0.10+
 vim.keymap.set(
   { 'n', 'v' },
   'gra',
-  '<cmd>FzfLua lsp_code_actions<cr>',
+  fzf_lua.lsp_code_actions,
   { desc = 'Code Action' }
 )
-vim.keymap.set(
-  'n',
-  'grr',
-  '<cmd>FzfLua lsp_references<cr>',
-  { desc = 'References' }
-)
+vim.keymap.set('n', 'grr', fzf_lua.lsp_references, { desc = 'References' })
 vim.keymap.set(
   'n',
   'gri',
-  '<cmd>FzfLua lsp_implementations<cr>',
+  fzf_lua.lsp_implementations,
   { desc = 'Implementations' }
 )
+vim.keymap.set('n', 'grt', fzf_lua.lsp_typedefs, { desc = 'Type Definition' })
 vim.keymap.set(
   'n',
-  'grt',
-  '<cmd>FzfLua lsp_typedefs<cr>',
-  { desc = 'Type Definition' }
-)
-
--- Прочие сочетания для LSP
-vim.keymap.set(
-  'n',
-  '<leader>ls',
-  '<cmd>FzfLua lsp_document_symbols<cr>',
+  'gO',
+  fzf_lua.lsp_document_symbols,
   { desc = 'Document Symbols' }
 )
-vim.keymap.set(
-  'n',
-  '<leader>lS',
-  '<cmd>FzfLua lsp_workspace_symbols<cr>',
-  { desc = 'Workspace Symbols' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>ld',
-  '<cmd>FzfLua diagnostics_document<cr>',
-  { desc = 'Document Diagnostics' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>lD',
-  '<cmd>FzfLua diagnostics_workspace<cr>',
-  { desc = 'Workspace Diagnostics' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>lf',
-  '<cmd>FzfLua lsp_finder<cr>',
-  { desc = 'LSP Finder' }
-)
 
--- Git
-vim.keymap.set(
-  'n',
-  '<leader>gb',
-  '<cmd>FzfLua git_branches<cr>',
-  { desc = 'Git Branches' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>gc',
-  '<cmd>FzfLua git_commits<cr>',
-  { desc = 'Git Commits' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>gf',
-  '<cmd>FzfLua git_files<cr>',
-  { desc = 'Git Files' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>gs',
-  '<cmd>FzfLua git_status<cr>',
-  { desc = 'Git Status' }
-)
-
--- Можно для дополнения файлов использовать fzf
--- vim.keymap.set({ 'i' }, '<C-x><C-f>', function()
---   fzfLua.complete_file({
---     cmd = 'rg --files',
---     winopts = { preview = { hidden = true } },
---   })
--- end, { silent = true, desc = 'Fuzzy complete file' })
+-- Замена встроенно автодополнения файлов, которое завершается при выборе
+-- сегмента пути, что не очень удобно
+vim.keymap.set({ 'i' }, '<C-x><C-f>', function()
+  fzf_lua.complete_file({
+    cmd = 'rg --files',
+    winopts = { preview = { hidden = true } },
+  })
+end, { silent = true, desc = 'Fuzzy complete file' })

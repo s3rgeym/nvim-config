@@ -11,28 +11,14 @@ vim.g.maplocalleader = ' '
 
 local map = vim.keymap.set
 
--- General
 map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
--- map('n', "<leader>Q", "<cmd>qa!<cr>", { desc = "Quit All" })
--- map('n', '<leader>x', '<cmd>x<cr>', { desc = 'Save and Quit' })
--- Как вариант можно использовать <A-a>
--- vim.keymap.set('n', '<C-a>', 'ggVG"+y', { desc = 'Select All' })
--- <leader>a для aerial.nvim
-
-map('n', '<leader>y', '<cmd>%y+<cr>', { desc = 'Copy entire buffer' })
-
-map('n', '<leader>p', 'ggVG"+p', {
-  desc = 'Replace buffer with clipboard',
-})
-
--- Спорное сочетанияе
-map({ 'n', 'x' }, '<leader>d', '"_d', { desc = 'Delete without copying' })
-
+map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
+-- <C-a> я использую для увеличения версий
+map('n', '<leader>sa', 'ggVG', { desc = 'Select all' })
+-- Не сохраняем удаляемый текст в буфер
+map({ 'n', 'x' }, 'x', '"_x')
 -- <C-w>c
 -- map('n', '<leader>bc', vim.cmd.close, { desc = 'Close buffer' })
-
-map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
-
 -- Esc ничего не делает в нормальном режиме в Neovim. Я не помню почему в Vim
 -- на него нельзя было повесить очистку экрана
 map('n', '<Esc>', '<cmd>noh<cr><esc>', { desc = 'Clear search highlight' })
@@ -172,17 +158,7 @@ map('n', '<leader>sl', '<cmd>source Session.vim<cr>', { desc = 'Load session' })
 -- Сомнительно
 map('n', '<leader>tw', '<cmd>setlocal wrap!<cr>', { desc = 'Toggle Wrap' })
 
-map('n', '<leader>u', function()
-  if not package.loaded['undotree'] then
-    vim.pack.add('undotree')
-  end
-  require('undotree').toggle()
-end, { desc = 'Undotree Toggle' })
-
-map('n', '<leader>U', vim.pack.update, { desc = 'Update packages' })
-
--- Удаляем встроенные сочетания
--- for _, mapping in ipairs({ 'gra', 'gri', 'grn', 'grt' }) do
---   vim.keymap.del('n', mapping)
--- end
--- print('keymaps loaded!')
+-- Управление плагинами
+map('n', '<leader>pu', function()
+  vim.pack.update({ force = true })
+end, { desc = 'Update plugins' })
