@@ -13,8 +13,8 @@ local map = vim.keymap.set
 
 map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
--- <C-a> я использую для увеличения версий
--- map('n', '<leader>a', 'ggVG', { desc = 'Select all' })
+map('n', '<leader>y', '<cmd>%y"+<cr>', { desc = 'Yank all' })
+map('n', '<leader>p', 'ggVG"_d"+P', { desc = 'Paste over entire file' })
 -- Можно на d просто повесить
 map({ 'n', 'x' }, '<leader>d', '"_d', { desc = 'Delete without yanking' })
 -- <C-w>c
