@@ -142,15 +142,8 @@ map(
 
 -- Config
 -- В VS Code м сножестве других программ используется `Ctrl-,`
-map(
-  'n',
-  '<leader>,',
-  '<cmd>tabedit $MYVIMRC<cr>',
-  { desc = 'Edit Neovim config' }
-)
--- Еще можно сохранять сессию перед перезапуском, а после загружать ее,
--- чтобы сохранить расположение окон
--- <leader>r оставим под плагины...
+map('n', '<leader>,', '<cmd>edit $MYVIMRC<cr>', { desc = 'Edit Neovim config' })
+-- <leader>r оставил для других сочетаний
 map('n', '<leader>R', '<cmd>restart<cr>', { desc = 'Restart Neovim' })
 
 -- Session
