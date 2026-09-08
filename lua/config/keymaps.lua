@@ -162,5 +162,6 @@ map('n', '<leader>tw', '<cmd>setlocal wrap!<cr>', { desc = 'Toggle Wrap' })
 
 -- Управление плагинами
 map('n', '<leader>U', function()
-  vim.pack.update({ force = true })
+  -- vim.pack.update({ force = true })
+  vim.pack.update {}
 end, { desc = 'Update plugins' })
