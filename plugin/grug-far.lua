@@ -1,3 +1,4 @@
+-- По факту он нужен только для работы с обычным текстом, переименование объектов нужно делать через LSP
 vim.pack.add({ 'https://github.com/MagicDuck/grug-far.nvim' })
 
 local grug_far = require('grug-far')
