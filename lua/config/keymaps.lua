@@ -144,7 +144,7 @@ map(
 -- В VS Code м сножестве других программ используется `Ctrl-,`
 map('n', '<leader>,', '<cmd>edit $MYVIMRC<cr>', { desc = 'Edit Neovim config' })
 -- <leader>r оставил для других сочетаний
-map('n', '<leader>R', '<cmd>restart<cr>', { desc = 'Restart Neovim' })
+map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neovim' })
 
 -- Session
 map('n', '<leader>ss', '<cmd>mksession!<cr>', { desc = 'Save session' })
