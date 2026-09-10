@@ -1,9 +1,5 @@
 # Minimal Neovim 0.12+ Config
 
-<img width="1120" height="788" alt="image" src="https://github.com/user-attachments/assets/a02aec01-2f1f-47eb-8b75-f0107fc6ad02" />
-<img width="1165" height="872" alt="image" src="https://github.com/user-attachments/assets/8fd0e655-5c4a-47e1-953c-83166d7d4686" />
-
-
 Минималистичный конфиг для **Neovim 0.12+**, использующий встроенные возможности редактора вместо сторонних плагинов.
 
 ## Особенности
@@ -147,3 +143,5 @@ vim.pack.add({ 'https://github.com/kdheepak/lazygit.nvim' })
 vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<cr>', { desc = 'LazyGit' })
 
 ```
+
+## Скриншоты
