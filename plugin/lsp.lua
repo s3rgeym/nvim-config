@@ -1,5 +1,3 @@
-local utils = require('utils')
-
 vim.pack.add({
   'https://github.com/neovim/nvim-lspconfig',
   'https://github.com/mason-org/mason.nvim',
