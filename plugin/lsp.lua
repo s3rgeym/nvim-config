@@ -9,6 +9,8 @@ vim.pack.add({
 
 require('mason').setup()
 
+vim.keymap.set('n', '<leader>M', '<cmd>Mason<cr>', { desc = 'Open Mason' })
+
 -- Конфиги самих языковых серверов в ~/.config/nvim/after/lsp. Они рекурсивно
 -- объединяются со встроенными.
 -- Полностью переопределить конфиги можно в ~/.config/nvim/lsp.
