@@ -124,9 +124,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         return pumvisible() and '<C-y>' or '<cr>'
       end, { expr = true })
 
-      map('i', '<C-Space>', function()
-        vim.lsp.completion.get()
-      end, 'Trigger Completion')
+      map('i', '<C-Space>', vim.lsp.completion.get, 'Trigger Completion')
 
       -- Закрыть меню и отменить подстановку
       -- Можно на <Esc> повесить
