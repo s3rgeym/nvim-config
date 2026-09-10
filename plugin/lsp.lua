@@ -121,7 +121,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 
       map('i', '<cr>', function()
-        return vim.fn.pumvisible() == 1 and '<C-y>' or '<cr>'
+        return pumvisible() and '<C-y>' or '<cr>'
       end, { expr = true })
 
       map('i', '<C-Space>', function()
