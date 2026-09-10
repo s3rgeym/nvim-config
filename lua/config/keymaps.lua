@@ -1,4 +1,4 @@
--- Alt + стрелки, f, g, h,j, k, l исп-ся в Zellij, поэтому их использование
+-- Alt + стрелки, f, g, h, j, k, l исп-ся в Zellij, поэтому их использование
 -- нежелательно!
 
 -- Вместо v лучше всегда использовать x, если не предполагается работа в режиме Select.
@@ -51,10 +51,10 @@ map(
 )
 
 -- windows
-map('n', '<C-k>', '<cmd>wincmd k<cr>', { desc = 'Focus window up' })
-map('n', '<C-j>', '<cmd>wincmd j<cr>', { desc = 'Focus window down' })
-map('n', '<C-h>', '<cmd>wincmd h<cr>', { desc = 'Focus window left' })
-map('n', '<C-l>', '<cmd>wincmd l<cr>', { desc = 'Focus window right' })
+map('n', '<C-h>', '<C-w>h', { desc = 'Go to Left Window' })
+map('n', '<C-j>', '<C-w>j', { desc = 'Go to Lower Window' })
+map('n', '<C-k>', '<C-w>k', { desc = 'Go to Upper Window' })
+map('n', '<C-l>', '<C-w>l', { desc = 'Go to Right Window' })
 
 map('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase height' })
 map('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease height' })
@@ -100,10 +100,8 @@ map(
 )
 
 -- Перемещение строк
-map('n', 'gK', '<cmd>m .-2<CR>==', { desc = 'Move Line Up' })
-map('n', 'gJ', '<cmd>m .+1<CR>==', { desc = 'Move Line Down' })
-map('x', 'gK', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
-map('x', 'gJ', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
+map('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
+map('x', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
 
 -- Indent
 -- C-u в insert удаляет до начала строки, эффективно убирая отступ

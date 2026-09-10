@@ -7,8 +7,6 @@ vim.pack.add({
 
 require('mason').setup()
 
-vim.keymap.set('n', '<leader>M', '<cmd>Mason<cr>', { desc = 'Open Mason' })
-
 -- Конфиги самих языковых серверов в ~/.config/nvim/after/lsp. Они рекурсивно
 -- объединяются со встроенными.
 -- Полностью переопределить конфиги можно в ~/.config/nvim/lsp.
@@ -66,7 +64,7 @@ vim.diagnostic.config({
   underline = true,
   severity_sort = true,
   float = {
-    border = 'rounded',
+    -- border = 'rounded',
     source = 'if_many',
     focusable = false,
   },
@@ -100,8 +98,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     local bufnr = args.buf
 
-    local function map(mode, lhs, rhs, opts)
-      opts = type(opts) == 'string' and { desc = opts } or opts or {}
+    local function bufmap(mode, lhs, rhs, opts)
+      opts = opts or {}
       opts.buffer = bufnr
       vim.keymap.set(mode, lhs, rhs, opts)
     end
@@ -120,31 +118,36 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 
-      map('i', '<cr>', function()
+      bufmap('i', '<cr>', function()
         return pumvisible() and '<C-y>' or '<cr>'
       end, { expr = true })
 
-      map('i', '<C-Space>', vim.lsp.completion.get, 'Trigger Completion')
+      bufmap(
+        'i',
+        '<C-Space>',
+        vim.lsp.completion.get,
+        { desc = 'Trigger Completion' }
+      )
 
       -- Закрыть меню и отменить подстановку
       -- Можно на <Esc> повесить
-      map('i', '/', function()
+      bufmap('i', '/', function()
         return pumvisible() and '<C-e>' or '/'
       end, { expr = true })
 
       -- Вызываем автодополнение по Ctrl-N
-      map('i', '<C-n>', function()
+      bufmap('i', '<C-n>', function()
         return pumvisible() and '<C-n>' or '<C-x><C-o>'
       end, { expr = true })
 
       -- Сниппеты по дефолту работают и специальных сочетаний для них не нужно
       -- https://neovim.io/doc/user/lua/#vim.snippet.jump()
       -- Сложно привыкнуть к <C-n>/<C-p>
-      map('i', '<Tab>', function()
+      bufmap('i', '<Tab>', function()
         return pumvisible() and '<C-n>' or '<Tab>'
       end, { expr = true })
 
-      map('i', '<S-Tab>', function()
+      bufmap('i', '<S-Tab>', function()
         return pumvisible() and '<C-p>' or '<S-Tab>'
       end, { expr = true })
     end
@@ -153,21 +156,26 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Это сочетание не всегда связано с LSP по умолчанию, поэтому его нужно
     -- прописать явно
-    map('n', 'gd', vim.lsp.buf.definition, 'Go to definition')
-    map('n', 'gD', vim.lsp.buf.declaration, 'Go to declaration')
+    bufmap('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
+    bufmap('n', 'gD', vim.lsp.buf.declaration, { desc = 'Go to declaration' })
     -- map('n', 'gl', vim.diagnostic.open_float, 'Line Diagnostics')
-    map('i', '<C-k>', vim.lsp.buf.signature_help, 'Signature Help')
+    bufmap(
+      'i',
+      '<C-k>',
+      vim.lsp.buf.signature_help,
+      { desc = 'Signature Help' }
+    )
 
     -- Включаем Inlay Hints по умолчанию
     if client:supports_method('textDocument/inlayHint') then
       vim.lsp.inlay_hint.enable(true)
 
       -- А нужна ли вообще возможность отключать их?
-      map('n', '<leader>th', function()
+      bufmap('n', '<leader>th', function()
         vim.lsp.inlay_hint.enable(
           not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
         )
-      end, 'Toggle Inlay Hints')
+      end, { desc = 'Toggle Inlay Hints' })
     end
 
     -- Подсветка упоминаний символа под курсором
@@ -194,3 +202,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
+
+-- Дополнительные сочетания
+vim.keymap.set('n', '<leader>M', '<cmd>Mason<cr>', { desc = 'Open Mason' })

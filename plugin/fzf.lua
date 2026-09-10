@@ -47,6 +47,7 @@ vim.keymap.set('n', '<leader>fm', fzf_lua.marks, { desc = 'FZF Marks' })
 vim.keymap.set('n', '<leader>fu', fzf_lua.undotree, { desc = 'FZF Undotree' })
 
 -- Переопределение встроенных сочетаний в Neovim 0.10+
+-- https://neovim.io/doc/user/lsp/#_defaults
 vim.keymap.set(
   { 'n', 'v' },
   'gra',
