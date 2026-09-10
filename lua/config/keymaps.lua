@@ -100,10 +100,10 @@ map(
 )
 
 -- Перемещение строк
-map('n', 'K', '<cmd>m .-2<CR>==', { desc = 'Move Line Up' })
-map('n', 'J', '<cmd>m .+1<CR>==', { desc = 'Move Line Down' })
-map('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
-map('x', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
+map('n', 'gK', '<cmd>m .-2<CR>==', { desc = 'Move Line Up' })
+map('n', 'gJ', '<cmd>m .+1<CR>==', { desc = 'Move Line Down' })
+map('x', 'gK', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
+map('x', 'gJ', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
 
 -- Indent
 -- C-u в insert удаляет до начала строки, эффективно убирая отступ
