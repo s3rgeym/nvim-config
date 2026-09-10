@@ -145,3 +145,6 @@ vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<cr>', { desc = 'LazyGit' })
 ```
 
 ## Скриншоты
+
+<img width="1120" height="788" alt="image" src="https://github.com/user-attachments/assets/e479fb5f-d64a-40d7-89af-05cf4b50f304" />
+
