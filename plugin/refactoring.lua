@@ -1,4 +1,5 @@
 vim.pack.add({
+  -- В Neovim 0.13+ async будет встроенным
   'https://github.com/lewis6991/async.nvim',
   'https://github.com/ThePrimeagen/refactoring.nvim',
 })

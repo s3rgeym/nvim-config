@@ -113,38 +113,11 @@ map('x', '<S-Tab>', '<gv', { desc = 'Decrease indent' })
 
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
--- map(
---   'n',
---   '<leader>cd',
---   '<cmd>lcd %:p:h<cr><cmd>pwd<cr>',
---   { desc = 'Change Directory' }
--- )
--- map(
---   'n',
---   '<leader>cD',
---   '<cmd>cd %:p:h<cr><cmd>pwd<cr>',
---   { desc = 'Change Directory Globally' }
--- )
-
--- Полезные сочетания для замены текста, если не используется grug-far
-map(
-  'n',
-  '<leader>sr',
-  [[:%s/\<<C-r><C-w>\>//gI<Left><Left><Left>]],
-  { desc = 'Search and replace' }
-)
-map(
-  'x',
-  '<leader>sr',
-  [["hy:%s/<C-r>h//gI<Left><Left><Left>]],
-  { desc = 'Search and replace' }
-)
-
 -- Config
 -- В VS Code м сножестве других программ используется `Ctrl-,`
-map('n', '<leader>,', '<cmd>edit $MYVIMRC<cr>', { desc = 'Edit Neovim config' })
+map('n', '<leader>,', '<cmd>edit $MYVIMRC<cr>', { desc = 'Edit Config' })
 -- <leader>r оставил для других сочетаний
-map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neovim' })
+map('n', '<leader>rc', vim.cmd.restart, { desc = 'Reload Config' })
 
 -- Session
 map('n', '<leader>ss', '<cmd>mksession!<cr>', { desc = 'Save session' })
