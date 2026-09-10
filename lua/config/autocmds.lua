@@ -1,5 +1,5 @@
 ---@diagnostic disable: undefined-field
-local group = vim.api.nvim_create_augroup('User', { clear = true })
+local group = vim.api.nvim_create_augroup('UserAutocmds', { clear = true })
 
 vim.api.nvim_create_autocmd('VimEnter', {
   group = group,

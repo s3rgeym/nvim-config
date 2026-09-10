@@ -84,7 +84,7 @@ vim.api.nvim_create_autocmd('CursorHold', {
 })
 
 -- https://mintlify.wiki/neovim/neovim/lsp/completion
-local lsp_group = vim.api.nvim_create_augroup('lsp', { clear = true })
+local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
 
 local function pumvisible()
   return tonumber(vim.fn.pumvisible()) ~= 0
