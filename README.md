@@ -2,6 +2,10 @@
 
 Минималистичный конфиг для **Neovim 0.12+**, использующий встроенные возможности редактора вместо сторонних плагинов.
 
+## Скриншоты
+
+<img width="1120" height="788" alt="image" src="https://github.com/user-attachments/assets/904c0c22-c753-4adc-93cf-c11cbaf9d474" />
+
 ## Особенности
 
 - Вместо одного огромного `init.lua` настройки вынесены в отдельные файлы:
@@ -143,9 +147,5 @@ vim.pack.add({ 'https://github.com/kdheepak/lazygit.nvim' })
 vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<cr>', { desc = 'LazyGit' })
 
 ```
-
-## Скриншоты
-
-<img width="1120" height="788" alt="image" src="https://github.com/user-attachments/assets/904c0c22-c753-4adc-93cf-c11cbaf9d474" />
 
 
