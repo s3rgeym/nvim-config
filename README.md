@@ -1,7 +1,6 @@
 # Minimal Neovim 0.12+ Config
 
-<img width="1120" height="788" alt="image" src="https://github.com/user-attachments/assets/e1b2c012-78af-4478-bc5e-e7033da25fc5" />
-<img width="1120" height="788" alt="image" src="https://github.com/user-attachments/assets/1591d239-b094-4036-8819-6c9e8c4cc454" />
+<img width="1120" height="788" alt="image" src="https://github.com/user-attachments/assets/a02aec01-2f1f-47eb-8b75-f0107fc6ad02" />
 
 Минималистичный конфиг для **Neovim 0.12+**, использующий встроенные возможности редактора вместо сторонних плагинов.
 
