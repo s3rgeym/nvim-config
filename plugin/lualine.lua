@@ -43,18 +43,20 @@ vim.api.nvim_create_autocmd('VimEnter', {
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
       },
-      tabline = {
-        lualine_a = { { 'buffers', mode = 2 } },
-        lualine_z = {
-          {
-            'tabs',
-            mode = 2,
-            cond = function()
-              return #vim.api.nvim_list_tabpages() > 1
-            end,
-          },
-        },
-      },
+      -- Сверху можно буферы и табы отображать, но когда буферов много, они лишь
+      -- глаза мозолят, а табы можно отображать встроенными средствами
+      -- tabline = {
+      --   lualine_a = { { 'buffers', mode = 2 } },
+      --   lualine_z = {
+      --     {
+      --       'tabs',
+      --       mode = 2,
+      --       cond = function()
+      --         return #vim.api.nvim_list_tabpages() > 1
+      --       end,
+      --     },
+      --   },
+      -- },
     })
   end,
 })

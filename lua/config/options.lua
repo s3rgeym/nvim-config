@@ -13,8 +13,8 @@ opt.signcolumn = 'yes'
 opt.laststatus = 3
 opt.shortmess:append('I')
 opt.conceallevel = 0
--- opt.showmode = false
--- opt.showtabline = 2
+opt.showmode = false
+opt.showtabline = 1
 -- Красная линия
 -- opt.colorcolumn = '+1'
 
