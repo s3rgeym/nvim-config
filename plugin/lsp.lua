@@ -85,6 +85,15 @@ vim.opt.updatetime = 300
 -- https://mintlify.wiki/neovim/neovim/lsp/completion
 local lsp_group = vim.api.nvim_create_augroup('lsp', { clear = true })
 
+local function pumvisible()
+  return tonumber(vim.fn.pumvisible()) ~= 0
+end
+
+-- local function feedkeys(keys, mode)
+--   local termocodes = vim.api.nvim_replace_termcodes(keys, true, false, true)
+--   vim.api.nvim_feedkeys(termocodes, mode or 'n', true)
+-- end
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = lsp_group,
   callback = function(args)
@@ -122,23 +131,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
       -- Закрыть меню и отменить подстановку
       -- Можно на <Esc> повесить
       map('i', '/', function()
-        return utils.pumvisible() and '<C-e>' or '/'
+        return pumvisible() and '<C-e>' or '/'
       end, { expr = true })
 
       -- Вызываем автодополнение по Ctrl-N
       map('i', '<C-n>', function()
-        return utils.pumvisible() and '<C-n>' or '<C-x><C-o>'
+        return pumvisible() and '<C-n>' or '<C-x><C-o>'
       end, { expr = true })
 
       -- Сниппеты по дефолту работают и специальных сочетаний для них не нужно
       -- https://neovim.io/doc/user/lua/#vim.snippet.jump()
       -- Сложно привыкнуть к <C-n>/<C-p>
       map('i', '<Tab>', function()
-        return utils.pumvisible() and '<C-n>' or '<Tab>'
+        return pumvisible() and '<C-n>' or '<Tab>'
       end, { expr = true })
 
       map('i', '<S-Tab>', function()
-        return utils.pumvisible() and '<C-p>' or '<S-Tab>'
+        return pumvisible() and '<C-p>' or '<S-Tab>'
       end, { expr = true })
     end
 
