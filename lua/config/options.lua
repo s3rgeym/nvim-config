@@ -75,10 +75,6 @@ opt.wildignore:append({
 opt.backspace = { 'indent', 'eol', 'start' }
 -- Без popup нативный LSP не показывает документацию
 opt.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
-opt.pumborder = 'rounded'
-opt.pummaxwidth = 60
--- o.pumwidth = 20
-opt.winborder = 'rounded'
 
 -- Files
 opt.clipboard = 'unnamedplus'
