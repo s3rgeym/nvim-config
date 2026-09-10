@@ -32,6 +32,12 @@ require('mason-lspconfig').setup({
   },
 })
 
+-- Необходимые настройки для автодополнения
+-- Задержка перед срабатыванием CursorHold (в миллисекундах)
+vim.opt.updatetime = 300
+-- Без popup справка не отображается
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- blink.cmp больше не нужен!
 -- local ok_blink, blink = pcall(require, 'blink.cmp')
@@ -76,9 +82,6 @@ vim.api.nvim_create_autocmd('CursorHold', {
     vim.diagnostic.open_float(nil, { focusable = false })
   end,
 })
-
--- Задержка перед срабатыванием CursorHold (в миллисекундах)
-vim.opt.updatetime = 300
 
 -- https://mintlify.wiki/neovim/neovim/lsp/completion
 local lsp_group = vim.api.nvim_create_augroup('lsp', { clear = true })
@@ -153,12 +156,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     -- Сочетания типа K, [d, ]d теперь по дефолту, а для <leader>ca есть gra
-
-    -- Это сочетание не всегда связано с LSP по умолчанию, поэтому его нужно
+    -- Эти сочетание не всегда связано с LSP по умолчанию, поэтому его нужно
     -- прописать явно
     bufmap('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
     bufmap('n', 'gD', vim.lsp.buf.declaration, { desc = 'Go to declaration' })
-    -- map('n', 'gl', vim.diagnostic.open_float, 'Line Diagnostics')
     bufmap(
       'i',
       '<C-k>',

@@ -71,11 +71,6 @@ opt.wildignore:append({
   '*/node_modules/*',
 })
 
--- Completion
-opt.backspace = { 'indent', 'eol', 'start' }
--- Без popup нативный LSP не показывает документацию
-opt.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
-
 -- Files
 opt.clipboard = 'unnamedplus'
 opt.swapfile = false
