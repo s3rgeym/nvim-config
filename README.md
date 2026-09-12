@@ -1,4 +1,6 @@
 <img width="1084" height="830" alt="image" src="https://github.com/user-attachments/assets/0f0ead08-c86c-4d13-ba88-91715ce883f1" />
+<img width="1084" height="830" alt="image" src="https://github.com/user-attachments/assets/7da93e1b-ba68-420d-b791-fc906ee7d7fd" />
+
 
 Минималистичный конфиг Neovim 0.12+:
 
