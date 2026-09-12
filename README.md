@@ -25,7 +25,9 @@
 Этот конфиг можно взять за основу своего.
 
 <details>
-<summary>Скриншоты</summary>
-<img width="1084" height="830" alt="image" src="https://github.com/user-attachments/assets/0f0ead08-c86c-4d13-ba88-91715ce883f1" />
-<img width="1084" height="830" alt="image" src="https://github.com/user-attachments/assets/7da93e1b-ba68-420d-b791-fc906ee7d7fd" />
+  <summary>Скриншоты</summary>
+
+  <img width="1230" height="818" alt="image" src="https://github.com/user-attachments/assets/454b6054-89fe-4b78-b0b4-060b061fcfcb" />
+  <img width="1230" height="818" alt="image" src="https://github.com/user-attachments/assets/da2023d9-1b10-49a7-b2d4-effcaaf67e7d" />
+
 </details>
