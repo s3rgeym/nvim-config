@@ -102,7 +102,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     local bufnr = args.buf
 
-    local function bufmap(mode, lhs, rhs, opts)
+    local function map(mode, lhs, rhs, opts)
       opts = opts or {}
       opts.buffer = bufnr
       vim.keymap.set(mode, lhs, rhs, opts)
@@ -122,11 +122,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 
-      bufmap('i', '<cr>', function()
+      map('i', '<cr>', function()
         return pumvisible() and '<C-y>' or '<cr>'
       end, { expr = true })
 
-      bufmap(
+      map(
         'i',
         '<C-Space>',
         vim.lsp.completion.get,
@@ -135,24 +135,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       -- Закрыть меню и отменить подстановку
       -- Можно на <Esc> повесить-- В зависимости от его значения может использоваться LSP или текст.
-      bufmap('i', '/', function()
+      map('i', '/', function()
         return pumvisible() and '<C-e>' or '/'
       end, { expr = true })
 
       -- Вызов дополнения через omnifunc.
       -- В зависимости от его значения может использоваться LSP или текст.
-      bufmap('i', '<C-n>', function()
+      map('i', '<C-n>', function()
         return pumvisible() and '<C-n>' or '<C-x><C-o>'
       end, { expr = true })
 
       -- Сниппеты по дефолту работают и специальных сочетаний для них не нужно
       -- https://neovim.io/doc/user/lua/#vim.snippet.jump()
       -- Сложно привыкнуть к <C-n>/<C-p>
-      bufmap('i', '<Tab>', function()
+      map('i', '<Tab>', function()
         return pumvisible() and '<C-n>' or '<Tab>'
       end, { expr = true })
 
-      bufmap('i', '<S-Tab>', function()
+      map('i', '<S-Tab>', function()
         return pumvisible() and '<C-p>' or '<S-Tab>'
       end, { expr = true })
     end
@@ -160,23 +160,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Сочетания типа K, [d, ]d теперь по дефолту, а для <leader>ca есть gra
     -- Эти сочетание не всегда связано с LSP по умолчанию, поэтому его нужно
     -- прописать явно
-    bufmap('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
-    bufmap('n', 'gD', vim.lsp.buf.declaration, { desc = 'Go to declaration' })
+    map('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
+    map('n', 'gD', vim.lsp.buf.declaration, { desc = 'Go to declaration' })
 
     -- Добавим подсказу параметров параметров в режиме редактирования
-    bufmap(
-      'i',
-      '<C-k>',
-      vim.lsp.buf.signature_help,
-      { desc = 'Signature Help' }
-    )
+    map('i', '<C-k>', vim.lsp.buf.signature_help, { desc = 'Signature Help' })
 
     -- Включаем Inlay Hints по умолчанию
     if client:supports_method('textDocument/inlayHint') then
       vim.lsp.inlay_hint.enable(true)
 
       -- А нужна ли вообще возможность отключать их?
-      bufmap('n', '<leader>th', function()
+      map('n', '<leader>th', function()
         vim.lsp.inlay_hint.enable(
           not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
         )
