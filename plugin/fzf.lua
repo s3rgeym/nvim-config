@@ -3,8 +3,8 @@
 -- Лучше задать через .fzfrc
 -- vim.env.FZF_DEFAULT_OPTS = '--layout=reverse'
 vim.pack.add({
-  'https://github.com/ibhagwan/fzf-lua',
   'https://github.com/nvim-tree/nvim-web-devicons',
+  'https://github.com/ibhagwan/fzf-lua',
 })
 
 local fzf_lua = require('fzf-lua')

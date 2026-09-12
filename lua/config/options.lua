@@ -1,53 +1,61 @@
 -- https://gist.github.com/echasnovski/fa70dc75c475369747d2a485a13303fb
 -- У меня был соблазн все это в массив загнать, а потом задать значения для
--- vim.opt, но из-за того, что порядок задания значений не соблюдается,
--- возникают странные баги
+-- vim.opt, но из-за того, что порядок задания некоторых значений не
+-- соблюдается, то возникают странные баги
 
-local opt = vim.opt
+local o = vim.opt
 
 -- Interface
-opt.number = true
-opt.relativenumber = true
-opt.cursorline = true
-opt.signcolumn = 'yes'
-opt.laststatus = 3
-opt.shortmess:append('I')
-opt.conceallevel = 0
-opt.showmode = false
-opt.showtabline = 1
+o.number = true
+o.relativenumber = true
+o.cursorline = true
+o.signcolumn = 'yes'
+o.laststatus = 3
+o.shortmess:append('I')
+o.conceallevel = 0
+o.showmode = false
+o.showtabline = 1
+-- Без popup справка не отображается
+o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
+-- В всплывающем окне с просмотром доументации края прямоугольные.
+-- https://github.com/neovim/neovim/issues/38248#issuecomment-4038192073
+o.pumborder = 'rounded'
+o.winborder = 'rounded'
+-- Эта опция влияет на задержку перед появлением всплывающего окна
+o.updatetime = 200
 -- Красная линия
--- opt.colorcolumn = '+1'
+-- o.colorcolumn = '+1'
 
 -- Включается автоматически, но требутся явная установка для некоторых плагинов
 if vim.fn.has('termguicolors') == 1 then
-  opt.termguicolors = true
+  o.termguicolors = true
 end
 
 -- Cursor
-opt.scrolloff = 8
-opt.sidescrolloff = 8
-opt.whichwrap = 'h,l,<,>,[,]'
-opt.mouse = 'a'
+o.scrolloff = 8
+o.sidescrolloff = 8
+o.whichwrap = 'h,l,<,>,[,]'
+o.mouse = 'a'
 
 -- Text
-opt.wrap = false
--- opt.linebreak = true
--- opt.breakindent = true
--- opt.showbreak = '↪ '
-opt.expandtab = true
-opt.tabstop = 4
-opt.shiftwidth = 2
-opt.softtabstop = 2
-opt.smarttab = true
-opt.autoindent = true
-opt.smartindent = true
--- opt.textwidth = 80
--- opt.joinspaces = false
--- Не имеет эффекта в арче, так как устанавливается через плагины после
--- загрузки init.lua
--- opt.formatoptions = { j = true, q = true }
-opt.list = true
-opt.listchars:append({
+o.wrap = false
+-- o.linebreak = true
+-- o.breakindent = true
+-- o.showbreak = '↪ '
+o.expandtab = true
+o.tabstop = 4
+o.shiftwidth = 2
+o.softtabstop = 2
+o.smarttab = true
+o.autoindent = true
+o.smartindent = true
+-- o.textwidth = 80
+-- o.joinspaces = false
+-- Не имеет эффекта в арче, так как устанавливается через системные плагины
+-- после загрузки init.lua
+-- o.formatoptions = { j = true, q = true }
+o.list = true
+o.listchars:append({
   extends = '↪',
   -- lead = '·',
   nbsp = '␣',
@@ -55,51 +63,50 @@ opt.listchars:append({
   tab = '→ ',
   trail = '·',
 })
-opt.synmaxcol = 255
+o.synmaxcol = 255
 
 -- Search
 -- Эти 4 настройки включены по дефолту
-opt.ignorecase = true
-opt.smartcase = true
-opt.hlsearch = true
-opt.incsearch = true
+o.ignorecase = true
+o.smartcase = true
+o.hlsearch = true
+o.incsearch = true
 
-opt.inccommand = 'split'
-opt.wildignorecase = true
-opt.wildignore:append({
+o.inccommand = 'split'
+o.wildignorecase = true
+o.wildignore:append({
   '*/.git/*',
   '*/node_modules/*',
 })
 
 -- Files
-opt.clipboard = 'unnamedplus'
-opt.swapfile = false
-opt.backup = false
-opt.undofile = true
-opt.hidden = true -- дефолт
-opt.autoread = true -- дефолт
-opt.confirm = true
+o.clipboard = 'unnamedplus'
+o.swapfile = false
+o.backup = false
+o.undofile = true
+o.hidden = true -- дефолт
+o.autoread = true -- дефолт
+o.confirm = true
 -- Отключает modeline во избежание инъекции команд через содержимое файлов
-opt.modeline = false
+o.modeline = false
 -- options не сохраняются в сессиях во избежание конфликтов с плагинами
-opt.sessionoptions =
+o.sessionoptions =
   'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal'
 -- Хранит позицию курсора, метки и регистры между сессиями
-opt.shada = "!,'100,<1000,s10,h"
+o.shada = "!,'100,<1000,s10,h"
 
 -- Windows
-opt.splitbelow = true
-opt.splitright = true
+o.splitbelow = true
+o.splitright = true
 
 -- Performance
-opt.updatetime = 200
-opt.timeoutlen = 500
+o.timeoutlen = 500
 
 -- Русская раскладка
 -- Переключение встроенной раскладки через <C-^>
-opt.keymap = 'russian-jcukenwin'
-opt.iminsert = 0
-opt.imsearch = -1
+o.keymap = 'russian-jcukenwin'
+o.iminsert = 0
+o.imsearch = -1
 -- Сочетания клавиш работают при любой активной раскладке
-opt.langmap =
+o.langmap =
   [[ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz]]

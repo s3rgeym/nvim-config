@@ -32,19 +32,7 @@ require('mason-lspconfig').setup({
   },
 })
 
--- Необходимые настройки для автодополнения
--- Задержка перед срабатыванием CursorHold (в миллисекундах)
-vim.opt.updatetime = 300
--- Без popup справка не отображается
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
--- blink.cmp больше не нужен!
--- local ok_blink, blink = pcall(require, 'blink.cmp')
--- if ok_blink then
---   capabilities =
---     vim.tbl_deep_extend('force', capabilities, blink.get_lsp_capabilities())
--- end
 
 -- Настройки для всех серверов
 vim.lsp.config('*', { capabilities = capabilities })
@@ -70,7 +58,7 @@ vim.diagnostic.config({
   underline = true,
   severity_sort = true,
   float = {
-    -- border = 'rounded',
+    border = 'rounded',
     source = 'if_many',
     focusable = false,
   },

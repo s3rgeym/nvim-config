@@ -1,10 +1,10 @@
--- В Neovim 0.13 появится встроенный файловый менеджер dir.nvim, который так же выводит список файлов, 
+-- В Neovim 0.13 появится встроенный файловый менеджер dir.nvim, который так же выводит список файлов,
 -- действия же над ними можно через команды выполнять и добавить автокоманду на создание файла при сохранении...
 -- Позволяет работать с файлами в обычном буфере как с текстом
 -- Можно также попробовать альтернативу в виде mini-files
 vim.pack.add({
-  'https://github.com/stevearc/oil.nvim',
   'https://github.com/nvim-tree/nvim-web-devicons',
+  'https://github.com/stevearc/oil.nvim',
   'https://github.com/benomahony/oil-git.nvim',
   'https://github.com/JezerM/oil-lsp-diagnostics.nvim',
 })

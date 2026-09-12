@@ -80,24 +80,24 @@ for i = 1, 9 do
 end
 
 -- движение по переносам строк
--- map({ 'n', 'x' }, '<Up>', 'gk')
--- map({ 'n', 'x' }, '<Down>', 'gj')
+map({ 'n', 'x' }, '<Up>', 'gk')
+map({ 'n', 'x' }, '<Down>', 'gj')
 -- в режиме редактирования раздражает отображение ошибок из-за скрытого
 -- переключения режимов
 -- map('i', "<up>", "<c-o>gk")
 -- map('i', "<down>", "<c-o>gj")
--- map(
---   { 'n', 'x' },
---   'j',
---   "v:count == 0 ? 'gj' : 'j'",
---   { expr = true, silent = true }
--- )
--- map(
---   { 'n', 'x' },
---   'k',
---   "v:count == 0 ? 'gk' : 'k'",
---   { expr = true, silent = true }
--- )
+map(
+  { 'n', 'x' },
+  'j',
+  "v:count == 0 ? 'gj' : 'j'",
+  { expr = true, silent = true }
+)
+map(
+  { 'n', 'x' },
+  'k',
+  "v:count == 0 ? 'gk' : 'k'",
+  { expr = true, silent = true }
+)
 
 -- Перемещение строк
 map('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
