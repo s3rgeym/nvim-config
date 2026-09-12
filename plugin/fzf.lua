@@ -1,4 +1,4 @@
--- sudo pacman -S fzf
+-- sudo pacman -S fzf ripgrep
 -- Многофункциональный плагин на основе fzf
 -- Лучше задать через .fzfrc
 -- vim.env.FZF_DEFAULT_OPTS = '--layout=reverse'
