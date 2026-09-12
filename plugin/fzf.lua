@@ -10,7 +10,7 @@ vim.pack.add({
 local fzf_lua = require('fzf-lua')
 
 fzf_lua.setup({
-  fzf_colors = true,
+  -- fzf_colors = true,
   -- winopts = {
   --   border = 'rounded',
   -- },
