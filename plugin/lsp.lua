@@ -87,6 +87,7 @@ vim.api.nvim_create_autocmd('CursorHold', {
 local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
 
 local function pumvisible()
+  -- Может вернуть nil?
   return tonumber(vim.fn.pumvisible()) ~= 0
 end
 
@@ -133,12 +134,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
       )
 
       -- Закрыть меню и отменить подстановку
-      -- Можно на <Esc> повесить
+      -- Можно на <Esc> повесить-- В зависимости от его значения может использоваться LSP или текст.
       bufmap('i', '/', function()
         return pumvisible() and '<C-e>' or '/'
       end, { expr = true })
 
-      -- Вызываем автодополнение по Ctrl-N
+      -- Вызов дополнения через omnifunc.
+      -- В зависимости от его значения может использоваться LSP или текст.
       bufmap('i', '<C-n>', function()
         return pumvisible() and '<C-n>' or '<C-x><C-o>'
       end, { expr = true })
@@ -160,6 +162,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- прописать явно
     bufmap('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
     bufmap('n', 'gD', vim.lsp.buf.declaration, { desc = 'Go to declaration' })
+
+    -- Добавим подсказу параметров параметров в режиме редактирования
     bufmap(
       'i',
       '<C-k>',
@@ -203,6 +207,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
-
--- Дополнительные сочетания
-vim.keymap.set('n', '<leader>M', '<cmd>Mason<cr>', { desc = 'Open Mason' })
