@@ -147,7 +147,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Сочетания типа K, [d, ]d теперь по дефолту, а для <leader>ca есть gra
     -- Эти сочетание не всегда связано с LSP по умолчанию, поэтому его нужно
-    -- прописать явно
+    -- прописать явно (где-то я столкнулся с тем, что оно не задано)
     map('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
     map('n', 'gD', vim.lsp.buf.declaration, { desc = 'Go to declaration' })
 
