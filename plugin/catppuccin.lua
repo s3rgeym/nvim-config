@@ -3,5 +3,8 @@ vim.pack.add({
 })
 
 -- Если не применяются специальные настройки, то setup можно не вызывать
--- require 'catppuccin'.setup { transparent_background = true }
-vim.cmd.colorscheme 'catppuccin-mocha'
+require('catppuccin').setup({
+  -- Эта прозрачность глючная
+  transparent_background = true,
+})
+vim.cmd.colorscheme('catppuccin-nvim')
