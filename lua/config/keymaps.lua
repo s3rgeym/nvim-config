@@ -92,7 +92,7 @@ map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
 map('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
 
 -- Отступы
-map('i', '<S-Tab>', '<C-u>', { desc = 'Unindent' })
+map('i', '<S-Tab>', '<C-d>', { desc = 'Unindent' })
 map('v', '<Tab>', '>gv', { desc = 'Indent' })
 map('v', '<S-Tab>', '<gv', { desc = 'Unindent' })
 
