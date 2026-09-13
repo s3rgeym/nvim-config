@@ -63,7 +63,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Неудобно тянуться до <C-y>
     map('i', '<cr>', function()
       return vim.fn.pumvisible() == 1 and '<C-y>' or '<cr>'
-    end, { expr = true, silent = true })
+    end, { expr = true })
 
     -- По умолчанию автодополнение вызывается при вводе ".", но это не очень
     -- удобно, привычнее когда варианты автоподстановки показываются при вводе
