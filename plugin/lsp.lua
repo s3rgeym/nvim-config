@@ -48,7 +48,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set(mode, l, r, opts)
     end
 
-    -- <C-x><C-o> по умолчанию
+    -- <C-x><C-o>
     map(
       'i',
       '<C-Space>',
