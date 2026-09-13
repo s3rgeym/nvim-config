@@ -44,10 +44,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     local bufnr = args.buf
 
-    local function map(m, l, r, o)
-      o = type(o) == 'string' and { desc = o } or o or {}
-      o.buffer = bufnr
-      vim.keymap.set(m, l, r, o)
+    local function map(modes, lhs, rhs, opts)
+      opts = type(opts) == 'string' and { desc = opts } or opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(modes, lhs, rhs, opts)
     end
 
     -- Сочетания вынесем за блоки с проверками чтобы во всех буферах те были доступны
