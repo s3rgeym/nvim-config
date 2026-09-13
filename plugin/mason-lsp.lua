@@ -1,4 +1,4 @@
--- Этот плагин можно грузить как до настройки lsp, так и после. 
+-- Этот плагин можно грузить как до настройки lsp, так и после.
 vim.pack.add({
   'https://github.com/neovim/nvim-lspconfig',
   'https://github.com/mason-org/mason.nvim',
@@ -29,11 +29,6 @@ require('mason-lspconfig').setup({
     'vtsls',
     'vue_ls',
     'yamlls',
-
-    -- Он не только устанавливает языковые сервера, но и форматеры с линтерами и пр
-    'shfmt',
-    'prettier',
-    'php-cs-fixer',
   },
 })
 
