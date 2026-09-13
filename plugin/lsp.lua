@@ -1,35 +1,6 @@
 vim.pack.add({
   'https://github.com/neovim/nvim-lspconfig',
-  'https://github.com/mason-org/mason.nvim',
-  'https://github.com/williamboman/mason-lspconfig.nvim',
   'https://github.com/b0o/schemastore.nvim',
-})
-
-require('mason').setup()
-
--- Конфиги самих языковых серверов в ~/.config/nvim/after/lsp. Они рекурсивно
--- объединяются со встроенными.
--- Полностью переопределить конфиги можно в ~/.config/nvim/lsp.
-require('mason-lspconfig').setup({
-  ensure_installed = {
-    'basedpyright',
-    'bashls',
-    'biome',
-    'clangd',
-    'cssls',
-    'docker_compose_language_service',
-    'docker_language_server',
-    'gopls',
-    'html',
-    'jsonls',
-    'lua_ls',
-    'ruff',
-    'stylua',
-    'vimls',
-    'vtsls',
-    'vue_ls',
-    'yamlls',
-  },
 })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -48,20 +19,11 @@ vim.lsp.config('jsonls', {
   },
 })
 
--- Включаем сервера вручную (эта утилита ставится вместе с растом и ставить ее
--- отдельно через Mason лишнее)
-vim.lsp.enable({ 'rust_analyzer' })
-
 -- Настройка внешнего вида диагностики
 vim.diagnostic.config({
   virtual_text = false,
   underline = true,
   severity_sort = true,
-  float = {
-    -- border = 'rounded',
-    source = 'if_many',
-    focusable = false,
-  },
 })
 
 -- Автоматически открывать float при остановке курсора
