@@ -14,10 +14,12 @@ vim.api.nvim_create_autocmd('VimEnter', {
         globalstatus = true,
         -- В консоли Linux пустые квадраты вместо иконок
         -- icons_enabled = vim.env.TERM == "linux",
+        -- Минимализм
+        -- component_separators = { left = '', right = '' },
+        -- section_separators = { left = '', right = '' },
+
         -- component_separators = { left = '│', right = '│' },
         -- section_separators = { left = '', right = '' },
-        component_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
       },
       sections = {
         lualine_a = { 'mode' },

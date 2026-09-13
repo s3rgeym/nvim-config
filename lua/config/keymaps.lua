@@ -80,24 +80,14 @@ for i = 1, 9 do
 end
 
 -- движение по переносам строк
-map({ 'n', 'x' }, '<Up>', 'gk')
+map({ 'n', 'x' }, 'j', 'gj')
+map({ 'n', 'x' }, 'k', 'gk')
 map({ 'n', 'x' }, '<Down>', 'gj')
+map({ 'n', 'x' }, '<Up>', 'gk')
 -- в режиме редактирования раздражает отображение ошибок из-за скрытого
 -- переключения режимов
 -- map('i', "<up>", "<c-o>gk")
 -- map('i', "<down>", "<c-o>gj")
-map(
-  { 'n', 'x' },
-  'j',
-  "v:count == 0 ? 'gj' : 'j'",
-  { expr = true, silent = true }
-)
-map(
-  { 'n', 'x' },
-  'k',
-  "v:count == 0 ? 'gk' : 'k'",
-  { expr = true, silent = true }
-)
 
 -- Перемещение строк
 map('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
@@ -105,17 +95,21 @@ map('x', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
 
 -- Indent
 -- C-u в insert удаляет до начала строки, эффективно убирая отступ
-map('i', '<S-Tab>', '<C-u>', { desc = 'Remove line indent' })
+map('i', '<S-Tab>', '<C-d>', { desc = 'Remove line indent' })
 map('x', '<Tab>', '>gv', { desc = 'Increase indent' })
 map('x', '<S-Tab>', '<gv', { desc = 'Decrease indent' })
 
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
 -- Config
--- В VS Code м сножестве других программ используется `Ctrl-,`
-map('n', '<leader>,', '<cmd>edit $MYVIMRC<cr>', { desc = 'Edit Config' })
+map(
+  'n',
+  '<leader>ev',
+  '<cmd>edit $MYVIMRC<cr>',
+  { desc = 'Edit Neo[v]im Config' }
+)
 -- <leader>r оставил для других сочетаний
-map('n', '<leader>rc', vim.cmd.restart, { desc = 'Reload Config' })
+map('n', '<leader>rv', vim.cmd.restart, { desc = 'Restart Neo[v]im' })
 
 -- Session
 map('n', '<leader>ss', '<cmd>mksession!<cr>', { desc = 'Save session' })
