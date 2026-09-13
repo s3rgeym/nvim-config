@@ -1,3 +1,4 @@
+-- Этот плагин можно грузить как до настройки lsp, так и после. 
 vim.pack.add({
   'https://github.com/neovim/nvim-lspconfig',
   'https://github.com/mason-org/mason.nvim',
