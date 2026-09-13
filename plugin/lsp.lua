@@ -26,7 +26,7 @@ vim.diagnostic.config({
   severity_sort = true,
 })
 
--- Автоматически открывать float при остановке курсора
+-- Показывать сообщение диагностики при наведении курсора
 vim.api.nvim_create_autocmd('CursorHold', {
   callback = function()
     vim.diagnostic.open_float(nil, { focusable = false })
