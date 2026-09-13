@@ -29,6 +29,11 @@ require('mason-lspconfig').setup({
     'vtsls',
     'vue_ls',
     'yamlls',
+
+    -- Он не только устанавливает языковые сервера, но и форматеры
+    'shfmt',
+    'prettier',
+    'php-cs-fixer',
   },
 })
 
