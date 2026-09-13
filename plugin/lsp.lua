@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('n', 'gd', vim.lsp.buf.definition, 'Go to Definition')
     map('n', 'gD', vim.lsp.buf.declaration, 'Go to Declaration')
 
-    -- Показать параметры функции
+    -- Показать сигнатуру функции
     map('i', '<c-k>', vim.lsp.buf.signature_help, 'Signature Help')
 
     -- Сочетания для диагностики и нач-ся с gr заданы по умолчанию
