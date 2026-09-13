@@ -1,6 +1,5 @@
 -- Alt + стрелки, f, g, h, j, k, l исп-ся в Zellij, поэтому их использование
 -- нежелательно!
-
 -- Вместо v лучше всегда использовать x, если не предполагается работа в режиме Select.
 -- v включает режим визуального выделения (Visual) и режим замены выделения (Select).
 -- x работает только в визуальном режиме (Visual), что предотвращает случайный перехват
@@ -89,15 +88,15 @@ map({ 'n', 'x' }, '<Up>', 'gk')
 -- map('i', "<down>", "<c-o>gj")
 
 -- Перемещение строк
-map('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
-map('x', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
+map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
+map('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
 
--- Indent
--- C-u в insert удаляет до начала строки, эффективно убирая отступ
-map('i', '<S-Tab>', '<C-d>', { desc = 'Remove line indent' })
-map('x', '<Tab>', '>gv', { desc = 'Increase indent' })
-map('x', '<S-Tab>', '<gv', { desc = 'Decrease indent' })
+-- Отступы
+map('i', '<S-Tab>', '<C-u>', { desc = 'Unindent' })
+map('v', '<Tab>', '>gv', { desc = 'Indent' })
+map('v', '<S-Tab>', '<gv', { desc = 'Unindent' })
 
+-- Просто Enter для отображения справки
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
 -- Neovim
