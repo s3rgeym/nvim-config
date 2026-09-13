@@ -13,7 +13,8 @@ o.signcolumn = 'yes'
 o.laststatus = 3
 o.shortmess:append('I')
 o.conceallevel = 0
-o.showmode = false
+-- Эту опцию правильнее отключать в плагинах
+-- o.showmode = false
 o.showtabline = 1
 -- Без popup справка не отображается
 o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
