@@ -35,6 +35,7 @@ vim.api.nvim_create_autocmd('CursorHold', {
 
 -- https://mintlify.wiki/neovim/neovim/lsp/completion
 local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
+local highlight_group = vim.api.nvim_create_augroup('LspHighlight', { clear = false })
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = lsp_group,
@@ -48,6 +49,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set(mode, l, r, opts)
     end
 
+    -- Сочетания вынесем за блоки с проверками чтобы во всех буферах те были доступны
     -- Об <C-x><C-o> пальцы сломаешь
     map('i', '<C-Space>', vim.lsp.completion.get, 'Trigger Completion')
 
@@ -65,6 +67,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
       return vim.fn.pumvisible() == 1 and '<C-y>' or '<cr>'
     end, { expr = true })
 
+    map('n', '<leader>i', function()
+      vim.lsp.inlay_hint.enable(
+        not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }),
+        { bufnr = bufnr }
+      )
+    end, 'Toggle [I]nlay Hints')
+      
     -- По умолчанию автодополнение вызывается при вводе ".", но это не очень
     -- удобно, привычнее когда варианты автоподстановки показываются при вводе
     -- любого символа (тут только печатные ASCII).
@@ -87,22 +96,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Подсветка упоминаний символа под курсором
     if client:supports_method('textDocument/documentHighlight') then
-      local group =
-        vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
-
       vim.api.nvim_clear_autocmds({
-        group = group,
+        group = highlight_group,
         buffer = bufnr,
       })
-
+    
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-        group = group,
+        group = highlight_group,
         buffer = bufnr,
         callback = vim.lsp.buf.document_highlight,
       })
-
+    
       vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-        group = group,
+        group = highlight_group,
         buffer = bufnr,
         callback = vim.lsp.buf.clear_references,
       })
