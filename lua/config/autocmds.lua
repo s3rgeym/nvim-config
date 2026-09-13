@@ -1,45 +1,12 @@
 ---@diagnostic disable: undefined-field
 local group = vim.api.nvim_create_augroup('UserAutocmds', { clear = true })
 
-vim.api.nvim_create_autocmd('VimEnter', {
-  group = group,
-  desc = 'Restore session',
-  nested = true,
-  callback = function()
-    if vim.fn.argc() == 0 and vim.fn.filereadable('Session.vim') == 1 then
-      vim.cmd('silent source Session.vim')
-    end
-  end,
-})
-
-vim.api.nvim_create_autocmd('VimLeavePre', {
-  group = group,
-  desc = 'Save session on exit',
-  callback = function()
-    if vim.v.this_session ~= '' then
-      vim.cmd('mksession! ' .. vim.fn.fnameescape(vim.v.this_session))
-    end
-  end,
-})
-
--- vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
---   pattern = '*.json',
---   desc = 'Treat JSON as JSONC',
---   callback = function()
---     vim.bo.filetype = 'jsonc'
---   end,
--- })
-
 -- Чтобы вручную не вводить :e!
--- Я не уверен, что тут нужен BufEnter
-vim.api.nvim_create_autocmd(
-  { 'BufEnter', 'CursorHold', 'CursorHoldI', 'FocusGained' },
-  {
-    group = group,
-    desc = 'Check for external file changes',
-    command = "if mode() != 'c' | checktime | endif",
-  }
-)
+vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI', 'FocusGained' }, {
+  group = group,
+  desc = 'Check for external file changes',
+  command = "if mode() != 'c' | checktime | endif",
+})
 
 -- Настройки форматирования можно переопределить в plugin/*.lua, но так
 -- универсальнее
@@ -62,27 +29,6 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end
   end,
 })
-
--- vim.api.nvim_create_autocmd("BufReadCmd", {
---   group = aucmd_group,
---   pattern = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" },
---   desc = 'Open images in external viewer',
---   command = "exe 'silent !display <afile> &' | b# | bw! #",
--- })
-
--- Мне оно больше мешает
--- vim.api.nvim_create_autocmd('BufWritePre', {
---   group = group,
---   desc = 'Create parent directories on save',
---   callback = function(event)
---     -- Буферы с именами типа oil://
---     if event.match:match('^%w+://') then
---       return
---     end
---     local file = vim.uv.fs_realpath(event.match) or event.match
---     vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
---   end,
--- })
 
 -- Highlight yanked text
 vim.api.nvim_create_autocmd('TextYankPost', {

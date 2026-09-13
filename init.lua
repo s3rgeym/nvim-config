@@ -4,6 +4,7 @@
 pcall(function()
   require('vim._core.ui2').enable()
 end)
+
 require('config.options')
 require('config.keymaps')
 require('config.autocmds')

@@ -13,10 +13,8 @@ local map = vim.keymap.set
 
 map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
-map('n', '<leader>y', '<cmd>%y"+<cr>', { desc = 'Yank all' })
-map('n', '<leader>p', 'ggVG"_d"+P', { desc = 'Paste over entire file' })
--- Можно на d просто повесить
-map({ 'n', 'x' }, '<leader>d', '"_d', { desc = 'Delete without yanking' })
+-- Я это сочетание редко использую
+-- map('n', '<leader>a', 'ggVG', { desc = 'Select [a]ll' })
 -- <C-w>c
 -- map('n', '<leader>bc', vim.cmd.close, { desc = 'Close buffer' })
 -- Esc ничего не делает в нормальном режиме в Neovim. Я не помню почему в Vim
@@ -31,21 +29,22 @@ map('n', '<Esc>', '<cmd>noh<cr><esc>', { desc = 'Clear search highlight' })
 -- map('n', '<Tab>', vim.cmd.bnext, { desc = 'Next Buffer' })
 -- map('n', '<S-Tab>', vim.cmd.bprev, { desc = 'Previous Buffer' })
 -- map('n', '<BS>', '<C-^>', { desc = 'Alternate Buffer' })
--- map('n', '<leader>bn', vim.cmd.bnext, { desc = 'Next Buffer' })
 -- map('n', '<leader>bp', vim.cmd.bprev, { desc = 'Previous Buffer' })
+-- map('n', '<leader>bn', vim.cmd.bnext, { desc = 'Next Buffer' })
 -- H и L служат для перехода в начало и конец буфера
 map('n', 'H', vim.cmd.bprev, { desc = 'Previous Buffer' })
 map('n', 'L', vim.cmd.bnext, { desc = 'Next Buffer' })
 -- Эти сочетания нужны очень редко, я бы задумался об их необходимости
+-- <leader>d и <leader>x под плагины оставил
 map(
   'n',
-  '<leader>x',
+  '<leader>bd',
   '<cmd>bp <bar> bd #<cr>',
   { desc = 'Delete current buffer' }
 )
 map(
   'n',
-  '<leader>X',
+  '<leader>bo',
   '<cmd>%bd <bar> e # <bar> bd #<cr>',
   { desc = 'Delete other buffers' }
 )
@@ -111,15 +110,8 @@ map(
 -- <leader>r оставил для других сочетаний
 map('n', '<leader>rv', vim.cmd.restart, { desc = 'Restart Neo[v]im' })
 
--- Session
-map('n', '<leader>ss', '<cmd>mksession!<cr>', { desc = 'Save session' })
-map('n', '<leader>sl', '<cmd>source Session.vim<cr>', { desc = 'Load session' })
-
--- Сомнительно
-map('n', '<leader>tw', '<cmd>setlocal wrap!<cr>', { desc = 'Toggle Wrap' })
-
 -- Управление плагинами
-map('n', '<leader>U', function()
+map('n', '<leader>u', function()
   -- vim.pack.update({ force = true })
   vim.pack.update {}
 end, { desc = 'Update plugins' })
