@@ -42,6 +42,34 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     local bufnr = args.buf
 
+    local map = function(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
+
+    -- <C-x><C-o> по умолчанию
+    map(
+      'i',
+      '<C-Space>',
+      vim.lsp.completion.get,
+      { desc = 'Trigger Completion' }
+    )
+
+    -- Эти сочетания по умолчанию не связаны с LSP
+    map('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to Definition' })
+    map('n', 'gD', vim.lsp.buf.declaration, { desc = 'Go to Declaration' })
+
+    -- Показать параметры функции
+    map('i', '<c-k>', vim.lsp.buf.signature_help, { desc = 'Signature Help' })
+
+    -- Сочетания для диагностики и нач-ся с gr заданы по умолчанию
+
+    -- Неудобно тянуться до <C-y>
+    map('i', '<cr>', function()
+      return vim.fn.pumvisible() == 1 and '<C-y>' or '<cr>'
+    end, { expr = true })
+
     -- По умолчанию автодополнение вызывается при вводе ".", но это не очень
     -- удобно, привычнее когда варианты автоподстановки показываются при вводе
     -- любого символа (тут только печатные ASCII).
@@ -86,28 +114,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
-
--- Сочетания можно объявить глобально, привязывать их к буферу не имеет смысла
--- <C-x><C-o> по умолчанию
-vim.keymap.set(
-  'i',
-  '<C-Space>',
-  vim.lsp.completion.get,
-  { desc = 'Trigger Completion' }
-)
-
--- Эти сочетания по умолчанию не связаны с LSP
-vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to Definition' })
-vim.keymap.set(
-  'n',
-  'gD',
-  vim.lsp.buf.declaration,
-  { desc = 'Go to Declaration' }
-)
-
-vim.keymap.set('i', '<c-k>', vim.lsp.buf.hover, { desc = 'Signature Help' })
-
--- Неудобно тянуться до <C-y>
-vim.keymap.set('i', '<cr>', function()
-  return vim.fn.pumvisible() == 1 and '<C-y>' or '<cr>'
-end, { expr = true })
