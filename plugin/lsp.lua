@@ -35,7 +35,8 @@ vim.api.nvim_create_autocmd('CursorHold', {
 
 -- https://mintlify.wiki/neovim/neovim/lsp/completion
 local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
-local highlight_group = vim.api.nvim_create_augroup('LspHighlight', { clear = false })
+local highlight_group =
+  vim.api.nvim_create_augroup('LspHighlight', { clear = false })
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = lsp_group,
@@ -43,10 +44,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     local bufnr = args.buf
 
-    local function map(mode, l, r, opts)
-      opts = type(opts) == 'string' and { desc = opts } or opts or {}
-      opts.buffer = bufnr
-      vim.keymap.set(mode, l, r, opts)
+    local function map(m, l, r, o)
+      o = type(o) == 'string' and { desc = o } or o or {}
+      o.buffer = bufnr
+      vim.keymap.set(m, l, r, o)
     end
 
     -- Сочетания вынесем за блоки с проверками чтобы во всех буферах те были доступны
@@ -73,7 +74,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         { bufnr = bufnr }
       )
     end, 'Toggle [I]nlay Hints')
-      
+
     -- По умолчанию автодополнение вызывается при вводе ".", но это не очень
     -- удобно, привычнее когда варианты автоподстановки показываются при вводе
     -- любого символа (тут только печатные ASCII).
@@ -100,13 +101,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
         group = highlight_group,
         buffer = bufnr,
       })
-    
+
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
         group = highlight_group,
         buffer = bufnr,
         callback = vim.lsp.buf.document_highlight,
       })
-    
+
       vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
         group = highlight_group,
         buffer = bufnr,
