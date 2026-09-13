@@ -100,7 +100,7 @@ map('x', '<S-Tab>', '<gv', { desc = 'Decrease indent' })
 
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
--- Config
+-- Neovim
 map(
   'n',
   '<leader>ev',
