@@ -88,12 +88,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 -- Сочетания можно объявить глобально, привязывать их к буферу не имеет смысла
+-- <C-x><C-o> по умолчанию
 vim.keymap.set(
   'i',
   '<C-Space>',
   vim.lsp.completion.get,
   { desc = 'Trigger Completion' }
 )
+
+-- Эти сочетания по умолчанию не связаны с LSP
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to Definition' })
+vim.keymap.set(
+  'n',
+  'gD',
+  vim.lsp.buf.declaration,
+  { desc = 'Go to Declaration' }
+)
+
+vim.keymap.set('i', '<c-k>', vim.lsp.buf.hover, { desc = 'Signature Help' })
 
 -- Неудобно тянуться до <C-y>
 vim.keymap.set('i', '<cr>', function()
