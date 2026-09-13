@@ -13,7 +13,6 @@ conform.setup({
     python = { 'ruff_fix', 'ruff_format', 'ruff_organize_imports' },
     lua = { 'stylua' },
     go = { 'goimports', 'gofmt' },
-    rust = { 'rustfmt' },
     bash = { 'shfmt' },
     javascript = { 'biome' },
     typescript = { 'biome' },
