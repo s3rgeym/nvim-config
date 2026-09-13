@@ -2,6 +2,9 @@ vim.pack.add({ 'https://github.com/lukas-reineke/indent-blankline.nvim' })
 
 require('ibl').setup({
   indent = { char = '▏' },
+  scope = {
+    enabled = true,
+  },
   exclude = {
     filetypes = {
       'help',
@@ -15,7 +18,7 @@ require('ibl').setup({
       'Trouble',
       'DressingInput',
       'DressingSelect',
-      'oil', -- oil.nvim
+      'oil',
     },
   },
 })
