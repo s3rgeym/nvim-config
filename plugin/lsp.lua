@@ -48,13 +48,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set(mode, l, r, opts)
     end
 
-    -- Об <C-x><C-o> пальцы сломаешь 
-    map(
-      'i',
-      '<C-Space>',
-      vim.lsp.completion.get,
-      'Trigger Completion'
-    )
+    -- Об <C-x><C-o> пальцы сломаешь
+    map('i', '<C-Space>', vim.lsp.completion.get, 'Trigger Completion')
 
     -- Эти сочетания по умолчанию не связаны с LSP
     map('n', 'gd', vim.lsp.buf.definition, 'Go to Definition')
