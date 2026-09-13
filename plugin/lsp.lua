@@ -43,32 +43,32 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local bufnr = args.buf
 
     local map = function(mode, l, r, opts)
-      opts = opts or {}
+      opts = type(opts) == 'string' and { desc = opts } or opts or {}
       opts.buffer = bufnr
       vim.keymap.set(mode, l, r, opts)
     end
 
-    -- <C-x><C-o>
+    -- Об <C-x><C-o> пальцы сломаешь 
     map(
       'i',
       '<C-Space>',
       vim.lsp.completion.get,
-      { desc = 'Trigger Completion' }
+      'Trigger Completion'
     )
 
     -- Эти сочетания по умолчанию не связаны с LSP
-    map('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to Definition' })
-    map('n', 'gD', vim.lsp.buf.declaration, { desc = 'Go to Declaration' })
+    map('n', 'gd', vim.lsp.buf.definition, 'Go to Definition')
+    map('n', 'gD', vim.lsp.buf.declaration, 'Go to Declaration')
 
     -- Показать параметры функции
-    map('i', '<c-k>', vim.lsp.buf.signature_help, { desc = 'Signature Help' })
+    map('i', '<c-k>', vim.lsp.buf.signature_help, 'Signature Help')
 
     -- Сочетания для диагностики и нач-ся с gr заданы по умолчанию
 
     -- Неудобно тянуться до <C-y>
     map('i', '<cr>', function()
       return vim.fn.pumvisible() == 1 and '<C-y>' or '<cr>'
-    end, { expr = true })
+    end, { expr = true, silent = true })
 
     -- По умолчанию автодополнение вызывается при вводе ".", но это не очень
     -- удобно, привычнее когда варианты автоподстановки показываются при вводе
