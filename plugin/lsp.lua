@@ -77,7 +77,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, { expr = true })
 
     -- Если на <S-Tab> в режиме редактирования повесить <C-d>, то он перестанет
-    -- работать из-за этого сочетания
+    -- работать из-за этого сочетания. Я даже через feedkeys пробовал. Что-то не
+    -- работает...
     map('i', '<S-Tab>', function()
       return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
     end, { expr = true })
