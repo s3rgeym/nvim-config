@@ -1,3 +1,20 @@
+<img width="1230" height="818" alt="Просмотр справки по K" src="https://github.com/user-attachments/assets/454b6054-89fe-4b78-b0b4-060b061fcfcb" />
+
+<details>
+  <summary>Показать еще</summary>
+
+  <figure>
+    <img width="1230" height="818" alt="Предпросмотр в автодополнении" src="https://github.com/user-attachments/assets/da2023d9-1b10-49a7-b2d4-effcaaf67e7d" />
+    <figcaption>Предпросмотр в автодополнении</figcaption>
+  </figure>
+
+  <figure>
+    <img width="1230" height="818" alt="Дополнение файлов через fzf-lua" src="https://github.com/user-attachments/assets/48adb6f8-c9a7-41cf-9f55-67e8db9e7bc5" />
+    <figcaption>Дополнение файлов по <code>&lt;C-x&gt;&lt;C-f&gt;</code> через fzf-lua</figcaption>
+  </figure>
+
+</details>
+
 ## Описание
 
 Минималистичный конфиг Neovim 0.12+:
@@ -29,28 +46,6 @@
   текущего блока кода. Названия цветов и их hex-коды отображаются с соответствующим фоном, что особенно полезно при работе с фронтендом.
 - Требуется Nerd Font для отображения иконок и других специальных символов. У меня на скринах `JetBrains Mono`. Его nerd-версия есть в стандартном репозитории арча.
 - Я не стал добавлять глобальные поиск и замену по файлам. `grn` прекрасно справляется с этой задачей. Нету тут и отладчика — лишь минимум плагинов. Этот конфиг можно взять за основу своего и добавить недостающее. Я же вдохновлялся `helix`, которым, к слову, пользоваться неанглоязычным пользователя неудобно. Там нет встроенных раскладок, не говоря уже об отсутствии мощной системы плагинов. Там для настройки используется лишь `yaml`, что делает невозможной кастомизацию. Про баги молчу. Vim же с его марсиянским языком для конфигов и призывами на главной может идти в щель.
-
-## Скриншоты
-
-<details>
-  <summary>Показать скриншоты</summary>
-
-  <figure>
-    <img width="1230" height="818" alt="Просмотр справки по K" src="https://github.com/user-attachments/assets/454b6054-89fe-4b78-b0b4-060b061fcfcb" />
-    <figcaption>Просмотр справки по <code>K</code></figcaption>
-  </figure>
-
-  <figure>
-    <img width="1230" height="818" alt="Предпросмотр в автодополнении" src="https://github.com/user-attachments/assets/da2023d9-1b10-49a7-b2d4-effcaaf67e7d" />
-    <figcaption>Предпросмотр в автодополнении</figcaption>
-  </figure>
-
-  <figure>
-    <img width="1230" height="818" alt="Дополнение файлов через fzf-lua" src="https://github.com/user-attachments/assets/48adb6f8-c9a7-41cf-9f55-67e8db9e7bc5" />
-    <figcaption>Дополнение файлов по <code>&lt;C-x&gt;&lt;C-f&gt;</code> через fzf-lua</figcaption>
-  </figure>
-
-</details>
 
 ## TODO
 
