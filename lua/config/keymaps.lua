@@ -24,13 +24,11 @@ map('n', '<Esc>', '<cmd>noh<cr><esc>', { desc = 'Clear search highlight' })
 -- <Tab> в терминалах возвращает тот же самый код, что и CTRL-I, поэтому его
 -- переопределение может сломать навигацию по истории, так что для
 -- универсальности их лучше не использовать
--- map('n', '<C-i>', '<C-i>')
 -- map('n', '<Tab>', vim.cmd.bnext, { desc = 'Next Buffer' })
 -- map('n', '<S-Tab>', vim.cmd.bprev, { desc = 'Previous Buffer' })
--- map('n', '<BS>', '<C-^>', { desc = 'Alternate Buffer' })
 -- map('n', '<leader>bp', vim.cmd.bprev, { desc = 'Previous Buffer' })
 -- map('n', '<leader>bn', vim.cmd.bnext, { desc = 'Next Buffer' })
--- H и L служат для перехода в начало и конец буфера
+-- H и L по умолчанию служат для перехода в начало и конец буфера
 map('n', 'H', vim.cmd.bprev, { desc = 'Previous Buffer' })
 map('n', 'L', vim.cmd.bnext, { desc = 'Next Buffer' })
 -- Эти сочетания нужны очень редко, я бы задумался об их необходимости
@@ -92,9 +90,12 @@ map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
 map('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
 
 -- Отступы
-map('i', '<S-Tab>', '<C-d>', { desc = 'Unindent' })
+-- Не будет работать, например, если в буфере в режиме вставки повесить на него действие
+-- map('i', '<S-Tab>', '<C-d>', { desc = 'Outdent line' })
 map('v', '<Tab>', '>gv', { desc = 'Indent' })
-map('v', '<S-Tab>', '<gv', { desc = 'Unindent' })
+map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
+map('n', '<Tab>', '>>', { desc = 'Indent line' })
+map('n', '<S-Tab>', '<<', { desc = 'Outdent line' })
 
 -- Просто Enter для отображения справки
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })

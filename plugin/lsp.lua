@@ -46,7 +46,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     local function map(modes, lhs, rhs, opts)
       opts = type(opts) == 'string' and { desc = opts } or opts
-      opts = vim.tbl_extend('force', { buffer = bufnr, silent = true }, opts or {})
+      opts =
+        vim.tbl_extend('force', { buffer = bufnr, silent = true }, opts or {})
       vim.keymap.set(modes, lhs, rhs, opts)
     end
 
@@ -62,23 +63,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Показать сигнатуру функции
     map('i', '<c-k>', vim.lsp.buf.signature_help, 'Signature Help')
 
+    -- Подтверждение выбора по Enter, так как неудобно тянуться до <C-y>
+    map('i', '<cr>', function()
+      return vim.fn.pumvisible() == 1 and '<C-y>' or '<cr>'
+    end, { expr = true })
+
+    -- <C-n> назначать не надо, так как он и так служит для вызова дополнения
+    -- keyword, если меню дополнения не открыто
+
     -- Выбор вариантов по Tab и Shift-Tab
     map('i', '<Tab>', function()
       return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>'
     end, { expr = true })
-    
+
+    -- Если на <S-Tab> в режиме редактирования повесить <C-d>, то он перестанет
+    -- работать из-за этого сочетания
     map('i', '<S-Tab>', function()
       return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
-    end, { expr = true })
-    
-    -- Отмена автодополнения
-    map('i', '/', function()
-      return vim.fn.pumvisible() == 1 and '<C-e>' or '/'
-    end, { expr = true })
-    
-    -- Подтверждение выбора по Enter, так как неудобно тянуться до <C-y>
-    map('i', '<cr>', function()
-      return vim.fn.pumvisible() == 1 and '<C-y>' or '<cr>'
     end, { expr = true })
 
     map('n', '<leader>i', function()
