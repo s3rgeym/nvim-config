@@ -45,8 +45,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local bufnr = args.buf
 
     local function map(modes, lhs, rhs, opts)
-      opts = type(opts) == 'string' and { desc = opts } or opts or {}
-      opts.buffer = bufnr
+      opts = type(opts) == 'string' and { desc = opts } or opts
+      opts = vim.tbl_extend('force', { buffer = bufnr, silent = true }, opts or {})
       vim.keymap.set(modes, lhs, rhs, opts)
     end
 
@@ -54,6 +54,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Об <C-x><C-o> пальцы сломаешь
     map('i', '<C-Space>', vim.lsp.completion.get, 'Trigger Completion')
 
+    -- Сочетания для диагностики и нач-ся с gr заданы по умолчанию
     -- Эти сочетания по умолчанию не связаны с LSP
     map('n', 'gd', vim.lsp.buf.definition, 'Go to Definition')
     map('n', 'gD', vim.lsp.buf.declaration, 'Go to Declaration')
@@ -61,9 +62,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Показать сигнатуру функции
     map('i', '<c-k>', vim.lsp.buf.signature_help, 'Signature Help')
 
-    -- Сочетания для диагностики и нач-ся с gr заданы по умолчанию
-
-    -- Неудобно тянуться до <C-y>
+    -- Выбор вариантов по Tab и Shift-Tab
+    map('i', '<Tab>', function()
+      return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>'
+    end, { expr = true })
+    
+    map('i', '<S-Tab>', function()
+      return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
+    end, { expr = true })
+    
+    -- Отмена автодополнения
+    map('i', '/', function()
+      return vim.fn.pumvisible() == 1 and '<C-e>' or '/'
+    end, { expr = true })
+    
+    -- Подтверждение выбора по Enter, так как неудобно тянуться до <C-y>
     map('i', '<cr>', function()
       return vim.fn.pumvisible() == 1 and '<C-y>' or '<cr>'
     end, { expr = true })
