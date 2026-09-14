@@ -71,9 +71,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
       return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
     end, { expr = true })
     
-    -- Отмена автодополнения
-    map('i', '/', function()
-      return vim.fn.pumvisible() == 1 and '<C-e>' or '/'
+    -- Отмена автодополнения по Backspace
+    map('i', '<BS>', function()
+      return vim.fn.pumvisible() == 1 and '<C-e>' or '<BS>'
     end, { expr = true })
     
     -- Подтверждение выбора по Enter, так как неудобно тянуться до <C-y>
