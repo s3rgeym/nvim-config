@@ -19,6 +19,8 @@
   </figure>
 </details>
 
+На скриншотах терминал Foot с Zellij со шрифтом `JetBrainsMonoNL Nerd Font Mono`.
+
 ### Описание
 
 Минималистичный конфиг Neovim 0.12+ со сл. особенностями:
