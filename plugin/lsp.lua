@@ -35,8 +35,9 @@ vim.api.nvim_create_autocmd('CursorHold', {
 
 -- https://mintlify.wiki/neovim/neovim/lsp/completion
 local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
-local highlight_group =
-  vim.api.nvim_create_augroup('LspHighlight', { clear = false })
+local highlight_group = vim.api.nvim_create_augroup('LspHighlight', {
+  clear = false,
+})
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = lsp_group,
@@ -46,8 +47,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     local function map(modes, lhs, rhs, opts)
       opts = type(opts) == 'string' and { desc = opts } or opts
-      opts =
-        vim.tbl_extend('force', { buffer = bufnr, silent = true }, opts or {})
+      opts = vim.tbl_extend('force', {
+        buffer = bufnr,
+        silent = true,
+      }, opts or {})
       vim.keymap.set(modes, lhs, rhs, opts)
     end
 
@@ -78,7 +81,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Если на <S-Tab> в режиме редактирования повесить <C-d>, то он перестанет
     -- работать из-за этого сочетания. Я даже через feedkeys пробовал. Что-то не
-    -- работает... Проблема тут в том еще, что <cr>, <Tab> в режиме вставки 
+    -- работает... Проблема тут в том еще, что <cr>, <Tab> в режиме вставки
     -- добавляют символы (пусть и непечатные), и никто их переопределять не
     -- станет
     map('i', '<S-Tab>', function()
