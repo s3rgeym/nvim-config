@@ -6,7 +6,7 @@
 </figure>
 
 <details> 
-  <summary>Больше скриншотов</summary>
+  <summary>Еще скриншоты</summary>
 
   <figure> 
     <img width="1230" height="818" src="https://github.com/user-attachments/assets/da2023d9-1b10-49a7-b2d4-effcaaf67e7d" /> 
