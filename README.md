@@ -1,7 +1,7 @@
 <img width="1230" height="818" alt="Просмотр справки по K" src="https://github.com/user-attachments/assets/454b6054-89fe-4b78-b0b4-060b061fcfcb" />
 
 <details>
-  <summary>Показать еще</summary>
+  <summary>Больше скриншотов</summary>
 
   <figure>
     <img width="1230" height="818" alt="Предпросмотр в автодополнении" src="https://github.com/user-attachments/assets/da2023d9-1b10-49a7-b2d4-effcaaf67e7d" />
