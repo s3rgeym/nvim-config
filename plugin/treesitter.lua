@@ -101,6 +101,7 @@ require('nvim-treesitter-textobjects').setup({
   },
 })
 
+-- Как запомнить: around/inner method/class/section
 -- keymaps
 -- You can use the capture groups defined in `textobjects.scm`
 vim.keymap.set({ 'x', 'o' }, 'am', function()
