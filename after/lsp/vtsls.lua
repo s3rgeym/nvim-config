@@ -1,4 +1,3 @@
--- vue_ls не будет работать без этих настроек
 -- @see <https://github.com/vuejs/language-tools/wiki/Neovim>
 local vue_language_server_path = vim.fn.stdpath("data")
   .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
