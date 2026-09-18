@@ -21,13 +21,6 @@ map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
 map('n', '<Esc>', '<cmd>noh<cr><esc>', { desc = 'Clear search highlight' })
 
 -- Buffers
--- <Tab> в терминалах возвращает тот же самый код, что и CTRL-I, поэтому его
--- переопределение может сломать навигацию по истории, так что для
--- универсальности их лучше не использовать
--- map('n', '<Tab>', vim.cmd.bnext, { desc = 'Next Buffer' })
--- map('n', '<S-Tab>', vim.cmd.bprev, { desc = 'Previous Buffer' })
--- map('n', '<leader>bp', vim.cmd.bprev, { desc = 'Previous Buffer' })
--- map('n', '<leader>bn', vim.cmd.bnext, { desc = 'Next Buffer' })
 -- H и L по умолчанию служат для перехода в начало и конец буфера
 map('n', 'H', vim.cmd.bprev, { desc = 'Previous Buffer' })
 map('n', 'L', vim.cmd.bnext, { desc = 'Next Buffer' })
@@ -66,24 +59,20 @@ map('n', '<leader>h', vim.cmd.split, { desc = 'Horizontal split' })
 map('n', '<leader>v', vim.cmd.vsplit, { desc = 'Vertical split' })
 
 -- Tabs
-map('n', '<leader>tn', vim.cmd.tabnew, { desc = 'New tab' })
-map('n', '<leader>tc', vim.cmd.tabclose, { desc = 'Close tab' })
-map('n', '<A-0>', vim.cmd.tablast, { desc = 'Go to last tab' })
-
 -- Выбор таба с помощью Alt+1..9
 for i = 1, 9 do
   map('n', '<a-' .. i .. '>', i .. 'gt', { desc = 'Go to Tab ' .. i })
 end
+
+map('n', '<A-0>', vim.cmd.tablast, { desc = 'Go to last tab' })
+map('n', '<leader>tn', vim.cmd.tabnew, { desc = 'New tab' })
+map('n', '<leader>tc', vim.cmd.tabclose, { desc = 'Close tab' })
 
 -- движение по переносам строк
 map({ 'n', 'x' }, 'j', 'gj')
 map({ 'n', 'x' }, 'k', 'gk')
 map({ 'n', 'x' }, '<Down>', 'gj')
 map({ 'n', 'x' }, '<Up>', 'gk')
--- в режиме редактирования раздражает отображение ошибок из-за скрытого
--- переключения режимов
--- map('i', "<up>", "<c-o>gk")
--- map('i', "<down>", "<c-o>gj")
 
 -- Перемещение строк
 map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
@@ -100,15 +89,32 @@ map('n', '<S-Tab>', '<<', { desc = 'Outdent line' })
 -- Просто Enter для отображения справки
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
+-- Замена строк
+-- Для замены во всех файлах с расширением питон:
+-- :args **/*.py
+-- :argdo %s/\<старое_слово\>/новое_слово/g | update
+map(
+  'n',
+  '<leader>r',
+  ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
+  { desc = 'Replace word under cursor' }
+)
+map(
+  'v',
+  '<leader>r',
+  [["hy:%s/<C-r>h//g<Left><Left>]],
+  { desc = 'Replace selected text' }
+)
+
 -- Neovim
 map(
   'n',
-  '<leader>ev',
+  '<leader>e',
   '<cmd>edit $MYVIMRC<cr>',
   { desc = 'Edit Neo[v]im Config' }
 )
 -- <leader>r оставил для других сочетаний
-map('n', '<leader>rv', vim.cmd.restart, { desc = 'Restart Neo[v]im' })
+map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neo[v]im' })
 
 -- Управление плагинами
 map('n', '<leader>u', function()
