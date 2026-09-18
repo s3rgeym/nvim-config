@@ -1,13 +1,13 @@
--- Alt + стрелки, f, g, h, j, k, l исп-ся в Zellij, поэтому их использование
--- нежелательно!
--- Вместо v лучше всегда использовать x, если не предполагается работа в режиме Select.
--- v включает режим визуального выделения (Visual) и режим замены выделения (Select).
--- x работает только в визуальном режиме (Visual), что предотвращает случайный перехват
--- клавиш в режиме Select.
+-- Alt + стрелки, f, g, h, j, k, l используются в Zellij, поэтому они не
+-- используются в данном конфиге
 
+-- Клавиша лидер
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- В Neovim в отличии от Vim по умолчанию noremap = true, поэтому
+-- пользовательские сочетания в rhs не будут разворачиваться,
+-- будут работать только встроенные
 local map = vim.keymap.set
 
 map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
@@ -69,14 +69,18 @@ map('n', '<leader>tn', vim.cmd.tabnew, { desc = 'New tab' })
 map('n', '<leader>tc', vim.cmd.tabclose, { desc = 'Close tab' })
 
 -- движение по переносам строк
+-- Вместо v лучше всегда использовать x, если не предполагается работа в режиме Select.
+-- v включает режим визуального выделения (Visual) и режим замены выделения (Select).
+-- x работает только в визуальном режиме (Visual), что предотвращает случайный перехват
+-- клавиш в режиме Select.
 map({ 'n', 'x' }, 'j', 'gj')
 map({ 'n', 'x' }, 'k', 'gk')
 map({ 'n', 'x' }, '<Down>', 'gj')
 map({ 'n', 'x' }, '<Up>', 'gk')
 
 -- Перемещение строк
-map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
-map('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
+map('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
+map('x', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Selection Down' })
 
 -- Отступы
 -- Не будет работать, например, если в буфере в режиме вставки повесить на него действие
@@ -89,34 +93,47 @@ map('n', '<S-Tab>', '<<', { desc = 'Outdent line' })
 -- Просто Enter для отображения справки
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
--- Замена строк
+-- Замена строк от s — substitute
+
 -- Для замены во всех файлах с расширением питон:
 -- :args **/*.py
 -- :argdo %s/\<старое_слово\>/новое_слово/g | update
 map(
   'n',
-  '<leader>r',
+  '<leader>s',
   ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
   { desc = 'Replace word under cursor' }
 )
 map(
   'v',
-  '<leader>r',
+  '<leader>s',
   [["hy:%s/<C-r>h//g<Left><Left>]],
-  { desc = 'Replace selected text' }
+  { desc = 'Replace selection' }
 )
 
 -- Neovim
 map(
   'n',
-  '<leader>e',
+  '<leader>ev',
   '<cmd>edit $MYVIMRC<cr>',
   { desc = 'Edit Neo[v]im Config' }
 )
 -- <leader>r оставил для других сочетаний
-map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neo[v]im' })
+map('n', '<leader>rv', vim.cmd.restart, { desc = 'Restart Neo[v]im' })
 
 -- Управление плагинами
-map('n', '<leader>u', function()
+map('n', '<leader>pu', function()
   vim.pack.update({ force = true })
 end, { desc = 'Update plugins' })
+
+map('n', '<leader>pc', function()
+  vim.pack.del(vim
+    .iter(vim.pack.get())
+    :filter(function(plugin)
+      return not plugin.active
+    end)
+    :map(function(plugin)
+      return plugin.spec.name
+    end)
+    :totable())
+end, { desc = 'Clean plugins' })
