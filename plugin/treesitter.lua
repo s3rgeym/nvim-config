@@ -1,4 +1,3 @@
--- Нужна утилита tree-sitter-cli, которую можно уст-ть ч-з :Mason.
 vim.pack.add({
   -- Этот плагин можно выбросить, тк treesitter давно является встроенным, если
   -- не нужен функционал nvim-treesitter-textobjects и др. зависимых плаг-ов
@@ -8,48 +7,60 @@ vim.pack.add({
 })
 
 local ts = require('nvim-treesitter')
-ts.setup({})
 
 -- You can manually install parsers with `:TSInstall <language>` or
 -- `:TSInstall all`
--- local ensure_installed = {
---   'bash',
---   'c',
---   'cmake',
---   'cpp',
---   'css',
---   'csv',
---   'dockerfile',
---   'editorconfig',
---   'go',
---   'html',
---   'java',
---   'javadoc',
---   'javascript',
---   'jsdoc',
---   'json',
---   'lua',
---   'luadoc',
---   'markdown',
---   'php',
---   'phpdoc',
---   'python',
---   'rust',
---   'scss',
---   'sql',
---   'ssh_config',
---   'typescript',
---   'vim',
---   'vimdoc',
---   'vue',
---   'yaml',
--- }
+-- ts.install('all')
 
--- NOTE: If languages fail to install or compilation hangs,
--- ensure 'tree-sitter-cli' is installed (e.g., :MasonInstall tree-sitter-cli).
--- If the issue persists, run :checkhealth nvim-treesitter to diagnose.
+local ensure_installed = {
+  'bash',
+  'c',
+  'cmake',
+  'cpp',
+  'css',
+  'csv',
+  'desktop',
+  'dockerfile',
+  'editorconfig',
+  'fish',
+  'git_config',
+  'gitignore',
+  'go',
+  'html',
+  'ini',
+  'java',
+  'javadoc',
+  'javascript',
+  'jsdoc',
+  'json',
+  'lua',
+  'luadoc',
+  'markdown',
+  'nginx',
+  'ninja',
+  'perl',
+  'php',
+  'phpdoc',
+  'powershell',
+  'python',
+  'requirements',
+  'robots',
+  'ruby',
+  'rust',
+  'scss',
+  'sql',
+  'ssh_config',
+  'toml',
+  'typescript',
+  'vim',
+  'vimdoc',
+  'vue',
+  'xml',
+  'yaml',
+  'zsh',
+}
 
---ts.install(ensure_installed)
+ts.install(ensure_installed)
 
 -- Treesitter features for installed languages must be enabled manually
 vim.api.nvim_create_autocmd('FileType', {
