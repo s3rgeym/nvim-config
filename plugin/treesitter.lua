@@ -17,6 +17,7 @@ local ts = require('nvim-treesitter')
 local ensure_installed = {
   'bash',
   'css',
+  'go',
   'html',
   'javascript',
   'json',

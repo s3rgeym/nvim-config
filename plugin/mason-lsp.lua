@@ -23,6 +23,7 @@ require('mason-lspconfig').setup({
     'lua_ls',
     'ruff',
     'stylua',
+    'tombi', -- LSP/Formatter for TOML
     'ts_ls', -- JS/TS
     'vimls',
     'yamlls',
