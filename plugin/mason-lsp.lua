@@ -11,10 +11,13 @@ require('mason').setup()
 -- объединяются со встроенными.
 -- Полностью переопределить конфиги можно в ~/.config/nvim/lsp.
 require('mason-lspconfig').setup({
+  -- Важжно помнить, что некоторые средства типа языкового сервера rust ставятся
+  -- с ним же, а поэтому в установке не нуждаются, но включать их придется
+  -- вручную через vim.lsp.enable
   ensure_installed = {
     'basedpyright',
     'bashls',
-    'biome', -- Форматирует код на JavaScript, TypeScript, JSX, TSX, JSON, HTML, CSS и GraphQ
+    'biome', -- Форматирует код на JavaScript, TypeScript, JSX, TSX, JSON, HTML, CSS и GraphQL
     'cssls',
     'docker_language_server',
     'docker_compose_language_service',
