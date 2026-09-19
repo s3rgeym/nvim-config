@@ -14,21 +14,10 @@ require('mason-lspconfig').setup({
   ensure_installed = {
     'basedpyright',
     'bashls',
-    'biome',
-    'clangd',
-    'cssls',
-    'docker_compose_language_service',
-    'docker_language_server',
-    'gopls',
-    'html',
-    'jsonls',
     'lua_ls',
     'ruff',
     'stylua',
     'vimls',
-    'vtsls',
-    'vue_ls',
-    'yamlls',
   },
 })
 
