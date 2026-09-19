@@ -59,7 +59,6 @@ local ensure_installed = {
   'php',
   'phpdoc',
   'powershell',
-  'prisma',
   'proto',
   'python',
   'requirements',

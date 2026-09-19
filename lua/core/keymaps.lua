@@ -122,9 +122,7 @@ map(
 map('n', '<leader>rv', vim.cmd.restart, { desc = 'Restart Neo[v]im' })
 
 -- Управление плагинами
-map('n', '<leader>pu', function()
-  vim.pack.update({ force = true })
-end, { desc = 'Update plugins' })
+map('n', '<leader>pu', vim.pack.update, { desc = 'Update plugins' })
 
 map('n', '<leader>pc', function()
   vim.pack.del(vim
