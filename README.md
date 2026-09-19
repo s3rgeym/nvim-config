@@ -17,6 +17,11 @@
     <img width="1230" height="818" src="https://github.com/user-attachments/assets/48adb6f8-c9a7-41cf-9f55-67e8db9e7bc5" /> 
     <figcaption>Дополнение файлов по <code>&lt;C-x&gt;&lt;C-f&gt;</code> через fzf-lua</figcaption>
   </figure>
+
+  <figure>
+   <img width="1300" height="858" alt="image" src="https://github.com/user-attachments/assets/c230412c-d749-48e8-9354-bc6206b9d9fd" />
+   <figcaption>Файловый менеджер oil</figcaption>
+  </figure>
 </details>
 
 На скриншотах терминал Foot с Zellij со шрифтом `JetBrainsMonoNL Nerd Font Mono`.
