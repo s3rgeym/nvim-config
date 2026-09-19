@@ -16,13 +16,21 @@ local ts = require('nvim-treesitter')
 -- https://github.com/nvim-treesitter/nvim-treesitter/blob/main/SUPPORTED_LANGUAGES.md
 local ensure_installed = {
   'bash',
+  'css',
+  'html',
+  'javascript',
+  'json',
   'lua',
   'luadoc',
   'markdown',
   'markdown_inline',
   'python',
+  'toml',
+  'typescript',
   'vim',
   'vimdoc',
+  'xml',
+  'yaml',
 }
 
 ts.install(ensure_installed)

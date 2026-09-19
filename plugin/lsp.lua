@@ -1,6 +1,8 @@
 vim.pack.add({
+  -- Содержит список настроек языковых серверов, избавляя от необходимости все
+  -- делать вручную
   'https://github.com/neovim/nvim-lspconfig',
-  'https://github.com/b0o/schemastore.nvim',
+  -- 'https://github.com/b0o/schemastore.nvim',
 })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -8,16 +10,17 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- Настройки для всех серверов
 vim.lsp.config('*', { capabilities = capabilities })
 
+-- Это нужно с biome подружить
 -- Специфичные настройки jsonls
-vim.lsp.config('jsonls', {
-  settings = {
-    json = {
-      -- Дополнение в json через схемы
-      schemas = require('schemastore').json.schemas(),
-      validate = { enable = true },
-    },
-  },
-})
+-- vim.lsp.config('jsonls', {
+--   settings = {
+--     json = {
+--       -- Дополнение в json через схемы
+--       schemas = require('schemastore').json.schemas(),
+--       validate = { enable = true },
+--     },
+--   },
+-- })
 
 -- Настройка внешнего вида диагностики
 vim.diagnostic.config({

@@ -14,10 +14,18 @@ require('mason-lspconfig').setup({
   ensure_installed = {
     'basedpyright',
     'bashls',
+    'biome', -- Форматирует код на JavaScript, TypeScript, JSX, TSX, JSON, HTML, CSS и GraphQ
+    'cssls',
+    'docker_language_server',
+    'docker_compose_language_service',
+    'html',
+    'jsonls',
     'lua_ls',
     'ruff',
     'stylua',
+    'ts_ls', -- JS/TS
     'vimls',
+    'yamlls',
   },
 })
 
