@@ -15,21 +15,9 @@ require('mason-lspconfig').setup({
   -- с ним же, а поэтому в установке не нуждаются, но включать их придется
   -- вручную через vim.lsp.enable
   ensure_installed = {
-    'basedpyright',
-    'bashls',
-    'biome', -- Форматирует код на JavaScript, TypeScript, JSX, TSX, JSON, HTML, CSS и GraphQL
-    'cssls',
-    'docker_language_server',
-    'docker_compose_language_service',
-    'html',
-    'jsonls',
     'lua_ls',
-    'ruff',
     'stylua',
-    'tombi', -- LSP/Formatter for TOML
-    'ts_ls', -- JS/TS
     'vimls',
-    'yamlls',
   },
 })
 
