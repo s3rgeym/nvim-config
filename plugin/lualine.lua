@@ -14,12 +14,11 @@ vim.api.nvim_create_autocmd('VimEnter', {
         globalstatus = true,
         -- В консоли Linux пустые квадраты вместо иконок
         -- icons_enabled = vim.env.TERM == "linux",
-        -- Минимализм
-        -- component_separators = { left = '', right = '' },
-        -- section_separators = { left = '', right = '' },
-
         -- component_separators = { left = '│', right = '│' },
         -- section_separators = { left = '', right = '' },
+        -- Минимализм
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
       },
       sections = {
         lualine_a = { 'mode' },
@@ -34,7 +33,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
         },
         lualine_c = { { 'filename', path = 0 } },
         lualine_x = {
-          -- Показывает встроенную раскладку редактора 
+          -- Показывает встроенную раскладку редактора
           function()
             return vim.opt.iminsert:get() > 0 and vim.b.keymap_name or ''
           end,
