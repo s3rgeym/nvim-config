@@ -4,6 +4,12 @@ vim.pack.add({
 })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- Тут можно capabilities изменить
+
+-- Многие отключают подсветку semantic tokens, т.к. за подсветку отвечает
+-- treesitter
+-- https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316
+capabilities.textDocument.semanticTokens = nil
 
 -- Настройки для всех серверов
 vim.lsp.config('*', { capabilities = capabilities })
@@ -101,7 +107,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Включаем Inlay Hints по умолчанию
     if client:supports_method('textDocument/inlayHint') then
-      vim.lsp.inlay_hint.enable(true)
+      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
     end
 
     -- Подсветка упоминаний символа под курсором
