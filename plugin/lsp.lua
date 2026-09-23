@@ -9,7 +9,9 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- Многие отключают подсветку semantic tokens, т.к. за подсветку отвечает
 -- treesitter
 -- https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316
-capabilities.textDocument.semanticTokens = nil
+if capabilities and capabilities.textDocument then
+  capabilities.textDocument.semanticTokens = nil
+end
 
 -- Настройки для всех серверов
 vim.lsp.config('*', { capabilities = capabilities })
@@ -21,19 +23,23 @@ vim.diagnostic.config({
   severity_sort = true,
 })
 
+
+local diagnostic_group = vim.api.nvim_create_augroup('Diagnostic', { clear = true })
+
 -- Показывать сообщение диагностики при наведении курсора
 vim.api.nvim_create_autocmd('CursorHold', {
+  group = diagnostic_group,
   callback = function()
     vim.diagnostic.open_float(nil, { focusable = false })
   end,
 })
 
--- https://mintlify.wiki/neovim/neovim/lsp/completion
 local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
 local highlight_group = vim.api.nvim_create_augroup('LspHighlight', {
   clear = false,
 })
 
+-- https://mintlify.wiki/neovim/neovim/lsp/completion
 vim.api.nvim_create_autocmd('LspAttach', {
   group = lsp_group,
   callback = function(args)
