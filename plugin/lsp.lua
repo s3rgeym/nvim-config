@@ -1,15 +1,12 @@
 -- Содержит список настроек языковых серверов, избавляя от необходимости настраивать их вручную
-vim.pack.add({
-  'https://github.com/neovim/nvim-lspconfig',
-})
+vim.pack.add({ 'https://github.com/neovim/nvim-lspconfig' })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
--- Тут можно capabilities изменить
 
 -- Многие отключают подсветку semantic tokens, т.к. за подсветку отвечает
 -- treesitter
 -- https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316
-if capabilities and capabilities.textDocument then
+if vim.tbl_get(capabilities, 'textDocument', 'semanticTokens') ~= nil then
   capabilities.textDocument.semanticTokens = nil
 end
 
