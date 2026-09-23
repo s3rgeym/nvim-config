@@ -14,6 +14,10 @@ o.laststatus = 3
 o.shortmess:append('I')
 o.conceallevel = 0
 o.showmode = false -- Не отображаем режим, вместо этого его переносим в statusline
+-- В tabline можно показывать имя файла вместо строки статуса, если лишнюю
+-- строку не жалко
+-- Для отключения табов
+-- o.showtabline = 0
 
 -- Statusline
 -- Функция должна быть объявлена глобальной для использования в statusline
