@@ -14,8 +14,24 @@ o.laststatus = 3
 o.shortmess:append('I')
 o.conceallevel = 0
 o.showtabline = 1
+
 o.showmode = false -- Не отображаем режим, вместо этого его переносим в statusline
-o.statusline = ' %{mode()} %f%m%r %= %k %l:%c %p%% '
+
+-- Функция должна быть объявлена глобальной для использования в statusline
+function _G.status_mode()
+  return ({
+    n = 'NORMAL',
+    i = 'INSERT',
+    v = 'VISUAL',
+    V = 'V-LINE',
+    ['\22'] = 'V-BLOCK',
+    c = 'COMMAND',
+    R = 'REPLACE',
+    t = 'TERMINAL',
+  })[vim.fn.mode()] or vim.fn.mode()
+end
+
+o.statusline = ' %{%v:lua.status_mode()%} %f%m%r %= %k %l:%c %p%% '
 -- Без popup справка не отображается
 o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
 -- В всплывающем окне с просмотром доументации края прямоугольные.
