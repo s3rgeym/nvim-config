@@ -1,6 +1,6 @@
 vim.pack.add({
   -- Этот плагин можно выбросить, тк treesitter давно является встроенным, если
-  -- не нужен функционал nvim-treesitter-textobjects и др. зависимых плаг-ов
+  -- не нужен команды для установки парсеров и зависимые от него плагины
   'https://github.com/nvim-treesitter/nvim-treesitter-context',
   'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
   'https://github.com/nvim-treesitter/nvim-treesitter',
@@ -53,7 +53,7 @@ vim.api.nvim_create_autocmd('FileType', {
       vim.wo.foldlevel = 99
 
       -- Enable treesitter-based indentation
-      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      vim.bo.indentexpr = 'v:lua.vim.treesitter.indentexpr()'
     end
   end,
 })
@@ -83,7 +83,7 @@ require('nvim-treesitter-textobjects').setup({
       selection_modes = {
         ['@parameter.outer'] = 'v', -- charwise
         ['@function.outer'] = 'V', -- linewise
-        -- ['@class.outer'] = '<c-v>', -- blockwise
+        ['@class.outer'] = '<c-v>', -- blockwise
       },
     },
   },
