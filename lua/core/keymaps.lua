@@ -73,10 +73,30 @@ map('n', '<leader>tc', vim.cmd.tabclose, { desc = 'Close tab' })
 -- v включает режим визуального выделения (Visual) и режим замены выделения (Select).
 -- x работает только в визуальном режиме (Visual), что предотвращает случайный перехват
 -- клавиш в режиме Select.
-map({ 'n', 'x' }, 'j', 'gj')
-map({ 'n', 'x' }, 'k', 'gk')
-map({ 'n', 'x' }, '<Down>', 'gj')
-map({ 'n', 'x' }, '<Up>', 'gk')
+map(
+  { 'n', 'x' },
+  'j',
+  "v:count == 0 ? 'gj' : 'j'",
+  { expr = true, silent = true }
+)
+map(
+  { 'n', 'x' },
+  '<Down>',
+  "v:count == 0 ? 'gj' : 'j'",
+  { expr = true, silent = true }
+)
+map(
+  { 'n', 'x' },
+  'k',
+  "v:count == 0 ? 'gk' : 'k'",
+  { expr = true, silent = true }
+)
+map(
+  { 'n', 'x' },
+  '<Up>',
+  "v:count == 0 ? 'gk' : 'k'",
+  { expr = true, silent = true }
+)
 
 -- Перемещение строк
 map('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Selection Up' })
