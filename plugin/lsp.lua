@@ -48,15 +48,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     local function map(modes, lhs, rhs, opts)
       local options = type(opts) == 'string' and { desc = opts } or opts or {}
-      vim.keymap.set(
-        modes,
-        lhs,
-        rhs,
-        vim.tbl_extend('force', {
-          buffer = bufnr,
-          silent = true,
-        }, options)
-      )
+      options = vim.tbl_extend('force', {
+        buffer = bufnr,
+        silent = true,
+      }, options)
+      vim.keymap.set(modes, lhs, rhs, options)
     end
 
     -- Сочетания вынесем за блоки с проверками чтобы во всех буферах те были доступны

@@ -31,7 +31,7 @@ function _G.statusline_mode()
   })[vim.fn.mode()] or vim.fn.mode()
 end
 
-o.statusline = ' %-8{%v:lua.statusline_mode()%} %f%m%r %= %k %l:%c %P '
+o.statusline = ' %{%v:lua.statusline_mode()%} %f%m%r %= %k %l:%c %P '
 -- Без popup справка не отображается
 o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
 -- В всплывающем окне с просмотром доументации края прямоугольные.
