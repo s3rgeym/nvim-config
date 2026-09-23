@@ -13,9 +13,9 @@ o.signcolumn = 'yes'
 o.laststatus = 3
 o.shortmess:append('I')
 o.conceallevel = 0
--- Эту опцию правильнее отключать в плагинах
--- o.showmode = false
 o.showtabline = 1
+o.showmode = false -- Не отображаем режим, вместо этого его переносим в statusline
+o.statusline = ' %{mode()} %f%m%r %= %k %l:%c %p%% '
 -- Без popup справка не отображается
 o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
 -- В всплывающем окне с просмотром доументации края прямоугольные.
