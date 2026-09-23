@@ -13,10 +13,9 @@ o.signcolumn = 'yes'
 o.laststatus = 3
 o.shortmess:append('I')
 o.conceallevel = 0
-o.showtabline = 1
-
 o.showmode = false -- Не отображаем режим, вместо этого его переносим в statusline
 
+-- Statusline
 -- Функция должна быть объявлена глобальной для использования в statusline
 function _G.statusline_mode()
   return ({
@@ -32,6 +31,8 @@ function _G.statusline_mode()
 end
 
 o.statusline = ' %{%v:lua.statusline_mode()%} %f%m%r %= %k %l:%c %P '
+
+-- Completion
 -- Без popup справка не отображается
 o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
 -- В всплывающем окне с просмотром доументации края прямоугольные.
