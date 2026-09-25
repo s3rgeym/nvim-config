@@ -34,23 +34,8 @@ function _G.statusline_mode()
   })[vim.fn.mode()] or vim.fn.mode()
 end
 
-function _G.statusline_diagnostics()
-  local counts = vim.diagnostic.count(0)
-  local result = {}
-
-  if counts[vim.diagnostic.severity.ERROR] then
-    table.insert(result, 'E' .. counts[vim.diagnostic.severity.ERROR])
-  end
-
-  if counts[vim.diagnostic.severity.WARN] then
-    table.insert(result, 'W' .. counts[vim.diagnostic.severity.WARN])
-  end
-
-  return table.concat(result, ' ')
-end
-
 o.statusline =
-  ' %-8{%v:lua.statusline_mode()%} %f%m%r %{v:lua.statusline_diagnostics()} %= %k %l:%c %P '
+  ' %-8{%v:lua.statusline_mode()%} %f%m%r %= %k %{%v:lua.vim.diagnostic.status()%} %l:%c %P '
 
 -- Completion
 -- Без popup справка не отображается
