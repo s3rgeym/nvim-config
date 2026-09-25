@@ -75,30 +75,10 @@ map('n', '<leader>tc', vim.cmd.tabclose, { desc = 'Close tab' })
 -- Нужно всегда x использовать вместо v
 -- x - Visual, т.е. визуальный режим, только выделение
 -- v - Visual + Select. В Select выделение заменяется на вводимые символы
-map(
-  { 'n', 'x' },
-  'j',
-  "v:count == 0 ? 'gj' : 'j'",
-  { expr = true }
-)
-map(
-  { 'n', 'x' },
-  '<Down>',
-  "v:count == 0 ? 'gj' : 'j'",
-  { expr = true }
-)
-map(
-  { 'n', 'x' },
-  'k',
-  "v:count == 0 ? 'gk' : 'k'",
-  { expr = true }
-)
-map(
-  { 'n', 'x' },
-  '<Up>',
-  "v:count == 0 ? 'gk' : 'k'",
-  { expr = true }
-)
+map({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
+map({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { expr = true })
+map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
+map({ 'n', 'x' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
 -- Перемещение выделения
 map('x', 'K', ":m '<-2<CR>gv=gv", {
