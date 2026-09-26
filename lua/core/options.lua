@@ -34,8 +34,15 @@ function _G.statusline_mode()
   })[vim.fn.mode()] or vim.fn.mode()
 end
 
-o.statusline =
-  ' %-8{%v:lua.statusline_mode()%} %f%m%r %= %k %{%v:lua.vim.diagnostic.status()%} %l:%c %P '
+o.statusline = table.concat({
+  ' %-8{%v:lua.statusline_mode()%}',
+  '%<%f%m%r',
+  '%=',
+  '%k',
+  '%{%v:lua.vim.diagnostic.status()%}',
+  '%l:%c',
+  '%P',
+}, ' ')
 
 -- Completion
 -- Без popup справка не отображается
