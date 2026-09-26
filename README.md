@@ -1,30 +1,27 @@
 ## Минималистичный конфиг Neovim
 
 <figure> 
- <img width="1230" height="818" alt="Просмотр справки по K" src="https://github.com/user-attachments/assets/454b6054-89fe-4b78-b0b4-060b061fcfcb" />
- <figcaption>Предпросмотр справки по <code>K</code></figcaption>
+ <img width="1300" height="893" alt="image" src="https://github.com/user-attachments/assets/304ccc82-f80f-459f-8a53-67f390729793" />
+ <figcaption>Автодополнение вызвается по Ctrl-Space</figcaption>
 </figure>
 
-<details> 
-  <summary>Еще скриншоты</summary>
-
-  <figure> 
-    <img width="1230" height="818" src="https://github.com/user-attachments/assets/da2023d9-1b10-49a7-b2d4-effcaaf67e7d" /> 
-    <figcaption>Предпросмотр в автодополнении</figcaption> 
-  </figure>
-
-  <figure> 
-    <img width="1230" height="818" src="https://github.com/user-attachments/assets/48adb6f8-c9a7-41cf-9f55-67e8db9e7bc5" /> 
-    <figcaption>Дополнение файлов по <code>&lt;C-x&gt;&lt;C-f&gt;</code> через fzf-lua</figcaption>
-  </figure>
-
-  <figure>
-   <img width="1300" height="858" alt="image" src="https://github.com/user-attachments/assets/c230412c-d749-48e8-9354-bc6206b9d9fd" />
-   <figcaption>Файловый менеджер oil</figcaption>
-  </figure>
+<details>
+ <summary>Еще скриншоты</summary>
+ <figure> 
+   <img width="1300" height="893" alt="image" src="https://github.com/user-attachments/assets/910258da-1f59-4124-83ca-ad3334d8e56b" />
+   <figcaption>Вызов signature help</figcaption> 
+ </figure>
+ 
+ <figure> 
+   <img width="1300" height="893" alt="image" src="https://github.com/user-attachments/assets/7669db2b-b713-46d0-8389-6db18a2cb72b" />
+   <figcaption>Файловый менеджер Oil</figcaption>
+ </figure>
+ 
+ <figure>
+  <img width="1300" height="893" alt="image" src="https://github.com/user-attachments/assets/4c067256-7b34-4170-abc8-8100eac64ca3" />
+  <figcaption>Поиск файлов через fzf</figcaption>
+ </figure>
 </details>
-
-На скриншотах терминал Foot с Zellij со шрифтом `JetBrainsMonoNL Nerd Font Mono`.
 
 ### Описание
 
