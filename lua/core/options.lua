@@ -47,15 +47,14 @@ end
 
 o.statusline = table.concat({
   ' %-8{v:lua.mode_name()}',
-  '%<%f%m%r',
-  '%{%v:lua.vim.diagnostic.status()%}',
-  '%{%v:lua.vim.ui.progress_status()%}',
+  ' %<%f%m%r',
+  ' %{%v:lua.vim.diagnostic.status()%}',
+  ' %{%v:lua.vim.ui.progress_status()%}',
   '%=',
-  '%k',
-  '%{v:lua.lsp_names()}',
-  '(%l:%c)',
-  '%P ',
-}, ' ')
+  ' %k',
+  ' %{v:lua.lsp_names()}',
+  '%14(%l:%c%) ',
+}, '')
 
 -- Completion
 -- Без popup справка не отображается
