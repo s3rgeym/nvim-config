@@ -21,7 +21,7 @@ o.showmode = false -- Не отображаем режим, вместо это�
 
 -- Statusline
 -- Функция должна быть объявлена глобальной для использования в statusline
-function _G.statusline_mode()
+function _G.mode_name()
   return ({
     n = 'NORMAL',
     i = 'INSERT',
@@ -34,14 +34,27 @@ function _G.statusline_mode()
   })[vim.fn.mode()] or vim.fn.mode()
 end
 
+function _G.lsp_names()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+
+  return table.concat(
+    vim.tbl_map(function(client)
+      return client.name
+    end, clients),
+    ', '
+  )
+end
+
 o.statusline = table.concat({
-  ' %-8{%v:lua.statusline_mode()%}',
+  ' %-8{v:lua.mode_name()}',
   '%<%f%m%r',
+  '%{%v:lua.vim.diagnostic.status()%}',
+  '%{%v:lua.vim.ui.progress_status()%}',
   '%=',
   '%k',
-  '%{%v:lua.vim.diagnostic.status()%}',
-  '%l:%c',
-  '%P',
+  '%{v:lua.lsp_names()}',
+  '(%l:%c)',
+  '%P ',
 }, ' ')
 
 -- Completion
