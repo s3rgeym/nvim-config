@@ -9,7 +9,7 @@ local o = vim.opt
 o.number = true
 o.relativenumber = true
 o.cursorline = true
-o.signcolumn = 'yes'
+-- o.signcolumn = 'yes'
 o.laststatus = 3
 o.shortmess:append('I')
 o.conceallevel = 0
@@ -31,7 +31,7 @@ function _G.mode_name()
     c = 'COMMAND',
     R = 'REPLACE',
     t = 'TERMINAL',
-  })[vim.fn.mode()] or vim.fn.mode()
+  })[vim.fn.mode()]
 end
 
 function _G.lsp_names()
@@ -48,10 +48,10 @@ end
 o.statusline = table.concat({
   ' %-8{v:lua.mode_name()}',
   ' %<%f%m%r',
-  ' %{%v:lua.vim.diagnostic.status()%}',
   ' %{%v:lua.vim.ui.progress_status()%}',
   '%=',
   ' %k',
+  ' %{%v:lua.vim.diagnostic.status()%}',
   ' %{v:lua.lsp_names()}',
   '%14(%l:%c%) ',
 }, '')
