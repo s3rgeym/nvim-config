@@ -13,15 +13,15 @@ o.cursorline = true
 o.laststatus = 3
 o.shortmess:append('I')
 o.conceallevel = 0
-o.showmode = false -- Не отображаем режим, вместо этого его переносим в statusline
+o.showmode = false -- Не отображаем режим, вместо этого переносим его в statusline
 -- В tabline можно показывать имя файла вместо строки статуса, если лишнюю
 -- строку не жалко
 -- Для отключения табов
 -- o.showtabline = 0
 
 -- Statusline
--- Функция должна быть объявлена глобальной для использования в statusline
-function _G.mode_name()
+-- Функции должны быть объявлены глобальными для использования в statusline
+function _G.statusline_mode()
   return ({
     n = 'NORMAL',
     i = 'INSERT',
@@ -31,44 +31,43 @@ function _G.mode_name()
     c = 'COMMAND',
     R = 'REPLACE',
     t = 'TERMINAL',
-  })[vim.fn.mode()]
+  })[vim.fn.mode()] or vim.fn.mode()
 end
 
-function _G.lsp_names()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
-
+function _G.statusline_lsp()
   return table.concat(
     vim.tbl_map(function(client)
       return client.name
-    end, clients),
+    end, vim.lsp.get_clients({ bufnr = 0 })),
     ', '
   )
 end
 
 o.statusline = table.concat({
-  ' %-8{v:lua.mode_name()}',
+  ' %-8{v:lua.statusline_mode()}',
   ' %<%f%m%r',
   ' %{%v:lua.vim.ui.progress_status()%}',
   '%=',
   ' %k',
   ' %{%v:lua.vim.diagnostic.status()%}',
-  ' %{v:lua.lsp_names()}',
-  '%14(%l:%c%) ',
+  ' %{v:lua.statusline_lsp()}',
+  ' %14(%l:%c%) ',
 }, '')
 
--- Completion
+-- Completion / Popup
 -- Без popup справка не отображается
 o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
--- В всплывающем окне с просмотром доументации края прямоугольные.
+-- В всплывающем окне с просмотром документации края прямоугольные.
 -- https://github.com/neovim/neovim/issues/38248#issuecomment-4038192073
 o.pumborder = 'rounded'
 o.winborder = 'rounded'
 -- Эта опция влияет на задержку перед появлением всплывающего окна
 o.updatetime = 200
+
 -- Красная линия
 -- o.colorcolumn = '+1'
 
--- Включается автоматически, но требутся явная установка для некоторых плагинов
+-- Включается автоматически, но требуется явная установка для некоторых плагинов
 if vim.fn.has('termguicolors') == 1 then
   o.termguicolors = true
 end
@@ -93,7 +92,7 @@ o.autoindent = true
 o.smartindent = true
 -- o.textwidth = 80
 -- o.joinspaces = false
--- Не имеет эффекта в арче, так как устанавливается через системные плагины
+-- Не имеет эффекта в Арче, так как устанавливается через системные плагины
 -- после загрузки init.lua
 -- o.formatoptions = { j = true, q = true }
 o.list = true
