@@ -103,10 +103,10 @@ map('x', 'J', ":m '>+1<CR>gv=gv", {
 -- Отступы
 -- Это сочетание не будет работать, так как на Shift-Tab вешают выбор предыдущего элемента из списка
 -- map('i', '<S-Tab>', '<C-d>', { desc = 'Outdent line' })
-map('v', '<Tab>', '>gv', { desc = 'Indent' })
-map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 map('v', '>', '>gv', { desc = 'Indent' })
 map('v', '<', '<gv', { desc = 'Outdent' })
+map('v', '<Tab>', '>gv', { desc = 'Indent' })
+map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 
 -- Переход к help по Enter
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
