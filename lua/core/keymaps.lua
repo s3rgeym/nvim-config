@@ -11,10 +11,13 @@ vim.g.maplocalleader = ' '
 local map = vim.keymap.set
 
 -- Общие сочетания
-map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
+-- <C-w>q
+-- map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
--- Для выделения и копирования - :%y
--- map('n', '<leader>a', 'ggVG', { desc = 'Select all' })
+
+-- <C-a> я использую для увеличения версии пакета и тп
+map('n', '<A-a>', 'ggVG', { desc = 'Select all' })
+
 -- <C-w>c
 -- map('n', '<leader>bc', vim.cmd.close, { desc = 'Close buffer' })
 -- В Neovim никаких сочетаний нет для Escape в нормальном режиме
@@ -69,8 +72,9 @@ map(
   { desc = 'Increase window width' }
 )
 
-map('n', '<leader>h', vim.cmd.split, { desc = 'Horizontal split' })
-map('n', '<leader>v', vim.cmd.vsplit, { desc = 'Vertical split' })
+-- <C-w>s, <C-w>v
+-- map('n', '<leader>h', vim.cmd.split, { desc = 'Horizontal split' })
+-- map('n', '<leader>v', vim.cmd.vsplit, { desc = 'Vertical split' })
 
 -- Вкладки
 for i = 1, 9 do
