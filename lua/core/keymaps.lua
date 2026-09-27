@@ -1,4 +1,5 @@
 -- Alt + стрелки, f, g, h, j, k, l используются в Zellij, поэтому их избегаем
+-- https://medium.com/unixification/must-have-neovim-keymaps-51c283394070
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -21,8 +22,11 @@ map('n', '<Esc>', '<cmd>noh<cr>', { desc = 'Clear search highlight' })
 
 -- Буферы
 -- H/L переходят по буферам вместо верха/низа экрана
-map('n', 'H', vim.cmd.bprev, { desc = 'Previous buffer' })
-map('n', 'L', vim.cmd.bnext, { desc = 'Next buffer' })
+-- map('n', 'H', vim.cmd.bprev, { desc = 'Previous buffer' })
+-- map('n', 'L', vim.cmd.bnext, { desc = 'Next buffer' })
+map('n', '<Tab>', vim.cmd.bprev, { desc = 'Previous buffer' })
+map('n', '<S-Tab>', vim.cmd.bnext, { desc = 'Next buffer' })
+
 -- Эти сочетания редко используются
 map(
   'n',
@@ -38,10 +42,16 @@ map(
 )
 
 -- Окна
-map('n', '<C-h>', '<C-w>h', { desc = 'Go to left window' })
-map('n', '<C-j>', '<C-w>j', { desc = 'Go to lower window' })
-map('n', '<C-k>', '<C-w>k', { desc = 'Go to upper window' })
-map('n', '<C-l>', '<C-w>l', { desc = 'Go to right window' })
+map('n', '<C-h>', '<C-w>h', { desc = 'Left window' })
+map('n', '<C-j>', '<C-w>j', { desc = 'Lower window' })
+map('n', '<C-k>', '<C-w>k', { desc = 'Upper window' })
+map('n', '<C-l>', '<C-w>l', { desc = 'Right window' })
+
+-- Терминал
+map('t', '<C-h>', '<cmd>wincmd h<CR>', { desc = 'Left window' })
+map('t', '<C-j>', '<cmd>wincmd j<CR>', { desc = 'Lower window' })
+map('t', '<C-k>', '<cmd>wincmd k<CR>', { desc = 'Upper window' })
+map('t', '<C-l>', '<cmd>wincmd l<CR>', { desc = 'Right window' })
 
 map('n', '<C-Up>', '<cmd>resize +2<cr>', {
   desc = 'Increase window height',
@@ -80,7 +90,7 @@ map({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 map({ 'n', 'x' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
--- Перемещение выделения
+-- Перемещение строк
 map('x', 'K', ":m '<-2<CR>gv=gv", {
   desc = 'Move selection up',
   silent = true,
@@ -93,24 +103,25 @@ map('x', 'J', ":m '>+1<CR>gv=gv", {
 -- Отступы
 -- Это сочетание не будет работать, так как на Shift-Tab вешают выбор предыдущего элемента из списка
 -- map('i', '<S-Tab>', '<C-d>', { desc = 'Outdent line' })
-map('v', '<Tab>', '>gv', { desc = 'Indent selection' })
-map('v', '<S-Tab>', '<gv', { desc = 'Outdent selection' })
-map('n', '<Tab>', '>>', { desc = 'Indent line' })
-map('n', '<S-Tab>', '<<', { desc = 'Outdent line' })
+map('v', '<Tab>', '>gv', { desc = 'Indent' })
+map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
+map('v', '>', '>gv', { desc = 'Indent' })
+map('v', '<', '<gv', { desc = 'Outdent' })
 
+-- Переход к help по Enter
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
 -- Поиск и замена
 -- Замена во всех файлах: :args **/*.py | :argdo %s/\<old\>/new/g | update
 map(
   'n',
-  '<leader>s',
+  '<leader>r',
   ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
   { desc = 'Replace word under cursor' }
 )
 map(
   'v',
-  '<leader>s',
+  '<leader>r',
   [["hy:%s/<C-r>h//g<Left><Left>]],
   { desc = 'Replace selection' }
 )
@@ -120,9 +131,9 @@ map(
   'n',
   '<leader>ev',
   '<cmd>edit $MYVIMRC<cr>',
-  { desc = 'Edit Neovim config' }
+  { desc = 'Edit Neo[v]im config' }
 )
-map('n', '<leader>rv', vim.cmd.restart, { desc = 'Restart Neovim' })
+map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neovim' })
 
 -- Управление плагинами
 map('n', '<leader>pu', vim.pack.update, { desc = 'Update plugins' })
