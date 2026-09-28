@@ -86,12 +86,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
       return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
     end, { expr = true })
 
-    map('n', '<leader>i', function()
+    map('n', '<leader>th', function()
       vim.lsp.inlay_hint.enable(
         not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }),
         { bufnr = bufnr }
       )
-    end, 'Toggle [I]nlay Hints')
+    end, 'Toggle Inlay Hints')
 
     -- По умолчанию автодополнение вызывается при вводе ".", но это не очень
     -- удобно, привычнее когда варианты автоподстановки показываются при вводе
