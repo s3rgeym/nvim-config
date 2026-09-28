@@ -1,4 +1,6 @@
 -- Alt + стрелки, f, g, h, j, k, l используются в Zellij, поэтому их избегаем
+-- Также по возможности следует избегать односимвольных сочетаний с `<leader>`, поскольку 
+-- они могут понадобиться в качестве префиксов для других сочетаний.
 -- https://medium.com/unixification/must-have-neovim-keymaps-51c283394070
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -117,6 +119,7 @@ map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 
 -- Поиск и замена
 -- Замена во всех файлах: :args **/*.py | :argdo %s/\<old\>/new/g | update
+-- <leader>r лучше освободить под префикс для других сочетаний
 map(
   'n',
   '<leader>r',
