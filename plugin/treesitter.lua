@@ -1,10 +1,9 @@
 -- Данный плагин лишь предоставляет команды TSInstall и TSUpdate.
+-- `:TSInstall <language>` или `:TSInstall all`.
 -- Парсеры можно ставить через vim.pack.add с { load = false }, который лишь выполняет git clone.
 -- В арче пакет tree-sitter является зависимостью nvim, поэтому tree-sitter ставить не нужно.
 vim.pack.add({ 'https://github.com/nvim-treesitter/nvim-treesitter' })
 
--- You can manually install parsers with `:TSInstall <language>` or
--- `:TSInstall all`
 -- https://github.com/nvim-treesitter/nvim-treesitter/blob/main/SUPPORTED_LANGUAGES.md
 require('nvim-treesitter').install({
   -- В арче все эти парсеры ставятся вместе с nvim
