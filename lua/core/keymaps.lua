@@ -16,7 +16,7 @@ local map = vim.keymap.set
 map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
 
 -- <C-a> я использую для увеличения версии пакета и тп
-map('n', '<A-a>', 'ggVG', { desc = 'Select all' })
+map('n', '<leader>a', 'ggVG', { desc = 'Select all' })
 
 -- <C-w>c
 -- map('n', '<leader>bc', vim.cmd.close, { desc = 'Close buffer' })

@@ -1,10 +1,6 @@
-vim.pack.add({
-  -- Этот плагин можно выбросить, тк treesitter давно является встроенным, если
-  -- не нужен команды для установки парсеров и зависимые от него плагины
-  'https://github.com/nvim-treesitter/nvim-treesitter-context',
-  'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
-  'https://github.com/nvim-treesitter/nvim-treesitter',
-})
+-- Этот плагин можно выбросить, тк treesitter давно является встроенным, если
+-- не нужен команды для установки парсеров и зависимые от него плагины
+vim.pack.add({ 'https://github.com/nvim-treesitter/nvim-treesitter' })
 
 -- setup не нужен
 local ts = require('nvim-treesitter')
@@ -67,65 +63,3 @@ vim.api.nvim_create_autocmd('PackChanged', {
     end
   end,
 })
-
-require('treesitter-context').setup({
-  -- How many lines the window should span. Values <= 0 mean no limit.
-  max_lines = 3,
-  -- Line used to calculate context. Choices: 'cursor', 'topline'
-  mode = 'cursor',
-})
-
-require('nvim-treesitter-textobjects').setup({
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      selection_modes = {
-        ['@parameter.outer'] = 'v', -- charwise
-        ['@function.outer'] = 'V', -- linewise
-        ['@class.outer'] = '<c-v>', -- blockwise
-      },
-    },
-  },
-})
-
--- Как запомнить: around/inner method/class/section
--- keymaps
--- You can use the capture groups defined in `textobjects.scm`
-vim.keymap.set({ 'x', 'o' }, 'am', function()
-  require 'nvim-treesitter-textobjects.select'.select_textobject(
-    '@function.outer',
-    'textobjects'
-  )
-end)
-vim.keymap.set({ 'x', 'o' }, 'im', function()
-  require 'nvim-treesitter-textobjects.select'.select_textobject(
-    '@function.inner',
-    'textobjects'
-  )
-end)
-vim.keymap.set({ 'x', 'o' }, 'ac', function()
-  require 'nvim-treesitter-textobjects.select'.select_textobject(
-    '@class.outer',
-    'textobjects'
-  )
-end)
-vim.keymap.set({ 'x', 'o' }, 'ic', function()
-  require 'nvim-treesitter-textobjects.select'.select_textobject(
-    '@class.inner',
-    'textobjects'
-  )
-end)
--- You can also use captures from other query groups like `locals.scm`
-vim.keymap.set({ 'x', 'o' }, 'as', function()
-  require 'nvim-treesitter-textobjects.select'.select_textobject(
-    '@local.scope',
-    'locals'
-  )
-end)
-vim.keymap.set('n', '<leader>a', function()
-  require('nvim-treesitter-textobjects.swap').swap_next '@parameter.inner'
-end)
-vim.keymap.set('n', '<leader>A', function()
-  require('nvim-treesitter-textobjects.swap').swap_previous '@parameter.outer'
-end)
