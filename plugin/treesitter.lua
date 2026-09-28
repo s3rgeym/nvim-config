@@ -1,39 +1,21 @@
--- Этот плагин можно выбросить, тк treesitter давно является встроенным, если
--- не нужен команды для установки парсеров и зависимые от него плагины
+-- Данный плагин лишь предоставляет команды TSInstall и TSUpdate.
+-- Парсеры можно ставить через vim.pack.add с { load = false }, который лишь делает git clone...
+-- В арче пакет tree-sitter является зависимостью nvim, поэтому tree-sitter ставить не нужно
 vim.pack.add({ 'https://github.com/nvim-treesitter/nvim-treesitter' })
-
--- setup не нужен
-local ts = require('nvim-treesitter')
 
 -- You can manually install parsers with `:TSInstall <language>` or
 -- `:TSInstall all`
--- ts.install('all')
-
 -- https://github.com/nvim-treesitter/nvim-treesitter/blob/main/SUPPORTED_LANGUAGES.md
-local ensure_installed = {
-  'bash',
-  'c',
-  'css',
-  'cpp',
-  'go',
-  'html',
-  'javascript',
-  'json',
-  'lua',
-  'luadoc',
-  'markdown',
-  'markdown_inline',
-  'python',
-  'rust',
-  'toml',
-  'typescript',
-  'vim',
-  'vimdoc',
-  'xml',
-  'yaml',
-}
-
-ts.install(ensure_installed)
+require('nvim-treesitter').install({
+  -- В арче все эти парсеры ставятся вместе с nvim
+  -- 'c',
+  -- 'lua',
+  -- 'luadoc',
+  -- 'markdown',
+  -- 'markdown_inline',
+  -- 'vim',
+  -- 'vimdoc',
+})
 
 -- Treesitter features for installed languages must be enabled manually
 vim.api.nvim_create_autocmd('FileType', {
