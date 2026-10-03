@@ -1,7 +1,8 @@
 -- Alt + стрелки, f, g, h, j, k, l используются в Zellij, поэтому их избегаем
--- Также по возможности следует избегать односимвольных сочетаний с `<leader>`, поскольку 
+-- Также по возможности следует избегать односимвольных сочетаний с `<leader>`, поскольку
 -- они могут понадобиться в качестве префиксов для других сочетаний.
 -- https://medium.com/unixification/must-have-neovim-keymaps-51c283394070
+-- https://www.reddit.com/r/neovim/comments/1h7f0bz/share_your_coolest_keymap/
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -17,13 +18,20 @@ local map = vim.keymap.set
 -- map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
 
--- <C-a> я использую для увеличения версии пакета и тп
-map('n', '<leader>a', 'ggVG', { desc = 'Select all' })
+-- <C-a> я использую для увеличения версии пакета, а <leader>a любят в
+-- плагинах
+-- gA свобобно в неовим, в обычном вим оно делает почти то же самое, что и ga
+map('n', 'gA', 'ggVG', { desc = 'Select all' })
 
 -- <C-w>c
 -- map('n', '<leader>bc', vim.cmd.close, { desc = 'Close buffer' })
 -- В Neovim никаких сочетаний нет для Escape в нормальном режиме
-map('n', '<Esc>', '<cmd>noh<cr>', { desc = 'Clear search highlight' })
+map(
+  'n',
+  '<Esc>',
+  '<cmd>nohlsearch<cr>',
+  { desc = 'Clear search highlight', silent = true }
+)
 
 -- Буферы
 -- H/L переходят по буферам вместо верха/низа экрана
@@ -120,27 +128,30 @@ map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 -- Поиск и замена
 -- Замена во всех файлах: :args **/*.py | :argdo %s/\<old\>/new/g | update
 -- <leader>r лучше освободить под префикс для других сочетаний
-map(
-  'n',
-  '<leader>r',
-  ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
-  { desc = 'Replace word under cursor' }
-)
-map(
-  'v',
-  '<leader>r',
-  [["hy:%s/<C-r>h//g<Left><Left>]],
-  { desc = 'Replace selection' }
-)
+-- map(
+--   'n',
+--   '<leader>r',
+--   ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
+--   { desc = 'Replace word under cursor' }
+-- )
+
+-- R в Visual свободно, но можно по аналогии с предыдущим данное действие на
+-- <leader>r повесить
+map('v', 'R', [["hy:%s/<C-r>h//g<Left><Left>]], { desc = 'Replace selection' })
 
 -- Конфиги Neovim
 map(
   'n',
   '<leader>ev',
   '<cmd>edit $MYVIMRC<cr>',
-  { desc = 'Edit Neo[v]im config' }
+  { desc = 'Edit Neovim config' }
 )
-map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neovim' })
+
+map('n', '<leader>R', function()
+  local session = vim.fn.stdpath('state') .. '/restart_session.vim'
+  vim.cmd('mksession! ' .. vim.fn.fnameescape(session))
+  vim.cmd('restart source ' .. vim.fn.fnameescape(session))
+end, { desc = 'Restart Neovim' })
 
 -- Управление плагинами
 map('n', '<leader>pu', vim.pack.update, { desc = 'Update plugins' })
