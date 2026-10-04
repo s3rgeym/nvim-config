@@ -27,11 +27,7 @@ vim.api.nvim_create_autocmd('FileType', {
       -- Configure code folding
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
       vim.wo.foldmethod = 'expr'
-
       vim.wo.foldlevel = 99
-
-      -- Enable treesitter-based indentation
-      vim.bo.indentexpr = 'v:lua.vim.treesitter.indentexpr()'
     end
   end,
 })
