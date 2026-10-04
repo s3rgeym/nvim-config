@@ -5,5 +5,9 @@
   "diagnostics.globals": ["vim"],
   "workspace.checkThirdParty": false,
   "workspace.library": ["$VIMRUNTIME"],
-  "diagnostics.disable": ["undefined-doc-name", "param-type-mismatch"]
+  "diagnostics.disable": [
+    "lowercase-global",
+    "param-type-mismatch",
+    "undefined-doc-name"
+  ]
 }

@@ -35,25 +35,25 @@ local function git_status()
   return result
 end
 
-local function lsp_status()
+local function lsp_clients()
   return table.concat(
     vim.tbl_map(function(client)
       return client.name
     end, vim.lsp.get_clients({ bufnr = 0 })),
-    ', '
+    ' | '
   )
 end
 
 function status_line()
   return table.concat({
-    string.format(' %-8s', mode()),
+    string.format(' %-8.8s', mode()),
     ' %<%f%m%r',
     ' ' .. git_status(),
     ' %{%v:lua.vim.ui.progress_status()%}',
     '%=',
     ' %k',
     ' %{%v:lua.vim.diagnostic.status()%}',
-    ' ' .. lsp_status(),
+    ' ' .. lsp_clients(),
     ' %14(%l:%c%) ',
   }, '')
 end
