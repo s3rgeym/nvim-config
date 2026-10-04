@@ -4,7 +4,7 @@
 -- https://medium.com/unixification/must-have-neovim-keymaps-51c283394070
 -- https://www.reddit.com/r/neovim/comments/1h7f0bz/share_your_coolest_keymap/
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = ' ' -- Часто его делают ',' или '\\'
 
 -- В Neovim по умолчанию noremap = true, т.е. только встроенные сочетания будут работать в rhs
 -- Это позволяет избежать рекурсии
@@ -18,20 +18,23 @@ local map = vim.keymap.set
 -- map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
 
+-- Сочетание для выбора всего текста не нужно
 -- <C-a> я использую для увеличения версии пакета, а <leader>a любят в
 -- плагинах
--- gA свобобно в неовим, в обычном вим оно делает почти то же самое, что и ga
-map('n', 'gA', 'ggVG', { desc = 'Select all' })
+-- map('n', 'g<C-a>', 'ggVG', { desc = 'Select all' })
+-- Как альтернативу Ctrl можно использовать Alt
+-- map('n', '<A-a>', 'ggVG', { desc = 'Select all' })
+-- map('n', '<leader>a', 'ggVG', { desc = 'Select all' })
+-- gA свободно в неовим, в обычном вим оно делает почти то же самое, что и ga
+-- ga же показывает коды символов под курсором и фактически бесполезен
+-- map('n', 'ga', 'ggVG', { desc = 'Select all' })
+-- В helix % используется для выбора всего текста, в вим это сочетание занято
+-- map('n', '<leader>%', 'ggVG', { desc = 'Select all' })
 
 -- <C-w>c
 -- map('n', '<leader>bc', vim.cmd.close, { desc = 'Close buffer' })
 -- В Neovim никаких сочетаний нет для Escape в нормальном режиме
-map(
-  'n',
-  '<Esc>',
-  '<cmd>nohlsearch<cr>',
-  { desc = 'Clear search highlight', silent = true }
-)
+map('n', '<Esc>', '<cmd>noh<cr>', { desc = 'Clear highlights' })
 
 -- Буферы
 -- H/L переходят по буферам вместо верха/низа экрана
@@ -40,7 +43,8 @@ map(
 map('n', '<Tab>', vim.cmd.bprev, { desc = 'Previous buffer' })
 map('n', '<S-Tab>', vim.cmd.bnext, { desc = 'Next buffer' })
 
--- Эти сочетания редко используются
+-- Нужно придерживаться правила, согласно которому первая буква после <leader> — namespace,
+-- а вторая — действие. Например: <leader>b — Buffers, <leader>bd — Delete buffer.
 map(
   'n',
   '<leader>bd',
@@ -49,7 +53,7 @@ map(
 )
 map(
   'n',
-  '<leader>bo',
+  '<leader>bD',
   '<cmd>%bd <bar> e # <bar> bd #<cr>',
   { desc = 'Delete other buffers' }
 )
@@ -82,7 +86,8 @@ map(
   { desc = 'Increase window width' }
 )
 
--- <C-w>s, <C-w>v
+-- Для них уже есть <C-w>s и <C-w>v
+-- Я по привычке раньше эти сочетания пихал
 -- map('n', '<leader>h', vim.cmd.split, { desc = 'Horizontal split' })
 -- map('n', '<leader>v', vim.cmd.vsplit, { desc = 'Vertical split' })
 
@@ -94,6 +99,8 @@ end
 map('n', '<A-0>', vim.cmd.tablast, { desc = 'Go to last tab' })
 map('n', '<leader>tn', vim.cmd.tabnew, { desc = 'New tab' })
 map('n', '<leader>tc', vim.cmd.tabclose, { desc = 'Close tab' })
+map('n', '<leader>to', vim.cmd.tabonly, { desc = 'Close other tabs' })
+map('n', '<leader>tm', '<cmd>tabmove<Space>', { desc = 'Move tab' })
 
 -- Навигация
 -- Нужно всегда x использовать вместо v
@@ -119,6 +126,7 @@ map('x', 'J', ":m '>+1<CR>gv=gv", {
 -- map('i', '<S-Tab>', '<C-d>', { desc = 'Outdent line' })
 map('v', '>', '>gv', { desc = 'Indent' })
 map('v', '<', '<gv', { desc = 'Outdent' })
+-- От табов нужно отвыкать, но для кого-то привычнее
 map('v', '<Tab>', '>gv', { desc = 'Indent' })
 map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 
@@ -136,7 +144,7 @@ map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 -- )
 
 -- R в Visual свободно, но можно по аналогии с предыдущим данное действие на
--- <leader>r повесить
+-- то же сочетание повесить
 map('v', 'R', [["hy:%s/<C-r>h//g<Left><Left>]], { desc = 'Replace selection' })
 
 -- Конфиги Neovim
@@ -154,7 +162,7 @@ map('n', '<leader>R', function()
 end, { desc = 'Restart Neovim' })
 
 -- Управление плагинами
-map('n', '<leader>pu', vim.pack.update, { desc = 'Update plugins' })
+map('n', '<leader>pu', vim.pack.update, { desc = 'update plugins' })
 
 map('n', '<leader>pc', function()
   vim.pack.del(vim
@@ -166,4 +174,4 @@ map('n', '<leader>pc', function()
       return plugin.spec.name
     end)
     :totable())
-end, { desc = 'Clean inactive plugins' })
+end, { desc = 'clean inactive plugins' })
