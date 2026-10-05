@@ -158,9 +158,8 @@ o.autoread = true -- дефолт
 o.confirm = true
 -- Отключает modeline во избежание инъекции команд через содержимое файлов
 o.modeline = false
--- options не сохраняются в сессиях во избежание конфликтов с плагинами
-o.sessionoptions =
-  'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal'
+-- Claude советовыал добавить, но то скорее его бред
+--o.sessionoptions:append('localoptions')
 -- Хранит позицию курсора, метки и регистры между сессиями
 o.shada = "!,'100,<1000,s10,h"
 

@@ -19,7 +19,8 @@ local function save_theme(theme_name)
 end
 
 local function load_theme()
-  package.loaded[theme_module] = nil -- отключаем кеширование модуля
+  -- гарантируем загрузку новой версии модуля, а не кешированной версии
+  package.loaded[theme_module] = nil
 
   local ok, theme = pcall(require, theme_module)
 
@@ -44,5 +45,10 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 vim.api.nvim_create_autocmd('VimEnter', {
   group = group,
   desc = 'Load the saved colorscheme',
-  callback = load_theme,
+  callback = function()
+    -- Так видно как применяется тема
+    -- Дополнительно выполним загрузку после всех обработчиков VimEnter
+    -- vim.schedule(load_theme)
+    load_theme()
+  end,
 })
