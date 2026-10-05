@@ -8,11 +8,11 @@ autocmd({ 'CursorHold', 'CursorHoldI', 'FocusGained' }, {
   command = "if mode() != 'c' | checktime | endif",
 })
 
--- Настройки форматирования можно переопределить в plugin/*.lua, но так
--- универсальнее
-autocmd({ 'BufEnter' }, {
+-- В арче настройки форматирования заданы где-то в /usr/share, и грузятся после
+-- init.lua, поэтому их можно задать только через autocmd либо, кинув в plugin
+autocmd('FileType', {
   group = group,
-  desc = 'Set buffer format options',
+  desc = 'Set format options',
   callback = function()
     -- По дефолту что-то типа ljcqrt.
     vim.opt_local.formatoptions = { c = true, j = true, q = true }
