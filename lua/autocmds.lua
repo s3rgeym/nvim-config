@@ -1,3 +1,4 @@
+local utils = require('utils')
 local group = vim.api.nvim_create_augroup('UserAutocmds', { clear = true })
 
 -- Чтобы вручную не вводить :e!
@@ -64,7 +65,6 @@ vim.api.nvim_create_autocmd('VimResized', {
   end,
 })
 
--- Я встроенным терминалом не пользуюсь
 -- vim.api.nvim_create_autocmd("TermOpen", {
 --   group = group,
 --   desc = 'Start terminal in insert mode',
@@ -83,4 +83,20 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.breakindent = true
     vim.opt_local.showbreak = '↪ '
   end,
+})
+
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = group,
+  desc = 'Save the current colorscheme',
+  callback = function(args)
+    if args.match and args.match ~= '' then
+      utils.save_theme(args.match)
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = group,
+  desc = 'Load the saved colorscheme',
+  callback = utils.load_theme,
 })
