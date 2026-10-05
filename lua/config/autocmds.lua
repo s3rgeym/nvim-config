@@ -1,6 +1,3 @@
-local utils = require('utils')
-
----@diagnostic disable: undefined-field
 local group = vim.api.nvim_create_augroup('UserAutocmds', { clear = true })
 
 -- Чтобы вручную не вводить :e!
@@ -85,22 +82,5 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.linebreak = true
     vim.opt_local.breakindent = true
     vim.opt_local.showbreak = '↪ '
-  end,
-})
-
--- Загрузка темы при полном старте Neovim
-vim.api.nvim_create_autocmd('VimEnter', {
-  group = group,
-  callback = utils.load_theme,
-})
-
--- Сохранение темы при её изменении
-vim.api.nvim_create_autocmd('ColorScheme', {
-  group = group,
-  callback = function(args)
-    -- Избегаем бесконечной перезаписи, если имя темы пустое
-    if args.match and args.match ~= '' then
-      utils.save_theme(args.match)
-    end
   end,
 })
