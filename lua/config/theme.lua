@@ -1,7 +1,5 @@
--- Имя модуля конфигурации темы
-local theme_module = 'current-theme'
-
 -- Путь к файлу конфигурации темы
+local theme_module = 'config/current-theme'
 local theme_file = vim.fn.stdpath('config') .. '/lua/' .. theme_module .. '.lua'
 
 -- Функция загрузки сохраненной темы
