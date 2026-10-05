@@ -6,7 +6,6 @@ pcall(function()
 end)
 
 require('options')
-require('statusline')
 require('keymaps')
 require('autocmds')
 require('theme')
