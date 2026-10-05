@@ -1,8 +1,9 @@
 local utils = require('utils')
+local autocmd = vim.api.nvim_create_autocmd
 local group = vim.api.nvim_create_augroup('UserAutocmds', { clear = true })
 
 -- Чтобы вручную не вводить :e!
-vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI', 'FocusGained' }, {
+autocmd({ 'CursorHold', 'CursorHoldI', 'FocusGained' }, {
   group = group,
   desc = 'Check for external file changes',
   command = "if mode() != 'c' | checktime | endif",
@@ -10,7 +11,7 @@ vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI', 'FocusGained' }, {
 
 -- Настройки форматирования можно переопределить в plugin/*.lua, но так
 -- универсальнее
-vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+autocmd({ 'BufEnter' }, {
   group = group,
   desc = 'Set buffer format options',
   callback = function()
@@ -19,7 +20,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   end,
 })
 
-vim.api.nvim_create_autocmd('BufReadPost', {
+autocmd('BufReadPost', {
   group = group,
   desc = 'Restore cursor position',
   callback = function(ev)
@@ -31,7 +32,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 })
 
 -- Highlight yanked text
-vim.api.nvim_create_autocmd('TextYankPost', {
+autocmd('TextYankPost', {
   group = group,
   desc = 'Highlight yanked text',
   callback = function()
@@ -42,7 +43,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
+autocmd('FileType', {
   group = group,
   desc = "Close special buffers with 'q'",
   pattern = { 'help', 'checkhealth', 'qf', 'man', 'lspinfo' },
@@ -57,7 +58,7 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd('VimResized', {
+autocmd('VimResized', {
   group = group,
   desc = 'Equalize window splits',
   callback = function()
@@ -65,7 +66,7 @@ vim.api.nvim_create_autocmd('VimResized', {
   end,
 })
 
--- vim.api.nvim_create_autocmd("TermOpen", {
+-- autocmd("TermOpen", {
 --   group = group,
 --   desc = 'Start terminal in insert mode',
 --   command = "startinsert",
@@ -73,7 +74,7 @@ vim.api.nvim_create_autocmd('VimResized', {
 
 -- Глобально word wrap отключен, но в некоторых текстовых форматах без него
 -- сложно
-vim.api.nvim_create_autocmd('FileType', {
+autocmd('FileType', {
   group = group,
   pattern = { 'markdown', 'text', 'gitcommit' },
   desc = 'Enable wrapping for text files',
@@ -85,7 +86,7 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd('ColorScheme', {
+autocmd('ColorScheme', {
   group = group,
   desc = 'Save the current colorscheme',
   callback = function(args)
@@ -95,7 +96,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   end,
 })
 
-vim.api.nvim_create_autocmd('VimEnter', {
+autocmd('VimEnter', {
   group = group,
   desc = 'Load the saved colorscheme',
   callback = utils.load_theme,

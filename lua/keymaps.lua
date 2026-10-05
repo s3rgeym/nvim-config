@@ -136,16 +136,20 @@ map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 -- Поиск и замена
 -- Замена во всех файлах: :args **/*.py | :argdo %s/\<old\>/new/g | update
 -- <leader>r лучше освободить под префикс для других сочетаний
--- map(
---   'n',
---   '<leader>r',
---   ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
---   { desc = 'Replace word under cursor' }
--- )
+map(
+  'n',
+  '<leader>r',
+  ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
+  { desc = 'Replace word under cursor' }
+)
 
--- R в Visual свободно, но можно по аналогии с предыдущим данное действие на
--- то же сочетание повесить
-map('v', 'R', [["hy:%s/<C-r>h//g<Left><Left>]], { desc = 'Replace selection' })
+-- R в Visual свободно и можно использовать его
+map(
+  'v',
+  '<leader>r',
+  [["hy:%s/<C-r>h//g<Left><Left>]],
+  { desc = 'Replace selection' }
+)
 
 -- Конфиги Neovim
 map(
@@ -155,11 +159,7 @@ map(
   { desc = 'Edit Neovim config' }
 )
 
-map('n', '<leader>R', function()
-  local session = vim.fn.stdpath('state') .. '/restart_session.vim'
-  vim.cmd('mksession! ' .. vim.fn.fnameescape(session))
-  vim.cmd('restart source ' .. vim.fn.fnameescape(session))
-end, { desc = 'Restart Neovim' })
+map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neovim' })
 
 -- Управление плагинами
 map('n', '<leader>pu', vim.pack.update, { desc = 'update plugins' })

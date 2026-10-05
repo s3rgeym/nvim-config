@@ -1,4 +1,4 @@
-local function mode()
+function custom_mode()
   return ({
     n = 'NORMAL',
     i = 'INSERT',
@@ -11,14 +11,14 @@ local function mode()
   })[vim.fn.mode()] or vim.fn.mode()
 end
 
-local function git_status()
-  local status = vim.b.gitsigns_status_dict
+function git_status()
+  status = vim.b.gitsigns_status_dict
 
   if not status then
     return ''
   end
 
-  local result = ' ' .. status.head
+  result = ' ' .. status.head
 
   if (status.added or 0) > 0 then
     result = result .. ' +' .. status.added
@@ -35,27 +35,26 @@ local function git_status()
   return result
 end
 
-local function lsp_clients()
+function lsp_clients()
   return table.concat(
     vim.tbl_map(function(client)
       return client.name
     end, vim.lsp.get_clients({ bufnr = 0 })),
-    ' | '
+    ' │ '
   )
 end
 
-function status_line()
-  return table.concat({
-    string.format(' %-8.8s', mode()),
-    ' %<%f%m%r',
-    ' ' .. git_status(),
-    ' %{%v:lua.vim.ui.progress_status()%}',
-    '%=',
-    ' %k',
-    ' %{%v:lua.vim.diagnostic.status()%}',
-    ' ' .. lsp_clients(),
-    ' %14(%l:%c%) ',
-  }, '')
-end
-
-vim.opt.statusline = '%!v:lua.status_line()'
+-- Доступен только вызов глобальных функций
+-- '%{v:lua.foo()}' возвращает строку как есть
+-- '%{%v:lua.foo()%}' дополнительное разбирает выражения, возвращаемые ей
+vim.opt.statusline = table.concat({
+  ' %-8.8{v:lua.custom_mode()}',
+  ' %<%f%m%r',
+  ' %{v:lua.git_status()}',
+  ' %{%v:lua.vim.ui.progress_status()%}',
+  '%=',
+  ' %k',
+  ' %{%v:lua.vim.diagnostic.status()%}',
+  ' %{v:lua.lsp_clients()}',
+  ' %14(%l:%c%) ',
+}, '')

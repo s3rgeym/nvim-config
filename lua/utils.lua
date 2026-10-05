@@ -1,15 +1,15 @@
 local M = {}
 
-local theme_module = 'current-theme'
+local theme_module = 'theme'
 local theme_file = vim.fs.joinpath(
   vim.fn.stdpath('config'),
   'lua',
   theme_module
 ) .. '.lua'
 
-function M.save_theme(name)
+function M.save_theme(theme_name)
   local ok, err = pcall(vim.fn.writefile, {
-    string.format('return %q', name),
+    string.format('return %q', theme_name),
   }, theme_file)
 
   if not ok then
