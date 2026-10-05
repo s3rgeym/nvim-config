@@ -22,11 +22,13 @@ local function load_theme()
   package.loaded[theme_module] = nil -- отключаем кеширование модуля
 
   local ok, theme = pcall(require, theme_module)
-  
+
   if ok and type(theme) == 'string' and theme ~= '' then
     pcall(vim.cmd.colorscheme, theme)
   end
 end
+
+local group = vim.api.nvim_create_augroup('ThemePersistence', { clear = true })
 
 vim.api.nvim_create_autocmd('ColorScheme', {
   group = group,
@@ -44,4 +46,3 @@ vim.api.nvim_create_autocmd('VimEnter', {
   desc = 'Load the saved colorscheme',
   callback = load_theme,
 })
-
