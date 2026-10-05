@@ -1,1 +1,1 @@
-vim.pack.add({ 'https://github.com/sainnhe/everforest' }, { load = false })
+vim.pack.add({ 'https://github.com/sainnhe/everforest' })

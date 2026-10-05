@@ -19,17 +19,19 @@ o.showmode = false -- Не отображаем режим, вместо это�
 -- Для отключения табов
 -- o.showtabline = 0
 
+local mode_names = {
+  n = 'NORMAL',
+  i = 'INSERT',
+  v = 'VISUAL',
+  V = 'V-LINE',
+  ['\22'] = 'V-BLOCK',
+  c = 'COMMAND',
+  R = 'REPLACE',
+  t = 'TERMINAL',
+}
+
 function custom_mode()
-  return ({
-    n = 'NORMAL',
-    i = 'INSERT',
-    v = 'VISUAL',
-    V = 'V-LINE',
-    ['\22'] = 'V-BLOCK',
-    c = 'COMMAND',
-    R = 'REPLACE',
-    t = 'TERMINAL',
-  })[vim.fn.mode()] or vim.fn.mode()
+  return mode_names[vim.fn.mode()] or vim.fn.mode()
 end
 
 function git_status()
