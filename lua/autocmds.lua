@@ -85,19 +85,3 @@ autocmd('FileType', {
     vim.opt_local.showbreak = '↪ '
   end,
 })
-
-autocmd('ColorScheme', {
-  group = group,
-  desc = 'Save the current colorscheme',
-  callback = function(args)
-    if args.match and args.match ~= '' then
-      utils.save_theme(args.match)
-    end
-  end,
-})
-
-autocmd('VimEnter', {
-  group = group,
-  desc = 'Load the saved colorscheme',
-  callback = utils.load_theme,
-})
