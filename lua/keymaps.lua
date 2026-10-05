@@ -162,7 +162,7 @@ map(
 map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neovim' })
 
 -- Управление плагинами
-map('n', '<leader>pu', vim.pack.update, { desc = 'update plugins' })
+map('n', '<leader>pu', vim.pack.update, { desc = 'Update plugins' })
 
 map('n', '<leader>pc', function()
   vim.pack.del(vim
@@ -174,4 +174,4 @@ map('n', '<leader>pc', function()
       return plugin.spec.name
     end)
     :totable())
-end, { desc = 'clean inactive plugins' })
+end, { desc = 'Clean plugins' })
