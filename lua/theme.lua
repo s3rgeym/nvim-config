@@ -38,7 +38,6 @@ local function save_theme(theme_name)
     string.format('return %q', theme_name),
   }, theme_file)
 
-  -- writefile при неудаче возвращает -1, а не бросает ошибку
   if not ok or res == -1 then
     vim.notify('Failed to save colorscheme', vim.log.levels.WARN)
   end
