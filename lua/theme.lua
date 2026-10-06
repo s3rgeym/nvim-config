@@ -18,7 +18,7 @@ local function read_theme()
 end
 
 local function load_theme()
-  current_theme = read_theme()
+  local current_theme = read_theme()
   if current_theme then
     vim.cmd.colorscheme(current_theme)
   end
@@ -29,7 +29,7 @@ local function save_theme(theme_name)
     return
   end
 
-  current_theme = read_theme()
+  local current_theme = read_theme()
   if theme_name == current_theme then
     return
   end
