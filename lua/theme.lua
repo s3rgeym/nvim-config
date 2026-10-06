@@ -5,50 +5,61 @@ local theme_file = vim.fs.joinpath(
   theme_module
 ) .. '.lua'
 
-local function save_theme(theme_name)
-  local ok, err = pcall(vim.fn.writefile, {
-    string.format('return %q', theme_name),
-  }, theme_file)
+local group = vim.api.nvim_create_augroup('ThemePersistence', { clear = true })
 
-  if not ok then
-    vim.notify(
-      'Failed to persist colorscheme: ' .. tostring(err),
-      vim.log.levels.WARN
-    )
+local function read_theme()
+  -- сбрасываем кеш модуля, чтобы загрузилась его актуальная версия
+  package.loaded[theme_module] = nil
+
+  local ok, theme = pcall(require, theme_module)
+  if ok and type(theme) == 'string' and theme ~= '' then
+    return theme
   end
 end
 
 local function load_theme()
-  -- гарантируем загрузку новой версии модуля, а не кешированной версии
-  package.loaded[theme_module] = nil
-
-  local ok, theme = pcall(require, theme_module)
-
-  if ok and type(theme) == 'string' and theme ~= '' then
-    pcall(vim.cmd.colorscheme, theme)
+  current_theme = read_theme()
+  if current_theme then
+    vim.cmd.colorscheme(current_theme)
   end
 end
 
-local group = vim.api.nvim_create_augroup('ThemePersistence', { clear = true })
+local function save_theme(theme_name)
+  if not theme_name or theme_name == '' then
+    return
+  end
+
+  current_theme = read_theme()
+  if theme_name == current_theme then
+    return
+  end
+
+  local ok, res = pcall(vim.fn.writefile, {
+    string.format('return %q', theme_name),
+  }, theme_file)
+
+  -- writefile при неудаче возвращает -1, а не бросает ошибку
+  if not ok or res == -1 then
+    vim.notify('Failed to save colorscheme', vim.log.levels.WARN)
+  end
+end
 
 vim.api.nvim_create_autocmd('ColorScheme', {
   group = group,
-  desc = 'Save the current colorscheme',
+  desc = 'Save colorscheme',
   callback = function(args)
-    if args.match and args.match ~= '' then
-      save_theme(args.match)
-    end
+    save_theme(args.match)
   end,
 })
 
 -- Тему нужно применить после загрузки плагинов
 vim.api.nvim_create_autocmd('VimEnter', {
   group = group,
-  desc = 'Load the saved colorscheme',
-  callback = function()
-    -- Так видно как применяется тема
-    -- Дополнительно выполним загрузку после всех обработчиков VimEnter
-    -- vim.schedule(load_theme)
-    load_theme()
-  end,
+  once = true,
+  -- nested нужен: vim.cmd.colorscheme внутри load_theme вызывает
+  -- ColorSchemePre/ColorScheme, и без nested другие обработчики
+  -- этих событий (плагины, переопределения highlight-групп) не сработают
+  nested = true,
+  desc = 'Load colorscheme',
+  callback = load_theme,
 })
