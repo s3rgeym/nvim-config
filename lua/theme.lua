@@ -56,9 +56,9 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 vim.api.nvim_create_autocmd('VimEnter', {
   group = group,
   once = true,
-  -- nested нужен: vim.cmd.colorscheme внутри load_theme вызывает
-  -- ColorSchemePre/ColorScheme, и без nested другие обработчики
-  -- этих событий (плагины, переопределения highlight-групп) не сработают
+  -- Тут vim.cmd.colorscheme внутри load_theme вызывает
+  -- события ColorScheme и ColorSchemePre, которые не будут перехвачены без
+  -- nested
   nested = true,
   desc = 'Load colorscheme',
   callback = load_theme,
