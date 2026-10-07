@@ -2,7 +2,7 @@
 
 <figure> 
   <img width="1239" height="1031" alt="image" src="https://github.com/user-attachments/assets/b1379e54-ad5e-46b3-bc93-7eb400a0fcec" />
-  <figcaption>Допопление по Ctrl-Space</figcaption>
+  <figcaption>Дополнение по Ctrl-Space</figcaption>
 </figure>
 
 <details>
