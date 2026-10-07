@@ -48,7 +48,7 @@ function lsp_clients()
 end
 
 local get_hl = function(name)
-  return vim.api.nvim_get_hl(0, { name = name, link = true })
+  return vim.api.nvim_get_hl(0, { name = name, link = false })
 end
 
 local function setup_statusline_hl()
