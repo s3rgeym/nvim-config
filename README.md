@@ -1,31 +1,22 @@
 ## Минималистичный конфиг Neovim
 
 <figure> 
- <img width="1300" height="893" alt="image" src="https://github.com/user-attachments/assets/304ccc82-f80f-459f-8a53-67f390729793" />
- <figcaption>Автодополнение вызывается по Ctrl-Space</figcaption>
+  <img width="1239" height="1031" alt="image" src="https://github.com/user-attachments/assets/b1379e54-ad5e-46b3-bc93-7eb400a0fcec" />
+  <figcaption>Допопление по Ctrl-Space</figcaption>
 </figure>
 
 <details>
- <summary>Еще скриншоты</summary>
- <figure> 
-   <img width="1300" height="893" alt="image" src="https://github.com/user-attachments/assets/910258da-1f59-4124-83ca-ad3334d8e56b" />
-   <figcaption>Вызов signature help</figcaption> 
- </figure>
- 
- <figure> 
-   <img width="1300" height="893" alt="image" src="https://github.com/user-attachments/assets/7669db2b-b713-46d0-8389-6db18a2cb72b" />
-   <figcaption>Файловый менеджер Oil</figcaption>
- </figure>
- 
- <figure>
-  <img width="1300" height="893" alt="image" src="https://github.com/user-attachments/assets/4c067256-7b34-4170-abc8-8100eac64ca3" />
-  <figcaption>Поиск файлов через fzf</figcaption>
- </figure>
+  <summary>Еще скриншоты</summary>
 
- <figure>
-  <img width="1210" height="830" alt="image" src="https://github.com/user-attachments/assets/1ecfaefe-6a6f-40e5-96cd-f4d6d6b125f4" />
-  <figcaption>Диалог выбора темы через него же</figcaption>
- </figure>
+  <figure>
+    <img width="1239" height="1031" alt="image" src="https://github.com/user-attachments/assets/f4e71f99-fd29-4499-95b3-4909813cea18" />
+    <figcaption>Выбор и предпросмотр тем оформления</figcaption>
+  </figure>
+
+  <figure>
+    <img width="1239" height="1031" alt="image" src="https://github.com/user-attachments/assets/176ade19-0988-46f5-bd84-5d1bd025a302" />
+    <figcaption>Поиск по содержимому</figcaption>
+  </figure>
 </details>
 
 ### Описание
