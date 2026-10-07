@@ -7,5 +7,6 @@ end)
 
 require('options')
 require('theme')
+require('statusline')
 require('autocmds')
 require('keymaps')
