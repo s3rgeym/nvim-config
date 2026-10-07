@@ -47,6 +47,25 @@ function lsp_clients()
   )
 end
 
+function diagnostic_status()
+  local errors =
+    #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+  local warnings =
+    #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+
+  local result = {}
+
+  if errors > 0 then
+    table.insert(result, 'E:' .. errors)
+  end
+
+  if warnings > 0 then
+    table.insert(result, 'W:' .. warnings)
+  end
+
+  return table.concat(result, ' ')
+end
+
 local get_hl = function(name)
   return vim.api.nvim_get_hl(0, { name = name, link = false })
 end
