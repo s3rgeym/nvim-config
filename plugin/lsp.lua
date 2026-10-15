@@ -3,12 +3,16 @@ vim.pack.add({ 'https://github.com/neovim/nvim-lspconfig' })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
+-- Эта настройка отвечает за изменение имен импортируемых файлов
+-- По умолчанию она отключена
+-- Эту настройку мало включить, нужно еще настроить файловый менеджер чтобы он
+-- регистрировал событие после чего LSP запустит переименование, если он,
+-- конечно, поддерживает его
+capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 -- Многие отключают подсветку semantic tokens, т.к. за подсветку отвечает
--- treesitter
+-- treesitter, но я так и не понял, чем она мешает
 -- https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316
-if vim.tbl_get(capabilities, 'textDocument', 'semanticTokens') ~= nil then
-  capabilities.textDocument.semanticTokens = nil
-end
+-- capabilities.textDocument.semanticTokens = nil
 
 -- Настройки для всех серверов
 vim.lsp.config('*', { capabilities = capabilities })
@@ -32,6 +36,7 @@ vim.api.nvim_create_autocmd('CursorHold', {
 })
 
 local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
+
 local highlight_group = vim.api.nvim_create_augroup('LspHighlight', {
   clear = false,
 })

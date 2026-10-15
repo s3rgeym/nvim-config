@@ -1,4 +1,6 @@
 -- Общие настройки
+-- Самые частые значения в конфигах
+-- https://github.com/neovim/neovim/issues/21342
 -- https://gist.github.com/echasnovski/fa70dc75c475369747d2a485a13303fb
 -- У меня был соблазн все это в массив загнать, а потом задать значения для
 -- vim.opt, но из-за того, что порядок задания некоторых значений не
@@ -22,6 +24,7 @@ o.showmode = false -- Не отображаем режим, вместо это�
 
 -- Completion / Popup
 -- Без popup справка не отображается
+-- Возможно, стот это вынести в настройки LSP
 o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
 -- В всплывающем окне с просмотром документации края прямоугольные.
 -- https://github.com/neovim/neovim/issues/38248#issuecomment-4038192073

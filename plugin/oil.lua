@@ -20,6 +20,14 @@ require('oil').setup({
   view_options = {
     show_hidden = true,
   },
+  -- Дергать какой-то калбек для регистрации изменения имени файла, чтобы LSP
+  -- переписало импорты
+  -- Работает только с включенным
+  -- capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+  lsp_file_methods = {
+    enabled = true,
+    timeout_ms = 5000,
+  },
 })
 
 require('oil-git').setup()

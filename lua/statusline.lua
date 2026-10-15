@@ -47,6 +47,7 @@ function lsp_clients()
   )
 end
 
+-- TODO: удалить
 function diagnostic_status()
   local errors =
     #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })

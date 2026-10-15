@@ -11,6 +11,9 @@ vim.g.maplocalleader = ' ' -- Часто его делают ',' или '\\'
 -- silent = true подавляет вывод команд в строку сообщений.
 -- Он нужен для vim-команд (строки, нач-ся с `:`, `<Cmd>`)
 -- Не нужен для vim.cmd.* и там где есть интерактив и важен вывод.
+-- Нужно всегда x использовать вместо v
+-- x - Visual, т.е. визуальный режим, только выделение
+-- v - Visual + Select. В Select выделение заменяется на вводимые символы
 local map = vim.keymap.set
 
 -- Общие сочетания
@@ -102,14 +105,24 @@ map('n', '<leader>tc', vim.cmd.tabclose, { desc = 'Close tab' })
 map('n', '<leader>to', vim.cmd.tabonly, { desc = 'Close other tabs' })
 map('n', '<leader>tm', '<cmd>tabmove<Space>', { desc = 'Move tab' })
 
--- Навигация
--- Нужно всегда x использовать вместо v
--- x - Visual, т.е. визуальный режим, только выделение
--- v - Visual + Select. В Select выделение заменяется на вводимые символы
-map({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
-map({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { expr = true })
-map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
-map({ 'n', 'x' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { expr = true })
+-- Перемещение курсора по "обернутым" строкам
+map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+map(
+  { 'n', 'x' },
+  '<Down>',
+  "v:count == 0 ? 'gj' : '<Down>'",
+  { expr = true, silent = true }
+)
+map(
+  { 'n', 'x' },
+  '<Up>',
+  "v:count == 0 ? 'gk' : '<Up>'",
+  { expr = true, silent = true }
+)
+-- Ломает выбор стрелками в меню автодополнения
+-- map('i', '<Down>', '<C-o>gj', { silent = true })
+-- map('i', '<Up>', '<C-o>gk', { silent = true })
 
 -- Перемещение строк
 map('x', 'K', ":m '<-2<CR>gv=gv", {
