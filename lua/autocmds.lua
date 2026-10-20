@@ -75,7 +75,16 @@ autocmd('VimResized', {
 -- сложно
 autocmd('FileType', {
   group = group,
-  pattern = { 'markdown', 'text', 'gitcommit' },
+  pattern = {
+    'markdown',
+    'text',
+    'gitcommit',
+    'rst',
+    'asciidoc',
+    'tex',
+    'mail',
+    'help',
+  },
   desc = 'Enable wrapping for text files',
   callback = function()
     vim.opt_local.wrap = true

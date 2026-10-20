@@ -172,6 +172,21 @@ map(
   { desc = 'Edit Neovim config' }
 )
 
+-- Диагностика
+-- <C-w>d
+-- map(
+--   'n',
+--   '<leader>dd',
+--   vim.diagnostic.open_float,
+--   { desc = 'Show diagnostics in float' }
+-- )
+map(
+  'n',
+  '<leader>q',
+  vim.diagnostic.setloclist,
+  { desc = 'Diagnostics to location list' }
+)
+
 map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neovim' })
 
 -- Управление плагинами
@@ -188,3 +203,6 @@ map('n', '<leader>pc', function()
     end)
     :totable())
 end, { desc = 'Clean plugins' })
+
+-- Прочее
+-- map('n', '<leader>tw', '<cmd>set wrap!<CR>', { desc = 'Toggle wrap' })

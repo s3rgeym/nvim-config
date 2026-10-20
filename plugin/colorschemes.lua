@@ -6,7 +6,7 @@ vim.pack.add({
   { src = 'https://github.com/rose-pine/neovim', name = 'rose-pine' },
   { src = 'https://github.com/sainnhe/everforest' },
   -- Уродливая тема
-  -- { src = 'https://github.com/craftzdog/solarized-osaka.nvim' },
+  { src = 'https://github.com/craftzdog/solarized-osaka.nvim' },
   -- Тема из nitghtfox лучше
   -- { src = 'https://github.com/gbprod/nord.nvim' },
   { src = 'https://github.com/navarasu/onedark.nvim' },

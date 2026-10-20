@@ -4,9 +4,10 @@
 pcall(function()
   require('vim._core.ui2').enable()
 end)
-
 require('options')
 require('theme')
 require('statusline')
 require('autocmds')
 require('keymaps')
+-- Можно вынести в after/plugin/ чтобы плагины не переопределяли настройки
+require('diagnostics')

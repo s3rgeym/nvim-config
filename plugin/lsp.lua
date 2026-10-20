@@ -17,24 +17,6 @@ capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 -- Настройки для всех серверов
 vim.lsp.config('*', { capabilities = capabilities })
 
--- Настройка внешнего вида диагностики
-vim.diagnostic.config({
-  virtual_text = false,
-  underline = true,
-  severity_sort = true,
-})
-
-local diagnostic_hover_group =
-  vim.api.nvim_create_augroup('DiagnosticHover', { clear = true })
-
--- Показывать сообщение диагностики при наведении курсора
-vim.api.nvim_create_autocmd('CursorHold', {
-  group = diagnostic_hover_group,
-  callback = function()
-    vim.diagnostic.open_float(nil, { focusable = false })
-  end,
-})
-
 local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
 
 local highlight_group = vim.api.nvim_create_augroup('LspHighlight', {

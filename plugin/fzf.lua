@@ -23,13 +23,18 @@ fzf_lua.register_ui_select()
 
 local map = vim.keymap.set
 
--- Я решил не вешать ничего на сочетания типа <C-g>, <C-p> и тп, как советует
--- разработчик
--- Поиск и навигация
+-- Эти сочетания бесполезны или дублируют что-то, поэтому автор fzf-lua советует
+-- на них вешать вызов команд
+-- дублирует k
+-- map('n', '<C-p>', fzf_lua.files, { desc = 'FZF Files' })
+-- показывает имя фала и текущую строку
+-- map('n', '<C-g>', fzf_lua.live_grep, { desc = 'FZF Grep' })
+-- переключение на альтернативный буфер (циклически на предыдущий)
+-- map('n', '<C-^>', fzf_lua.buffers, { desc = 'FZF Buffers' })
+
+-- Всякие <C-p> перехватываются oil, поэтому с префикосом лучше
 map('n', '<leader>ff', fzf_lua.files, { desc = 'FZF Files' })
 map('n', '<leader>fg', fzf_lua.live_grep, { desc = 'FZF Grep' })
-map('n', '<leader>f/', fzf_lua.lgrep_curbuf, { desc = 'FZF Buffer Search' })
-map('n', '<leader>fw', fzf_lua.grep_cword, { desc = 'FZF Grep Word' })
 map('n', '<leader>fb', fzf_lua.buffers, { desc = 'FZF Buffers' })
 map('n', '<leader>fo', fzf_lua.oldfiles, { desc = 'FZF Old Files' })
 map('n', '<leader>fr', fzf_lua.resume, { desc = 'FZF Resume' })
@@ -62,13 +67,6 @@ map(
 
 -- История и переходы
 map('n', '<leader>fj', fzf_lua.jumps, { desc = 'FZF Jumplist' })
-map(
-  'n',
-  '<leader>f:',
-  fzf_lua.command_history,
-  { desc = 'FZF Command History' }
-)
-map('n', '<leader>f?', fzf_lua.search_history, { desc = 'FZF Search History' })
 map('n', '<leader>fm', fzf_lua.marks, { desc = 'FZF Marks' })
 map('n', '<leader>fq', fzf_lua.quickfix, { desc = 'FZF Quickfix' })
 
