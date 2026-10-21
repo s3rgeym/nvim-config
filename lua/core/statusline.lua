@@ -1,4 +1,4 @@
-local color = require('utils.color')
+local color_utils = require('utils.color')
 
 local mode_names = {
   n = 'NORMAL',
@@ -40,16 +40,20 @@ local function setup_statusline_hl()
   -- Можно просто задать цвет фона
   -- local edge_fg = normal_hl.bg
   -- Но лучше определять более контратный цвеь
-  local edge_fg = color.pick_contrasting(edge_hl.fg, normal_hl.fg, normal_hl.bg)
+  local edge_fg =
+    color_utils.pick_contrasting(edge_hl.fg, normal_hl.fg, normal_hl.bg)
   local inner_fg =
-    color.pick_contrasting(inner_hl.fg, normal_hl.fg, normal_hl.bg)
+    color_utils.pick_contrasting(inner_hl.fg, normal_hl.fg, normal_hl.bg)
 
   -- Крайние блоки (слева и справа)
-  vim.api.nvim_set_hl(0, 'StatusLineEdge', {
-    fg = edge_fg,
-    bg = edge_hl.fg,
-    bold = true,
-  })
+  local edge_style = { fg = edge_fg, bg = edge_hl.fg }
+
+  vim.api.nvim_set_hl(0, 'StatusLineEdge', edge_style)
+  vim.api.nvim_set_hl(
+    0,
+    'StatusLineMode',
+    vim.tbl_extend('force', edge_style, { bold = true })
+  )
 
   -- Слева: стрелка из крайнего блока во внутренний
   vim.api.nvim_set_hl(0, 'StatusLineLeftArrowEdge', {
@@ -61,7 +65,6 @@ local function setup_statusline_hl()
   vim.api.nvim_set_hl(0, 'StatusLineInner', {
     fg = inner_fg,
     bg = inner_hl.fg,
-    bold = true,
   })
 
   -- Слева: стрелка из внутреннего блока в обычную строку
@@ -100,7 +103,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 -- '%{v:lua.foo()}' возвращает строку как есть
 -- '%{%v:lua.foo()%}' дополнительное разбирает выражения, возвращаемые ей
 vim.opt.statusline = table.concat({
-  '%#StatusLineEdge# %-8.8{v:lua.statusline_mode()}%#StatusLineLeftArrowEdge#\u{e0b0}',
+  '%#StatusLineMode# %-8.8{v:lua.statusline_mode()} %#StatusLineLeftArrowEdge#\u{e0b0}',
   '%#StatusLineInner# %<%t%m%r %#StatusLineLeftArrowInner#\u{e0b0}', -- %t - имя файла, %f - отн путь
   '%#StatusLine# %{%v:lua.vim.ui.progress_status()%} ',
   '%=',
