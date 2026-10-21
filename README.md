@@ -1,23 +1,6 @@
 ## Минималистичный конфиг Neovim
 
-<figure> 
-  <img width="1239" height="1031" alt="image" src="https://github.com/user-attachments/assets/b1379e54-ad5e-46b3-bc93-7eb400a0fcec" />
-  <figcaption>Дополнение по Ctrl-Space</figcaption>
-</figure>
-
-<details>
-  <summary>Еще скриншоты</summary>
-
-  <figure>
-    <img width="1239" height="1031" alt="image" src="https://github.com/user-attachments/assets/f4e71f99-fd29-4499-95b3-4909813cea18" />
-    <figcaption>Выбор и предпросмотр тем оформления</figcaption>
-  </figure>
-
-  <figure>
-    <img width="1239" height="1031" alt="image" src="https://github.com/user-attachments/assets/176ade19-0988-46f5-bd84-5d1bd025a302" />
-    <figcaption>Поиск по содержимому</figcaption>
-  </figure>
-</details>
+<img width="605" height="529" alt="image" src="https://github.com/user-attachments/assets/f3d10961-71ba-475a-a15d-3b6b3b11b421" />
 
 ### Описание
 
