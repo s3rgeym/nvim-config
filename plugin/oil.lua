@@ -3,16 +3,19 @@
 -- Позволяет работать с файлами в обычном буфере как с текстом
 -- Можно также попробовать альтернативу в виде mini-files
 vim.pack.add({
-  'https://github.com/nvim-tree/nvim-web-devicons',
+  -- 'https://github.com/nvim-tree/nvim-web-devicons',
   'https://github.com/stevearc/oil.nvim',
-  'https://github.com/benomahony/oil-git.nvim',
-  'https://github.com/JezerM/oil-lsp-diagnostics.nvim',
+  -- 'https://github.com/benomahony/oil-git.nvim',
+  -- 'https://github.com/JezerM/oil-lsp-diagnostics.nvim',
 })
 
 require('oil').setup({
   default_file_explorer = true,
   columns = {
-    'icon',
+    -- "icon",
+    -- "permissions",
+    -- 'size',
+    -- "mtime",
   },
   skip_confirm_for_simple_edits = true,
   prompt_save_on_select_new_entry = false,
@@ -30,7 +33,7 @@ require('oil').setup({
   },
 })
 
-require('oil-git').setup()
-require('oil-lsp-diagnostics').setup()
+-- require('oil-git').setup()
+-- require('oil-lsp-diagnostics').setup()
 
 vim.keymap.set('n', '-', '<cmd>Oil<cr>', { desc = 'Open parent in Oil' })

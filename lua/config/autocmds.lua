@@ -71,40 +71,42 @@ vim.api.nvim_create_autocmd('VimResized', {
 })
 
 -- Большие файлы
--- Проверка, находясь в большом файле: :lua =vim.b.large_file
-local large_group = vim.api.nvim_create_augroup('LargeFile', { clear = true })
+-- Проверка: :lua =vim.b.large_file
+-- Эти костыли не имеют особого смысла, так как файлы всегда читаются полностью
+-- в оперативную память
+local group = vim.api.nvim_create_augroup('LargeFile', { clear = true })
 local MAX_SIZE = 10 * 1024 * 1024 -- 10 МБ
 
 vim.api.nvim_create_autocmd('BufReadPre', {
-  group = large_group,
+  group = group,
   desc = 'Detect large files',
   callback = function(ev)
     local stat = vim.uv.fs_stat(vim.api.nvim_buf_get_name(ev.buf))
-    if stat and stat.size > MAX_SIZE then
-      vim.b[ev.buf].large_file = true
-      vim.opt_local.swapfile = false
-      vim.opt_local.undolevels = -1
-      vim.opt_local.foldmethod = 'manual'
+    if not stat or stat.size <= MAX_SIZE then
+      return
     end
+
+    vim.b[ev.buf].large_file = true
+    vim.bo[ev.buf].swapfile = false
+    vim.bo[ev.buf].undolevels = -1
   end,
 })
 
--- BufWinEnter приходит после FileType, когда синтаксис и treesitter
--- уже включены другими, поэтому здесь их можно гарантированно выключить
 vim.api.nvim_create_autocmd('BufWinEnter', {
-  group = large_group,
-  desc = 'Disable highlighting for large files',
+  group = group,
+  desc = 'Disable features for large files',
   callback = function(ev)
     if not vim.b[ev.buf].large_file then
       return
     end
+
     pcall(vim.treesitter.stop, ev.buf)
-    vim.cmd('syntax clear')
-    vim.opt_local.syntax = 'off'
-    vim.opt_local.cursorline = false
-    vim.opt_local.relativenumber = false
-    vim.opt_local.spell = false
-    vim.b[ev.buf].matchparen_disable = true
+    vim.bo[ev.buf].syntax = 'off'
+    vim.wo.foldmethod = 'manual'
+    vim.wo.cursorline = false
+    vim.wo.relativenumber = false
+    vim.wo.spell = false
+    vim.wo.wrap = false
   end,
 })
 
