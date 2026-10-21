@@ -12,7 +12,7 @@ capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 -- Многие отключают подсветку semantic tokens, т.к. за подсветку отвечает
 -- treesitter, но я так и не понял, чем она мешает
 -- https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316
--- capabilities.textDocument.semanticTokens = nil
+capabilities.textDocument.semanticTokens = nil
 
 -- Настройки для всех серверов
 vim.lsp.config('*', { capabilities = capabilities })
@@ -23,6 +23,14 @@ local highlight_group = vim.api.nvim_create_augroup('LspHighlight', {
   clear = false,
 })
 
+-- Это сочетание всегда работает с текущим буфером
+vim.keymap.set('n', '<leader>oi', function()
+  vim.lsp.buf.code_action({
+    context = { only = { 'source.organizeImports' }, diagnostics = {} },
+    apply = true,
+  })
+end, { desc = 'Organize imports' })
+
 -- https://mintlify.wiki/neovim/neovim/lsp/completion
 vim.api.nvim_create_autocmd('LspAttach', {
   group = lsp_group,
@@ -30,7 +38,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     local bufnr = args.buf
 
-    local function map(modes, lhs, rhs, opts)
+    local function bufmap(modes, lhs, rhs, opts)
       local options = type(opts) == 'string' and { desc = opts } or opts or {}
       options = vim.tbl_extend('force', {
         buffer = bufnr,
@@ -41,26 +49,27 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Сочетания вынесем за блоки с проверками чтобы во всех буферах те были доступны
     -- Об <C-x><C-o> пальцы сломаешь
-    map('i', '<C-Space>', vim.lsp.completion.get, 'Trigger Completion')
+    bufmap('i', '<C-Space>', vim.lsp.completion.get, 'Trigger Completion')
 
     -- Сочетания для диагностики и нач-ся с gr заданы по умолчанию
     -- Эти сочетания по умолчанию не связаны с LSP
-    map('n', 'gd', vim.lsp.buf.definition, 'Go to Definition')
-    map('n', 'gD', vim.lsp.buf.declaration, 'Go to Declaration')
+    bufmap('n', 'gd', vim.lsp.buf.definition, 'Go to Definition')
+    bufmap('n', 'gD', vim.lsp.buf.declaration, 'Go to Declaration')
 
     -- Показать сигнатуру функции
-    map('i', '<c-k>', vim.lsp.buf.signature_help, 'Signature Help')
+    -- На <c-s> уже висит
+    -- map('i', '<c-k>', vim.lsp.buf.signature_help, 'Signature Help')
 
     -- Подтверждение выбора по Enter, так как неудобно тянуться до <C-y>
-    map('i', '<cr>', function()
+    bufmap('i', '<cr>', function()
       return vim.fn.pumvisible() == 1 and '<C-y>' or '<cr>'
     end, { expr = true })
 
     -- <C-n> назначать не надо, так как он и так служит для вызова дополнения
-    -- keyword, если меню дополнения не открыто
+    -- keyword, если меню дополнения не открыто?
 
     -- Выбор вариантов по Tab и Shift-Tab
-    map('i', '<Tab>', function()
+    bufmap('i', '<Tab>', function()
       return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>'
     end, { expr = true })
 
@@ -69,11 +78,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- работает... Проблема тут в том еще, что <cr>, <Tab> в режиме вставки
     -- добавляют символы (пусть и непечатные), и никто их переопределять не
     -- станет
-    map('i', '<S-Tab>', function()
+    bufmap('i', '<S-Tab>', function()
       return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
     end, { expr = true })
 
-    map('n', '<leader>th', function()
+    bufmap('n', '<leader>th', function()
       vim.lsp.inlay_hint.enable(
         not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }),
         { bufnr = bufnr }
@@ -81,15 +90,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, 'Toggle Inlay Hints')
 
     -- По умолчанию автодополнение вызывается при вводе ".", но это не очень
-    -- удобно, привычнее когда варианты автоподстановки показываются при вводе
-    -- любого символа (тут только печатные ASCII).
+    -- удобно, привычнее когда варианты автоподстановки показываются, когда
+    -- начинаешь печатать имя класса.
     if client:supports_method('textDocument/completion') then
-      local chars = {}
+      local chars = { '.', '_' }
 
-      for i = 32, 126 do
-        table.insert(chars, string.char(i))
+      for i = 0, 61 do
+        local base = i < 10 and 48 or i < 36 and 55 or 61 -- 0-9, A-Z, a-z
+        table.insert(chars, string.char(base + i))
       end
 
+      -- Символы эти можно так посмотреть
+      -- :lua =vim.lsp.get_clients({ bufnr = 0 })[1].server_capabilities.completionProvider.triggerCharacters
       client.server_capabilities.completionProvider.triggerCharacters = chars
 
       vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })

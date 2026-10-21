@@ -19,7 +19,7 @@ local map = vim.keymap.set
 -- Общие сочетания
 -- <C-w>q
 -- map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
-map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
+-- map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
 
 -- Сочетание для выбора всего текста не нужно
 -- <C-a> я использую для увеличения версии пакета, а <leader>a любят в
@@ -174,12 +174,12 @@ map(
 
 -- Диагностика
 -- <C-w>d
--- map(
---   'n',
---   '<leader>dd',
---   vim.diagnostic.open_float,
---   { desc = 'Show diagnostics in float' }
--- )
+map(
+  'n',
+  'gl',
+  vim.diagnostic.open_float,
+  { desc = 'Show diagnostics in float' }
+)
 map(
   'n',
   '<leader>q',

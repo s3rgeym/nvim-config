@@ -11,6 +11,8 @@ vim.pack.add({
   -- { src = 'https://github.com/gbprod/nord.nvim' },
   { src = 'https://github.com/navarasu/onedark.nvim' },
   { src = 'https://github.com/sainnhe/gruvbox-material' },
+  { src = 'https://github.com/Mofiqul/dracula.nvim' },
+  { src = 'https://github.com/projekt0n/github-nvim-theme' },
 })
 
 -- setup для тем как правило вызывать не нужно, если только не требуется настройка
