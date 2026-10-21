@@ -3,7 +3,7 @@
 -- Позволяет работать с файлами в обычном буфере как с текстом
 -- Можно также попробовать альтернативу в виде mini-files
 vim.pack.add({
-  -- 'https://github.com/nvim-tree/nvim-web-devicons',
+  'https://github.com/nvim-tree/nvim-web-devicons',
   'https://github.com/stevearc/oil.nvim',
   -- 'https://github.com/benomahony/oil-git.nvim',
   -- 'https://github.com/JezerM/oil-lsp-diagnostics.nvim',
@@ -12,7 +12,7 @@ vim.pack.add({
 require('oil').setup({
   default_file_explorer = true,
   columns = {
-    -- "icon",
+    'icon',
     -- "permissions",
     -- 'size',
     -- "mtime",

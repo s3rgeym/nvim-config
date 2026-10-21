@@ -6,14 +6,13 @@ pcall(function()
 end)
 
 -- Порядок подключения конфигов имеет значение
--- Ну, по крайней мере, options должны быть первыми
-for _, name in ipairs({
-  'options',
-  'keymaps',
-  'autocmds',
-  'theme-persistence',
-  'statusline',
-  'diagnostics',
-}) do
-  require('config.' .. name)
-end
+-- Ну, по крайней мере, options должнен быть первым,
+-- а statusline идти после темы, так как берет из нее
+-- цвета highlight групп
+-- При использовании циклов в файл по gf нельзя перейти
+require('core.options')
+require('core.keymaps')
+require('core.autocmds')
+require('core.diagnostics')
+require('core.theme-persistence')
+require('core.statusline')

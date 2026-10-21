@@ -1,3 +1,5 @@
+local color = require('utils.color')
+
 local mode_names = {
   n = 'NORMAL',
   i = 'INSERT',
@@ -34,43 +36,47 @@ local function setup_statusline_hl()
   -- Чтобы узнать highlight группу токена можно использовать :Inspect
   local normal_hl = get_hl('Normal')
   local edge_hl = get_hl('Function') -- цвет крайних блоков
-  -- В зависимости от темы хорошо смотрятся Constant/String
-  -- local inner_hl = get_hl('Constant') -- цвет внутренних блоков
   local inner_hl = get_hl('String') -- цвет внутренних блоков
+  -- Можно просто задать цвет фона
+  -- local edge_fg = normal_hl.bg
+  -- Но лучше определять более контратный цвеь
+  local edge_fg = color.pick_contrasting(edge_hl.fg, normal_hl.fg, normal_hl.bg)
+  local inner_fg =
+    color.pick_contrasting(inner_hl.fg, normal_hl.fg, normal_hl.bg)
 
-  -- Крайние блоки (слева и справа): фон Function, текст обычного цвета, жирный
+  -- Крайние блоки (слева и справа)
   vim.api.nvim_set_hl(0, 'StatusLineEdge', {
-    fg = normal_hl.bg,
+    fg = edge_fg,
     bg = edge_hl.fg,
     bold = true,
   })
 
-  -- Левая сторона, стрелка после крайнего блока: переход в внутренний блок
+  -- Слева: стрелка из крайнего блока во внутренний
   vim.api.nvim_set_hl(0, 'StatusLineLeftArrowEdge', {
     fg = edge_hl.fg,
     bg = inner_hl.fg,
   })
 
-  -- Внутренние блоки (слева и справа): фон String, текст обычного цвета, жирный
+  -- Внутренние блоки (слева и справа)
   vim.api.nvim_set_hl(0, 'StatusLineInner', {
-    fg = normal_hl.bg,
+    fg = inner_fg,
     bg = inner_hl.fg,
     bold = true,
   })
 
-  -- Левая сторона, стрелка после внутреннего блока: переход в обычную строку
+  -- Слева: стрелка из внутреннего блока в обычную строку
   vim.api.nvim_set_hl(0, 'StatusLineLeftArrowInner', {
     fg = inner_hl.fg,
     bg = 'NONE',
   })
 
-  -- Правая сторона, стрелка перед внутренним блоком: переход из обычной строки
+  -- Справа: стрелка из обычной строки во внутренний блок
   vim.api.nvim_set_hl(0, 'StatusLineRightArrowInner', {
     fg = inner_hl.fg,
     bg = 'NONE',
   })
 
-  -- Правая сторона, стрелка перед крайним блоком: переход из внутреннего блока
+  -- Справа: стрелка из внутреннего блока в крайний
   vim.api.nvim_set_hl(0, 'StatusLineRightArrowEdge', {
     fg = edge_hl.fg,
     bg = inner_hl.fg,
