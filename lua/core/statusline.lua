@@ -1,89 +1,104 @@
-local color_utils = require('utils.color')
-
-local mode_names = {
-  n = 'NORMAL',
-  i = 'INSERT',
-  v = 'VISUAL',
-  V = 'V-LINE',
-  ['\22'] = 'V-BLOCK',
-  c = 'COMMAND',
-  R = 'REPLACE',
-  t = 'TERMINAL',
+local MODES = {
+  n = { label = 'NORMAL', group = 'Function' },
+  i = { label = 'INSERT', group = 'String' },
+  v = { label = 'VISUAL', group = 'Keyword' },
+  V = { label = 'V-LINE', group = 'Keyword' },
+  ['\22'] = { label = 'V-BLOCK', group = 'Keyword' },
+  c = { label = 'COMMAND', group = 'Constant' },
+  R = { label = 'REPLACE', group = 'DiagnosticError' },
+  t = { label = 'TERMINAL', group = 'Type' },
+  -- Для режимов, которых нет в таблице (select, prompt и т.д.)
+  other = { group = 'Type' },
 }
 
-function statusline_mode()
-  return mode_names[vim.fn.mode()] or vim.fn.mode()
-end
+StatusLine = {}
 
-function statusline_lsp_clients()
-  local lsp_names = vim.tbl_map(function(client)
-    return client.name
-  end, vim.lsp.get_clients({ bufnr = 0 }))
-  -- То же не очень смотрится, когда отсутствует диагностика
-  -- table.insert(lsp_names, 1, '')
-  return table.concat(
-    lsp_names,
-    ' \u{e0b3} '
-    -- ' │ '
+-- Блок режима: подсветка зависит от режима, поэтому группа выбирается при
+-- каждой отрисовке. Возвращает кусок строки статуса, а не просто текст,
+-- поэтому вызывать нужно через '%{%...%}'
+function StatusLine.mode_block()
+  local mode = vim.fn.mode()
+  -- Первый символ: 'no' (operator-pending) считается как 'n'
+  local entry = MODES[mode:sub(1, 1)] or MODES.other
+
+  -- %* возвращает подсветку по умолчанию (StatusLine / StatusLineNC)
+  return string.format(
+    '%%#StatusLineMode%s# %-8s %%*',
+    entry.group,
+    entry.label or mode
   )
 end
 
-local get_hl = function(name)
-  return vim.api.nvim_get_hl(0, { name = name, link = false })
+function StatusLine.lsp_client_names()
+  local names = {}
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+    names[#names + 1] = client.name
+  end
+  return table.concat(names, ', ')
 end
 
-local function setup_statusline_hl()
-  -- Чтобы узнать highlight группу токена можно использовать :Inspect
-  local normal_hl = get_hl('Normal')
-  local edge_hl = get_hl('Function') -- цвет крайних блоков
-  local inner_hl = get_hl('String') -- цвет внутренних блоков
-  -- Можно просто задать цвет фона
-  -- local edge_fg = normal_hl.bg
-  -- Но лучше определять более контратный цвеь
-  local edge_fg =
-    color_utils.pick_contrasting(edge_hl.fg, normal_hl.fg, normal_hl.bg)
-  local inner_fg =
-    color_utils.pick_contrasting(inner_hl.fg, normal_hl.fg, normal_hl.bg)
+local function get_highlight(group)
+  return vim.api.nvim_get_hl(0, { name = group, link = false })
+end
 
-  -- Крайние блоки (слева и справа)
-  local edge_style = { fg = edge_fg, bg = edge_hl.fg }
+-- Относительная яркость цвета 0xRRGGBB по WCAG: от 0 (чёрный) до 1 (белый)
+local function get_luminance(color)
+  local function linearize(channel)
+    channel = channel / 255
+    if channel <= 0.03928 then
+      return channel / 12.92
+    end
+    return ((channel + 0.055) / 1.055) ^ 2.4
+  end
 
-  vim.api.nvim_set_hl(0, 'StatusLineEdge', edge_style)
-  vim.api.nvim_set_hl(
-    0,
-    'StatusLineMode',
-    vim.tbl_extend('force', edge_style, { bold = true })
-  )
+  local red = linearize(bit.rshift(color, 16) % 256)
+  local green = linearize(bit.rshift(color, 8) % 256)
+  local blue = linearize(color % 256)
 
-  -- Слева: стрелка из крайнего блока во внутренний
-  vim.api.nvim_set_hl(0, 'StatusLineLeftArrowEdge', {
-    fg = edge_hl.fg,
-    bg = inner_hl.fg,
-  })
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue
+end
 
-  -- Внутренние блоки (слева и справа)
-  vim.api.nvim_set_hl(0, 'StatusLineInner', {
-    fg = inner_fg,
-    bg = inner_hl.fg,
-  })
+-- Контрастность двух цветов по WCAG: от 1 (одинаковые) до 21 (чёрный и белый)
+local function get_contrast(color_a, color_b)
+  local luminance_a = get_luminance(color_a)
+  local luminance_b = get_luminance(color_b)
 
-  -- Слева: стрелка из внутреннего блока в обычную строку
-  vim.api.nvim_set_hl(0, 'StatusLineLeftArrowInner', {
-    fg = inner_hl.fg,
-    bg = 'NONE',
-  })
+  local lighter = math.max(luminance_a, luminance_b)
+  local darker = math.min(luminance_a, luminance_b)
 
-  -- Справа: стрелка из обычной строки во внутренний блок
-  vim.api.nvim_set_hl(0, 'StatusLineRightArrowInner', {
-    fg = inner_hl.fg,
-    bg = 'NONE',
-  })
+  return (lighter + 0.05) / (darker + 0.05)
+end
 
-  -- Справа: стрелка из внутреннего блока в крайний
-  vim.api.nvim_set_hl(0, 'StatusLineRightArrowEdge', {
-    fg = edge_hl.fg,
-    bg = inner_hl.fg,
-  })
+-- Из fg и bg темы (Normal) выбирает цвет текста, лучше читаемый на фоне
+-- background. Так текст остаётся читаемым и в тёмных, и в светлых темах
+local function get_readable_color(background, normal)
+  -- Если у Normal цвета не заданы (прозрачная тема), считаем по умолчанию
+  local dark = normal.bg or 0x000000
+  local light = normal.fg or 0xffffff
+
+  if get_contrast(dark, background) >= get_contrast(light, background) then
+    return dark
+  end
+
+  return light
+end
+
+local function setup_mode_highlights()
+  local normal = get_highlight('Normal')
+
+  -- Режим: акцентный цвет берётся из цвета текста группы (у групп вроде
+  -- Function он всегда задан и хорошо виден), жирным (ссылкой bold не добавить).
+  -- Группа может повторяться у разных режимов, тогда она просто
+  -- переопределяется тем же значением
+  for _, mode in pairs(MODES) do
+    local accent = get_highlight(mode.group).fg
+
+    vim.api.nvim_set_hl(0, 'StatusLineMode' .. mode.group, {
+      fg = accent and get_readable_color(accent, normal) or normal.fg,
+      bg = accent,
+      bold = true,
+    })
+  end
 end
 
 -- Подсветка зависит от цветов темы, поэтому считать её можно только после
@@ -96,20 +111,23 @@ end
 --
 -- То же самое при автоматической загрузке плагинов
 vim.api.nvim_create_autocmd('ColorScheme', {
-  callback = setup_statusline_hl,
+  callback = setup_mode_highlights,
 })
 
 -- Доступен только вызов глобальных функций
 -- '%{v:lua.foo()}' возвращает строку как есть
--- '%{%v:lua.foo()%}' дополнительное разбирает выражения, возвращаемые ей
+-- '%{%v:lua.foo()%}' дополнительный разбирает выражения, возвращаемые ей
 vim.opt.statusline = table.concat({
-  '%#StatusLineMode# %-8.8{v:lua.statusline_mode()} %#StatusLineLeftArrowEdge#\u{e0b0}',
-  '%#StatusLineInner# %<%t%m%r %#StatusLineLeftArrowInner#\u{e0b0}', -- %t - имя файла, %f - отн путь
-  '%#StatusLine# %{%v:lua.vim.ui.progress_status()%} ',
+  -- Левая часть
+  '%{%v:lua.StatusLine.mode_block()%}',
+  ' %<%t%m%r', -- %t - имя файла, %f - отн путь
+  ' %{%v:lua.vim.ui.progress_status()%}',
+
   '%=',
-  ' %k ',
-  ' %{%v:lua.vim.diagnostic.status()%} ',
-  ' %{v:lua.statusline_lsp_clients()} ',
-  '%#StatusLineRightArrowInner#\u{e0b2}%#StatusLineInner# %{&filetype} ',
-  '%#StatusLineRightArrowEdge#\u{e0b2}%#StatusLineEdge# %3l:%-2v ',
-}, '')
+
+  -- Правая часть
+  '%k',
+  ' %{%v:lua.vim.diagnostic.status()%}',
+  ' %{v:lua.StatusLine.lsp_client_names()}',
+  ' %3l:%-2v',
+})
