@@ -102,6 +102,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       -- Символы эти можно так посмотреть
       -- :lua =vim.lsp.get_clients({ bufnr = 0 })[1].server_capabilities.completionProvider.triggerCharacters
+      -- `:lua =` - это краткая запись для `:lua vim.print(...)`
       client.server_capabilities.completionProvider.triggerCharacters = chars
 
       vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
