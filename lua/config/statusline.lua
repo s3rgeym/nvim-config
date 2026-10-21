@@ -34,7 +34,9 @@ local function setup_statusline_hl()
   -- Чтобы узнать highlight группу токена можно использовать :Inspect
   local normal_hl = get_hl('Normal')
   local edge_hl = get_hl('Function') -- цвет крайних блоков
-  local inner_hl = get_hl('Constant') -- цвет внутренних блоков
+  -- В зависимости от темы хорошо смотрятся Constant/String
+  -- local inner_hl = get_hl('Constant') -- цвет внутренних блоков
+  local inner_hl = get_hl('String') -- цвет внутренних блоков
 
   -- Крайние блоки (слева и справа): фон Function, текст обычного цвета, жирный
   vim.api.nvim_set_hl(0, 'StatusLineEdge', {

@@ -205,4 +205,4 @@ map('n', '<leader>pc', function()
 end, { desc = 'Clean plugins' })
 
 -- Прочее
--- map('n', '<leader>tw', '<cmd>set wrap!<CR>', { desc = 'Toggle wrap' })
+map('n', '<leader>tw', '<cmd>set wrap!<CR>', { desc = 'Toggle wrap' })

@@ -20,11 +20,16 @@ require('nvim-treesitter').install({
 -- Treesitter features for installed languages must be enabled manually
 vim.api.nvim_create_autocmd('FileType', {
   callback = function(args)
+    -- Этот костыль ставиться в моих autocmds, без него отключение подсветки и
+    -- тп не будет работать
+    if vim.b[args.buf].large_file then
+      return
+    end
+
     local lang = vim.treesitter.language.get_lang(args.match)
-    if vim.treesitter.language.add(lang) then
+    if lang and vim.treesitter.language.add(lang) then
       vim.treesitter.start()
 
-      -- Configure code folding
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
       vim.wo.foldmethod = 'expr'
       vim.wo.foldlevel = 99
