@@ -1,10 +1,10 @@
 ## Минималистичный конфиг Neovim
 
 <p align="center">
-<img width="25%" src="https://github.com/user-attachments/assets/0302e7aa-3631-40fc-89e6-8969f054cba5" />
-<img width="25%" src="https://github.com/user-attachments/assets/8df8f6f0-ef66-4186-9dd5-3a07039c2f0d" />
-<img width="25%" src="https://github.com/user-attachments/assets/a813f2a0-1b1f-434f-99e8-7a570a5ae78e" />
-<img width="25%" src="https://github.com/user-attachments/assets/284f8771-c71e-4e1a-8bb2-9dac2fedca09" />
+<img src="https://github.com/user-attachments/assets/0302e7aa-3631-40fc-89e6-8969f054cba5" />
+<img width="33%" src="https://github.com/user-attachments/assets/8df8f6f0-ef66-4186-9dd5-3a07039c2f0d" />
+<img width="33%" src="https://github.com/user-attachments/assets/a813f2a0-1b1f-434f-99e8-7a570a5ae78e" />
+<img width="33%" src="https://github.com/user-attachments/assets/284f8771-c71e-4e1a-8bb2-9dac2fedca09" />
 </p>
 
 ### Описание
