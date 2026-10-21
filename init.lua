@@ -4,10 +4,16 @@
 pcall(function()
   require('vim._core.ui2').enable()
 end)
-require('options')
-require('theme')
-require('statusline')
-require('autocmds')
-require('keymaps')
--- Можно вынести в after/plugin/ чтобы плагины не переопределяли настройки
-require('diagnostics')
+
+-- Порядок подключения конфигов имеет значение
+-- Ну, по крайней мере, options должны быть первыми
+for _, name in ipairs({
+  'options',
+  'keymaps',
+  'autocmds',
+  'theme-persistence',
+  'statusline',
+  'diagnostics',
+}) do
+  require('config.' .. name)
+end

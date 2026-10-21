@@ -1,3 +1,4 @@
+-- Можно вынести в after/plugin/ чтобы плагины не переопределяли настройки
 vim.diagnostic.config({
   virtual_text = { source = 'if_many', spacing = 0, prefix = '' },
   signs = true,
