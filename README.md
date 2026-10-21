@@ -1,7 +1,7 @@
 ## Минималистичный конфиг Neovim
 
 <p align="center">
-<img width="1090" height="1038" alt="image" src="https://github.com/user-attachments/assets/4310f338-302b-4908-a971-a97311a673b6" />
+<img width="66%" src="https://github.com/user-attachments/assets/4310f338-302b-4908-a971-a97311a673b6" />
 <img width="33%" src="https://github.com/user-attachments/assets/8df8f6f0-ef66-4186-9dd5-3a07039c2f0d" />
 <img width="33%" src="https://github.com/user-attachments/assets/a813f2a0-1b1f-434f-99e8-7a570a5ae78e" />
 <img width="33%" src="https://github.com/user-attachments/assets/284f8771-c71e-4e1a-8bb2-9dac2fedca09" />
