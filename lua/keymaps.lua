@@ -95,11 +95,11 @@ map(
 -- map('n', '<leader>v', vim.cmd.vsplit, { desc = 'Vertical split' })
 
 -- Вкладки
-for i = 1, 9 do
+for i = 1, 8 do
   map('n', '<a-' .. i .. '>', i .. 'gt', { desc = 'Go to tab ' .. i })
 end
 
-map('n', '<A-0>', vim.cmd.tablast, { desc = 'Go to last tab' })
+map('n', '<A-9>', vim.cmd.tablast, { desc = 'Go to last tab' })
 map('n', '<leader>tn', vim.cmd.tabnew, { desc = 'New tab' })
 map('n', '<leader>tc', vim.cmd.tabclose, { desc = 'Close tab' })
 map('n', '<leader>to', vim.cmd.tabonly, { desc = 'Close other tabs' })
