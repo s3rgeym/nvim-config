@@ -136,8 +136,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 -- :checkhealth
-vim.api.nvim_create_user_command('LspCaps', function()
-  for _, c in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
-    vim.print(c.name, c.capabilities.workspace.didChangeWatchedFiles)
-  end
-end, {})
+-- vim.api.nvim_create_user_command('LspCaps', function()
+--   for _, c in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+--     vim.print(c.name, c.capabilities.workspace.didChangeWatchedFiles)
+--   end
+-- end, {})
