@@ -23,7 +23,8 @@ function StatusLine.mode_name()
 
   -- %* возвращает подсветку по умолчанию (StatusLine / StatusLineNC)
   return string.format(
-    '%%#StatusLineMode%s# %-8s %%*',
+    -- '%%#StatusLineMode%s# %-8s %%*',
+    '%%#StatusLineMode%s# %s %%*',
     entry.group,
     entry.label or mode
   )
