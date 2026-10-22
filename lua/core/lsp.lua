@@ -1,6 +1,3 @@
--- Содержит список настроек языковых серверов, избавляя от необходимости настраивать их вручную
-vim.pack.add({ 'https://github.com/neovim/nvim-lspconfig' })
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- Эта настройка отвечает за изменение имен импортируемых файлов
@@ -9,13 +6,16 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- регистрировал событие после чего LSP запустит переименование, если он,
 -- конечно, поддерживает его
 capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+
+-- Настройки для всех серверов
+-- Эти настройки лишь сохранятсяб а применены они будут только при подключении к
+-- LSP-серверу
+vim.lsp.config('*', { capabilities = capabilities })
+
 -- Многие отключают подсветку semantic tokens, т.к. за подсветку отвечает
 -- treesitter, но я так и не понял, чем она мешает
 -- https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316
-capabilities.textDocument.semanticTokens = nil
-
--- Настройки для всех серверов
-vim.lsp.config('*', { capabilities = capabilities })
+vim.lsp.semantic_tokens.enable(false)
 
 local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
 
@@ -134,3 +134,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
+
+-- :checkhealth
+vim.api.nvim_create_user_command('LspCaps', function()
+  for _, c in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+    vim.print(c.name, c.capabilities.workspace.didChangeWatchedFiles)
+  end
+end, {})

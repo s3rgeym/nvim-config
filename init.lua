@@ -6,13 +6,14 @@ pcall(function()
 end)
 
 -- Порядок подключения конфигов имеет значение
--- Ну, по крайней мере, options должнен быть первым,
--- а statusline идти после темы, так как берет из нее
--- цвета highlight групп
--- При использовании циклов в файл по gf нельзя перейти
+-- Задает leader и базовые настройки, поэтому должен идти первым
 require('core.options')
+-- Все модули, задающие сочтениния, быть загружены после задания клавиши Leader
+require('core.diagnostics')
+require('core.lsp')
+require('core.theme-persistence')
+-- Должна быть загружена после темы, но у меня тема через событие ставится,
+-- поэтому порядок не важен
+require('core.statusline')
 require('core.keymaps')
 require('core.autocmds')
-require('core.diagnostics')
-require('core.theme-persistence')
-require('core.statusline')

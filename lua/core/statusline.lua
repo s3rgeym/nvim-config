@@ -130,5 +130,5 @@ vim.opt.statusline = table.concat({
   '%k',
   ' %{%v:lua.vim.diagnostic.status()%}',
   ' %{v:lua.StatusLine.lsp_client_names()}',
-  ' %3l:%-2v',
+  ' %3l:%-2v ',
 })

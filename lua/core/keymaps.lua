@@ -3,8 +3,6 @@
 -- они могут понадобиться в качестве префиксов для других сочетаний.
 -- https://medium.com/unixification/must-have-neovim-keymaps-51c283394070
 -- https://www.reddit.com/r/neovim/comments/1h7f0bz/share_your_coolest_keymap/
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' ' -- Часто его делают ',' или '\\'
 
 -- В Neovim по умолчанию noremap = true, т.е. только встроенные сочетания будут работать в rhs
 -- Это позволяет избежать рекурсии
