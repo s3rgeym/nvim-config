@@ -13,10 +13,10 @@ local MODES = {
 
 StatusLine = {}
 
--- Блок режима: подсветка зависит от режима, поэтому группа выбирается при
+-- Название режима: подсветка зависит от режима, поэтому группа выбирается при
 -- каждой отрисовке. Возвращает кусок строки статуса, а не просто текст,
 -- поэтому вызывать нужно через '%{%...%}'
-function StatusLine.mode_block()
+function StatusLine.mode_name()
   local mode = vim.fn.mode()
   -- Первый символ: 'no' (operator-pending) считается как 'n'
   local entry = MODES[mode:sub(1, 1)] or MODES.other
@@ -37,12 +37,12 @@ function StatusLine.lsp_client_names()
   return table.concat(names, ', ')
 end
 
-local function get_highlight(group)
+local function highlight_attrs(group)
   return vim.api.nvim_get_hl(0, { name = group, link = false })
 end
 
 -- Относительная яркость цвета 0xRRGGBB по WCAG: от 0 (чёрный) до 1 (белый)
-local function get_luminance(color)
+local function luminance(color)
   local function linearize(channel)
     channel = channel / 255
     if channel <= 0.03928 then
@@ -59,9 +59,9 @@ local function get_luminance(color)
 end
 
 -- Контрастность двух цветов по WCAG: от 1 (одинаковые) до 21 (чёрный и белый)
-local function get_contrast(color_a, color_b)
-  local luminance_a = get_luminance(color_a)
-  local luminance_b = get_luminance(color_b)
+local function contrast(color_a, color_b)
+  local luminance_a = luminance(color_a)
+  local luminance_b = luminance(color_b)
 
   local lighter = math.max(luminance_a, luminance_b)
   local darker = math.min(luminance_a, luminance_b)
@@ -69,32 +69,32 @@ local function get_contrast(color_a, color_b)
   return (lighter + 0.05) / (darker + 0.05)
 end
 
--- Из fg и bg темы (Normal) выбирает цвет текста, лучше читаемый на фоне
--- background. Так текст остаётся читаемым и в тёмных, и в светлых темах
-local function get_readable_color(background, normal)
-  -- Если у Normal цвета не заданы (прозрачная тема), считаем по умолчанию
-  local dark = normal.bg or 0x000000
-  local light = normal.fg or 0xffffff
-
-  if get_contrast(dark, background) >= get_contrast(light, background) then
-    return dark
+-- Из двух цветов выбирает тот, что контрастнее на фоне background
+local function get_more_contrast(background, color_a, color_b)
+  if contrast(color_a, background) >= contrast(color_b, background) then
+    return color_a
   end
 
-  return light
+  return color_b
 end
 
-local function setup_mode_highlights()
-  local normal = get_highlight('Normal')
+-- Создаёт highlight-группы StatusLineMode<Group> для всех режимов
+local function update_highlights()
+  local theme = highlight_attrs('Normal')
+
+  -- Если у Normal цвета не заданы (прозрачная тема), считаем по умолчанию
+  local theme_bg = theme.bg or 0x000000
+  local theme_fg = theme.fg or 0xffffff
 
   -- Режим: акцентный цвет берётся из цвета текста группы (у групп вроде
   -- Function он всегда задан и хорошо виден), жирным (ссылкой bold не добавить).
   -- Группа может повторяться у разных режимов, тогда она просто
   -- переопределяется тем же значением
-  for _, mode in pairs(MODES) do
-    local accent = get_highlight(mode.group).fg
+  for _, entry in pairs(MODES) do
+    local accent = highlight_attrs(entry.group).fg
 
-    vim.api.nvim_set_hl(0, 'StatusLineMode' .. mode.group, {
-      fg = accent and get_readable_color(accent, normal) or normal.fg,
+    vim.api.nvim_set_hl(0, 'StatusLineMode' .. entry.group, {
+      fg = accent and get_more_contrast(accent, theme_bg, theme_fg) or theme_fg,
       bg = accent,
       bold = true,
     })
@@ -111,7 +111,7 @@ end
 --
 -- То же самое при автоматической загрузке плагинов
 vim.api.nvim_create_autocmd('ColorScheme', {
-  callback = setup_mode_highlights,
+  callback = update_highlights,
 })
 
 -- Доступен только вызов глобальных функций
@@ -119,7 +119,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 -- '%{%v:lua.foo()%}' дополнительный разбирает выражения, возвращаемые ей
 vim.opt.statusline = table.concat({
   -- Левая часть
-  '%{%v:lua.StatusLine.mode_block()%}',
+  '%{%v:lua.StatusLine.mode_name()%}',
   ' %<%t%m%r', -- %t - имя файла, %f - отн путь
   ' %{%v:lua.vim.ui.progress_status()%}',
 
