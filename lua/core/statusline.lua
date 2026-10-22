@@ -1,15 +1,25 @@
+-- label    - текст в строке статуса
+-- hl_group - имя highlight-группы, которой красится плашка с названием режима
+-- color    - индекс ANSI-цвета в vim.g.terminal_color_N, он станет фоном группы:
+--            1 красный, 2 зелёный, 3 жёлтый, 4 синий, 5 пурпурный, 6 циан,
+--            8 ярко-чёрный
+-- Если тема этот цвет не задаёт, группа не создаётся и плашка не красится
 local MODES = {
-  n = { label = 'NORMAL', group = 'Function' },
-  i = { label = 'INSERT', group = 'String' },
-  v = { label = 'VISUAL', group = 'Keyword' },
-  V = { label = 'V-LINE', group = 'Keyword' },
-  ['\22'] = { label = 'V-BLOCK', group = 'Keyword' },
-  c = { label = 'COMMAND', group = 'Constant' },
-  R = { label = 'REPLACE', group = 'DiagnosticError' },
-  t = { label = 'TERMINAL', group = 'Type' },
+  n = { label = 'NORMAL', hl_group = 'StatusLineModeNormal', color = 4 },
+  i = { label = 'INSERT', hl_group = 'StatusLineModeInsert', color = 2 },
+  v = { label = 'VISUAL', hl_group = 'StatusLineModeVisual', color = 5 },
+  V = { label = 'V-LINE', hl_group = 'StatusLineModeVisual', color = 5 },
+  ['\22'] = { label = 'V-BLOCK', hl_group = 'StatusLineModeVisual', color = 5 },
+  c = { label = 'COMMAND', hl_group = 'StatusLineModeCommand', color = 3 },
+  R = { label = 'REPLACE', hl_group = 'StatusLineModeReplace', color = 1 },
+  t = { label = 'TERMINAL', hl_group = 'StatusLineModeTerminal', color = 6 },
   -- Для режимов, которых нет в таблице (select, prompt и т.д.)
-  other = { group = 'Type' },
+  other = { hl_group = 'StatusLineModeOther', color = 8 },
 }
+
+-- Группы, которые удалось создать для текущей темы: { [имя группы] = true }.
+-- Заполняется в update_highlights()
+local active_hl_groups = {}
 
 StatusLine = {}
 
@@ -20,14 +30,14 @@ function StatusLine.mode_name()
   local mode = vim.fn.mode()
   -- Первый символ: 'no' (operator-pending) считается как 'n'
   local entry = MODES[mode:sub(1, 1)] or MODES.other
+  local label = entry.label or mode
+
+  if not active_hl_groups[entry.hl_group] then
+    return string.format(' %s ', label)
+  end
 
   -- %* возвращает подсветку по умолчанию (StatusLine / StatusLineNC)
-  return string.format(
-    -- '%%#StatusLineMode%s# %-8s %%*',
-    '%%#StatusLineMode%s# %s %%*',
-    entry.group,
-    entry.label or mode
-  )
+  return string.format('%%#%s# %s %%*', entry.hl_group, label)
 end
 
 function StatusLine.lsp_client_names()
@@ -36,10 +46,6 @@ function StatusLine.lsp_client_names()
     names[#names + 1] = client.name
   end
   return table.concat(names, ', ')
-end
-
-local function highlight_attrs(group)
-  return vim.api.nvim_get_hl(0, { name = group, link = false })
 end
 
 -- Относительная яркость цвета 0xRRGGBB по WCAG: от 0 (чёрный) до 1 (белый)
@@ -79,45 +85,68 @@ local function get_more_contrast(background, color_a, color_b)
   return color_b
 end
 
--- Создаёт highlight-группы StatusLineMode<Group> для всех режимов
+-- Читает vim.g.terminal_color_<index> и возвращает число 0xRRGGBB.
+-- Значение может быть '#rrggbb' или именем цвета.
+-- Если переменная не задана или не распознана, возвращает nil
+local function terminal_color(index)
+  local value = vim.g['terminal_color_' .. index]
+  if type(value) ~= 'string' then
+    return nil
+  end
+
+  local color = vim.api.nvim_get_color_by_name(value)
+  if color == -1 then
+    return nil
+  end
+
+  return color
+end
+
+-- Создаёт highlight-группы с цветами из палитры терминала текущей темы
 local function update_highlights()
-  local theme = highlight_attrs('Normal')
+  -- Из StatusLine цвета лучше не брать, так как они могут быть не заданы, так
+  -- как используется reverse=true
+  local normal_hl = vim.api.nvim_get_hl(0, {
+    name = 'Normal',
+    link = false,
+  })
 
-  -- Если у Normal цвета не заданы (прозрачная тема), считаем по умолчанию
-  local theme_bg = theme.bg or 0x000000
-  local theme_fg = theme.fg or 0xffffff
+  local normal_fg = normal_hl.fg or 0xFFFFFF
+  local normal_bg = normal_hl.bg or 0x000000
 
-  -- Режим: акцентный цвет берётся из цвета текста группы (у групп вроде
-  -- Function он всегда задан и хорошо виден), жирным (ссылкой bold не добавить).
-  -- Группа может повторяться у разных режимов, тогда она просто
-  -- переопределяется тем же значением
+  active_hl_groups = {}
+
   for _, entry in pairs(MODES) do
-    local accent = highlight_attrs(entry.group).fg
+    local color = terminal_color(entry.color)
 
-    vim.api.nvim_set_hl(0, 'StatusLineMode' .. entry.group, {
-      fg = accent and get_more_contrast(accent, theme_bg, theme_fg) or theme_fg,
-      bg = accent,
-      bold = true,
-    })
+    if color then
+      vim.api.nvim_set_hl(0, entry.hl_group, {
+        fg = get_more_contrast(color, normal_fg, normal_bg),
+        bg = color,
+        bold = true,
+      })
+      active_hl_groups[entry.hl_group] = true
+    else
+      -- Цвета нет в новой теме: сбрасываем группу от прошлой
+      vim.api.nvim_set_hl(0, entry.hl_group, {})
+    end
   end
 end
 
--- Подсветка зависит от цветов темы, поэтому считать её можно только после
--- применения темы: сразу после вызова vim.cmd.colorscheme, а она у меня в
--- VimEnter вызывается...
---
--- Кроме того, :colorscheme сбрасывает все highlight-группы (в том числе
--- пользовательские), так что группы нужно создавать заново при каждой смене
--- темы. Событие ColorScheme срабатывает после каждого применения темы.
---
--- То же самое при автоматической загрузке плагинов
+-- :colorscheme сбрасывает пользовательские highlight-группы,
+-- поэтому создаём их заново при каждой смене темы.
+-- Группа нужна, чтобы повторный :source не плодил дубликаты автокоманд
 vim.api.nvim_create_autocmd('ColorScheme', {
+  group = vim.api.nvim_create_augroup('StatusLineModes', { clear = true }),
   callback = update_highlights,
 })
 
+-- Тема могла быть загружена до этого файла, а ColorScheme тогда не сработает
+update_highlights()
+
 -- Доступен только вызов глобальных функций
 -- '%{v:lua.foo()}' возвращает строку как есть
--- '%{%v:lua.foo()%}' дополнительный разбирает выражения, возвращаемые ей
+-- '%{%v:lua.foo()%}' дополнительно разбирает выражения, возвращаемые ей
 vim.opt.statusline = table.concat({
   -- Левая часть
   '%{%v:lua.StatusLine.mode_name()%}',
