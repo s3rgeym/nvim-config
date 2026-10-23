@@ -39,9 +39,10 @@ map('n', '<Esc>', '<cmd>noh<cr>', { desc = 'Clear highlights' })
 
 -- Редактирование текста
 -- Вставить из буфера обмена без перезаписи регистра
--- при выделении и нажатии з, выделенный текст сохранится в регистр
+-- при выделении и нажатии p, выделенный текст сохранится в регистр
 map('x', '<leader>p', [["_dP]], { desc = 'Paste without overwriting register' })
 map({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without register' })
+map('n', '<leader>y', '<Cmd>%y+<CR>', { desc = 'Yank entire file to system clipboard' })
 
 -- Буферы
 -- H/L переходят по буферам вместо верха/низа экрана
@@ -155,18 +156,17 @@ map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 -- <leader>r лучше освободить под префикс для других сочетаний
 map(
   'n',
-  '<leader>sr',
+  '<leader>rw',
   ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
-  { desc = 'Search and replace word under cursor' }
+  { desc = 'Replace word under cursor' }
 )
 
--- <C-r>
 -- R в Visual бесполезно, можно на него повесить
 map(
   'v',
-  '<leader>sr',
+  '<C-r>',
   [["hy:%s/<C-r>h//g<Left><Left>]],
-  { desc = 'Search and replace selected text' }
+  { desc = 'Replace selection' }
 )
 
 -- Neovim
