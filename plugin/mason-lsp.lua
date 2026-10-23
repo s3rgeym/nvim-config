@@ -23,4 +23,4 @@ require('mason-lspconfig').setup({
   },
 })
 
-vim.keymap.set('n', '<leader>m', '<cmd>Mason<cr>', { desc = 'Open Mason' })
+-- vim.keymap.set('n', '<leader>M', '<cmd>Mason<cr>', { desc = 'Open Mason' })

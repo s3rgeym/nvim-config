@@ -1,5 +1,5 @@
 -- Идею я а блоге подсмотрел, но там в json-файл тема сохранялась
-local theme_module = 'theme'
+local theme_module = 'current-theme'
 local theme_file = vim.fs.joinpath(
   vim.fn.stdpath('config'),
   'lua',

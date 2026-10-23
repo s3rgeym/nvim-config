@@ -11,9 +11,10 @@ require('core.options')
 -- Все модули, задающие сочтениния, быть загружены после задания клавиши Leader
 require('core.diagnostics')
 require('core.lsp')
-require('core.theme-persistence')
+require('core.theme')
+require('core.statusline')
+require('core.commands')
+require('core.keymaps')
 -- Должна быть загружена после темы, но у меня тема через событие ставится,
 -- поэтому порядок не важен
-require('core.statusline')
-require('core.keymaps')
 require('core.autocmds')

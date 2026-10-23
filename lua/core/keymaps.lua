@@ -37,6 +37,12 @@ local map = vim.keymap.set
 -- В Neovim никаких сочетаний нет для Escape в нормальном режиме
 map('n', '<Esc>', '<cmd>noh<cr>', { desc = 'Clear highlights' })
 
+-- Редактирование текста
+-- Вставить из буфера обмена без перезаписи регистра
+-- при выделении и нажатии з, выделенный текст сохранится в регистр
+map('x', '<leader>p', [["_dP]], { desc = 'Paste without overwriting register' })
+map({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without register' })
+
 -- Буферы
 -- H/L переходят по буферам вместо верха/низа экрана
 -- map('n', 'H', vim.cmd.bprev, { desc = 'Previous buffer' })
@@ -144,31 +150,33 @@ map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 -- Переход к help по Enter
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
--- Поиск и замена
+-- Search and replace
 -- Замена во всех файлах: :args **/*.py | :argdo %s/\<old\>/new/g | update
 -- <leader>r лучше освободить под префикс для других сочетаний
-map(
-  'n',
-  '<leader>r',
-  ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
-  { desc = 'Replace word under cursor' }
-)
+-- map(
+--   'n',
+--   '<leader>r',
+--   ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
+--   { desc = 'Search and replace word under cursor' }
+-- )
 
--- R в Visual свободно и можно использовать его
-map(
-  'v',
-  '<leader>r',
-  [["hy:%s/<C-r>h//g<Left><Left>]],
-  { desc = 'Replace selection' }
-)
-
--- Конфиги Neovim
+-- R в Visual бесполезно, можно на него повесить
+-- map(
+--   'v',
+--   '<leader>r',
+--   [["hy:%s/<C-r>h//g<Left><Left>]],
+--   { desc = 'Search and replace' }
+-- )
+--
+-- Neovim
 map(
   'n',
   '<leader>ev',
   '<cmd>edit $MYVIMRC<cr>',
   { desc = 'Edit Neovim config' }
 )
+
+map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neovim' })
 
 -- Диагностика
 -- <C-w>d
@@ -185,22 +193,9 @@ map(
   { desc = 'Diagnostics to location list' }
 )
 
-map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neovim' })
-
--- Управление плагинами
-map('n', '<leader>pu', vim.pack.update, { desc = 'Update plugins' })
-
-map('n', '<leader>pc', function()
-  vim.pack.del(vim
-    .iter(vim.pack.get())
-    :filter(function(plugin)
-      return not plugin.active
-    end)
-    :map(function(plugin)
-      return plugin.spec.name
-    end)
-    :totable())
-end, { desc = 'Clean plugins' })
+-- Сессии
+map('n', '<leader>ss', '<Cmd>mksession!<cr>', { desc = 'Save session' })
+-- map('n', '<leader>ss', '<Cmd>mksession!<cr>', { desc = 'Save session' })
 
 -- Прочее
 map('n', '<leader>tw', '<cmd>set wrap!<CR>', { desc = 'Toggle wrap' })

@@ -74,11 +74,12 @@ vim.api.nvim_create_autocmd('VimResized', {
 -- Проверка: :lua =vim.b.large_file
 -- Эти костыли не имеют особого смысла, так как файлы всегда читаются полностью
 -- в оперативную память
-local group = vim.api.nvim_create_augroup('LargeFile', { clear = true })
+local largefile_group =
+  vim.api.nvim_create_augroup('LargeFile', { clear = true })
 local MAX_SIZE = 10 * 1024 * 1024 -- 10 МБ
 
 vim.api.nvim_create_autocmd('BufReadPre', {
-  group = group,
+  group = largefile_group,
   desc = 'Detect large files',
   callback = function(ev)
     local stat = vim.uv.fs_stat(vim.api.nvim_buf_get_name(ev.buf))
@@ -93,7 +94,7 @@ vim.api.nvim_create_autocmd('BufReadPre', {
 })
 
 vim.api.nvim_create_autocmd('BufWinEnter', {
-  group = group,
+  group = largefile_group,
   desc = 'Disable features for large files',
   callback = function(ev)
     if not vim.b[ev.buf].large_file then
@@ -163,3 +164,28 @@ vim.api.nvim_create_autocmd('FileType', {
 --   desc = 'Start terminal in insert mode',
 --   command = 'startinsert',
 -- })
+
+-- Сессии
+local autosession_group =
+  vim.api.nvim_create_augroup('AutoSession', { clear = true })
+
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = autosession_group,
+  nested = true,
+  desc = 'Load existing session if launched without arguments',
+  callback = function()
+    if vim.fn.argc() == 0 and vim.fn.filereadable('Session.vim') == 1 then
+      vim.cmd('source Session.vim')
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  group = autosession_group,
+  desc = 'Save current session on exit',
+  callback = function()
+    if vim.v.this_session ~= '' then
+      vim.cmd('mksession! ' .. vim.fn.fnameescape(vim.v.this_session))
+    end
+  end,
+})
