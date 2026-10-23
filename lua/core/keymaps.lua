@@ -1,9 +1,9 @@
--- Alt + стрелки, f, g, h, j, k, l используются в Zellij, поэтому их избегаем
+-- Alt + стрелки, f, g, h, j, k, l используются в Zellij, поэтому такие
+-- сочетания не используются, хотя Alt+j/k ьыло привычно до новых версий Z-j
 -- Также по возможности следует избегать односимвольных сочетаний с `<leader>`, поскольку
 -- они могут понадобиться в качестве префиксов для других сочетаний.
--- https://medium.com/unixification/must-have-neovim-keymaps-51c283394070
--- https://www.reddit.com/r/neovim/comments/1h7f0bz/share_your_coolest_keymap/
-
+-- На стрелки и табы в режиме вставки лучше ничего не вешать, так как сломается
+-- автодополнение
 -- В Neovim по умолчанию noremap = true, т.е. только встроенные сочетания будут работать в rhs
 -- Это позволяет избежать рекурсии
 -- silent = true подавляет вывод команд в строку сообщений.
@@ -12,12 +12,16 @@
 -- Нужно всегда x использовать вместо v
 -- x - Visual, т.е. визуальный режим, только выделение
 -- v - Visual + Select. В Select выделение заменяется на вводимые символы
+-- https://medium.com/unixification/must-have-neovim-keymaps-51c283394070
+-- https://www.reddit.com/r/neovim/comments/1h7f0bz/share_your_coolest_keymap/
+
 local map = vim.keymap.set
 
 -- Общие сочетания
--- <C-w>q
--- map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
--- map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
+-- map('n',';', ':')
+map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
+-- <C-w>q немного неудобнее
+map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 
 -- Сочетание для выбора всего текста не нужно
 -- <C-a> я использую для увеличения версии пакета, а <leader>a любят в
@@ -42,7 +46,12 @@ map('n', '<Esc>', '<cmd>noh<cr>', { desc = 'Clear highlights' })
 -- при выделении и нажатии p, выделенный текст сохранится в регистр
 map('x', '<leader>p', [["_dP]], { desc = 'Paste without overwriting register' })
 map({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Delete without register' })
-map('n', '<leader>y', '<Cmd>%y+<CR>', { desc = 'Yank entire file to system clipboard' })
+map(
+  'n',
+  '<leader>y',
+  '<Cmd>%y+<CR>',
+  { desc = 'Yank entire file to system clipboard' }
+)
 
 -- Буферы
 -- H/L переходят по буферам вместо верха/низа экрана
@@ -145,8 +154,8 @@ map('x', 'J', ":m '>+1<CR>gv=gv", {
 map('v', '>', '>gv', { desc = 'Indent' })
 map('v', '<', '<gv', { desc = 'Outdent' })
 -- От табов нужно отвыкать, но для кого-то привычнее
-map('v', '<Tab>', '>gv', { desc = 'Indent' })
-map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
+-- map('v', '<Tab>', '>gv', { desc = 'Indent' })
+-- map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 
 -- Переход к help по Enter
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
@@ -156,9 +165,9 @@ map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 -- <leader>r лучше освободить под префикс для других сочетаний
 map(
   'n',
-  '<leader>rw',
+  '<leader>s',
   ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
-  { desc = 'Replace word under cursor' }
+  { desc = 'Substitute: replace word under cursor' }
 )
 
 -- R в Visual бесполезно, можно на него повесить
@@ -181,21 +190,21 @@ map('n', '<leader>rr', vim.cmd.restart, { desc = 'Restart Neovim' })
 
 -- Диагностика
 -- <C-w>d
+-- map(
+--   'n',
+--   'gl',
+--   vim.diagnostic.open_float,
+--   { desc = 'Show diagnostics in float' }
+-- )
 map(
   'n',
-  'gl',
-  vim.diagnostic.open_float,
-  { desc = 'Show diagnostics in float' }
-)
-map(
-  'n',
-  '<leader>q',
-  vim.diagnostic.setloclist,
-  { desc = 'Diagnostics to location list' }
+  '<leader>dq',
+  vim.diagnostic.setqflist,
+  { desc = 'View all diagnostics in quickfix list' }
 )
 
 -- Сессии
-map('n', '<leader>ss', '<Cmd>mksession!<cr>', { desc = 'Save session' })
+map('n', '<leader>ms', '<Cmd>mksession!<cr>', { desc = 'Save session' })
 
 -- Прочее
 map('n', '<leader>tw', '<cmd>set wrap!<CR>', { desc = 'Toggle wrap' })

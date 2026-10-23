@@ -17,6 +17,9 @@ vim.lsp.config('*', { capabilities = capabilities })
 -- https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316
 vim.lsp.semantic_tokens.enable(false)
 
+-- Уровень логирования
+vim.lsp.log.set_level('WARN')
+
 local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
 
 local highlight_group = vim.api.nvim_create_augroup('LspHighlight', {
