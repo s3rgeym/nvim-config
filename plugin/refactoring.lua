@@ -6,6 +6,6 @@ vim.pack.add {
 }
 
 -- calling `require("refactoring").setup()` is not required for the plugin to work
-vim.keymap.set('v', '<leader>r', function()
+vim.keymap.set('v', '<leader>rs', function()
   require('refactoring').select_refactor()
-end, { desc = 'Refactoring' })
+end, { desc = 'Refactor Select' })

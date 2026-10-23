@@ -150,6 +150,7 @@ map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 -- Переход к help по Enter
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
+-- Search and replace
 -- Замена во всех файлах: :args **/*.py | :argdo %s/\<old\>/new/g | update
 -- <leader>r лучше освободить под префикс для других сочетаний
 map(
@@ -159,12 +160,13 @@ map(
   { desc = 'Search and replace word under cursor' }
 )
 
+-- <C-r>
 -- R в Visual бесполезно, можно на него повесить
 map(
   'v',
   '<leader>sr',
   [["hy:%s/<C-r>h//g<Left><Left>]],
-  { desc = 'Search and replace selection' }
+  { desc = 'Search and replace selected text' }
 )
 
 -- Neovim
