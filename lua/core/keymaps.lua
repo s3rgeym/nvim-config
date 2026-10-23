@@ -177,7 +177,7 @@ map(
   { desc = 'Edit Neovim config' }
 )
 
-map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neovim' })
+map('n', '<leader>rr', vim.cmd.restart, { desc = 'Restart Neovim' })
 
 -- Диагностика
 -- <C-w>d
