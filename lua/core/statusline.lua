@@ -1,140 +1,131 @@
-local color = require('utils.color')
+local color_utils = require('utils.color')
 
-local HIGHLIGHT_PREFIX = 'StatusLineMode'
+local MODE_GROUP_PREFIX = 'StatusLineMode'
+local LOCATION_GROUP = 'StatusLineLocation'
+local AUGROUP_NAME = 'StatusLineHighlights'
 
--- vim.g.terminal_color_N не доступны в catppuccin
-local MODE_THEME_MAPPING = {
+-- vim.g.terminal_color_N не доступны в catppuccin.
+-- Стиль режима -> группа темы, из fg которой берётся фон блока.
+local MODE_COLOR_SOURCES = {
   Normal = 'Function',
   Insert = 'String',
   Visual = 'Statement',
   Command = 'Constant',
   Replace = 'DiagnosticError',
   Terminal = 'DiagnosticInfo',
-  Comment = 'Comment',
   Other = 'Comment',
 }
 
+-- Результат vim.fn.mode() -> название и стиль режима.
 local MODES = {
-  n = {
-    label = 'NORMAL',
-    hl_group = 'Normal',
-  },
-  i = {
-    label = 'INSERT',
-    hl_group = 'Insert',
-  },
-  v = {
-    label = 'VISUAL',
-    hl_group = 'Visual',
-  },
-  V = {
-    label = 'V-LINE',
-    hl_group = 'Visual',
-  },
-  ['\22'] = {
-    label = 'V-BLOCK',
-    hl_group = 'Visual',
-  },
-  c = {
-    label = 'COMMAND',
-    hl_group = 'Command',
-  },
-  R = {
-    label = 'REPLACE',
-    hl_group = 'Replace',
-  },
-  t = {
-    label = 'TERMINAL',
-    hl_group = 'Terminal',
-  },
-  other = {
-    hl_group = 'Other',
-  },
+  n = { label = 'NORMAL', style = 'Normal' },
+  i = { label = 'INSERT', style = 'Insert' },
+  v = { label = 'VISUAL', style = 'Visual' },
+  V = { label = 'V-LINE', style = 'Visual' },
+  ['\22'] = { label = 'V-BLOCK', style = 'Visual' },
+  c = { label = 'COMMAND', style = 'Command' },
+  R = { label = 'REPLACE', style = 'Replace' },
+  t = { label = 'TERMINAL', style = 'Terminal' },
+  other = { style = 'Other' },
 }
 
-local augroup = vim.api.nvim_create_augroup('StatusLineModes', {})
-local active_hl_groups = {}
-
+-- Глобальная: нужна для вызова через v:lua в 'statusline'.
 StatusLine = {}
 
--- Возвращает полное имя собственной highlight-группы.
-local function hl_group(entry)
-  return HIGHLIGHT_PREFIX .. entry.hl_group
+-- Возвращает атрибуты highlight-группы с разрешёнными ссылками.
+local function get_highlight(group)
+  return vim.api.nvim_get_hl(0, {
+    name = group,
+    link = false,
+  })
 end
 
--- Возвращает название режима с его подсветкой.
--- Вызывать через '%{%v:lua.StatusLine.mode_name()%}'.
-function StatusLine.mode_name()
-  local mode = vim.fn.mode()
-  local entry = MODES[mode:sub(1, 1)] or MODES.other
-  local label = entry.label or mode
-  local group = hl_group(entry)
+-- Возвращает имя highlight-группы для стиля режима.
+local function get_mode_group(style)
+  return MODE_GROUP_PREFIX .. style
+end
 
-  if not active_hl_groups[group] then
-    return string.format(' %s ', label)
+-- Возвращает цвет текста с максимальным контрастом к фону.
+local function get_contrast_fg(background, normal_hl)
+  return color_utils.get_more_contrast(
+    background,
+    normal_hl.fg or 0xFFFFFF,
+    normal_hl.bg or 0x000000
+  )
+end
+
+-- Создаёт highlight-группу цветного блока.
+-- Без цвета очищает группу, чтобы не остались цвета предыдущей темы.
+local function set_block_highlight(group, background, base_hl, normal_hl)
+  if not background then
+    vim.api.nvim_set_hl(0, group, {})
+    return
   end
 
-  return string.format('%%#%s# %s %%*', group, label)
+  vim.api.nvim_set_hl(
+    0,
+    group,
+    vim.tbl_extend('force', base_hl or {}, {
+      fg = get_contrast_fg(background, normal_hl),
+      bg = background,
+      bold = true,
+    })
+  )
 end
 
-function StatusLine.lsp_client_names()
+-- Обновляет цвета блоков на основе highlight-групп текущей темы.
+local function update_highlights()
+  local normal_hl = get_highlight('Normal')
+  local location_hl = get_highlight('PmenuSel')
+
+  for style, source_group in pairs(MODE_COLOR_SOURCES) do
+    local source_hl = get_highlight(source_group)
+
+    set_block_highlight(get_mode_group(style), source_hl.fg, nil, normal_hl)
+  end
+
+  set_block_highlight(LOCATION_GROUP, location_hl.bg, location_hl, normal_hl)
+end
+
+-- Возвращает название текущего режима с его подсветкой.
+-- Вызывать через '%{%v:lua.StatusLine.mode_block()%}'.
+function StatusLine.mode_block()
+  local mode = vim.fn.mode()
+  local info = MODES[mode:sub(1, 1)] or MODES.other
+
+  return string.format(
+    '%%#%s# %s %%*',
+    get_mode_group(info.style),
+    info.label or mode
+  )
+end
+
+-- Возвращает имена LSP-клиентов текущего буфера.
+-- Вызывать через '%{v:lua.StatusLine.lsp_clients()}'.
+function StatusLine.lsp_clients()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+
+  if #clients == 0 then
+    return 'n/a'
+  end
+
   local names = {}
 
-  for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+  for _, client in ipairs(clients) do
     names[#names + 1] = client.name
   end
 
   return table.concat(names, ', ')
 end
 
--- Создаёт highlight-группы на основе цветов текущей темы.
-local function update_highlights()
-  local normal_hl = vim.api.nvim_get_hl(0, {
-    name = 'Normal',
-    link = false,
-  })
-
-  local normal_fg = normal_hl.fg or 0xFFFFFF
-  local normal_bg = normal_hl.bg or 0x000000
-
-  active_hl_groups = {}
-
-  for _, entry in pairs(MODES) do
-    local group = hl_group(entry)
-    local source_name = MODE_THEME_MAPPING[entry.hl_group]
-      or MODE_THEME_MAPPING.Other
-
-    local source_hl = vim.api.nvim_get_hl(0, {
-      name = source_name,
-      link = true,
-    })
-
-    local background = source_hl.fg
-
-    if background then
-      vim.api.nvim_set_hl(0, group, {
-        fg = color.get_more_contrast(background, normal_fg, normal_bg),
-        bg = background,
-        bold = true,
-      })
-
-      active_hl_groups[group] = true
-    else
-      -- Удаляем цвета предыдущей темы, если исходная группа отсутствует.
-      vim.api.nvim_set_hl(0, group, {})
-    end
-  end
-end
-
 -- Повторно создаём группы при смене цветовой схемы.
-vim.api.nvim_clear_autocmds({
-  group = augroup,
-  event = 'ColorScheme',
+local augroup = vim.api.nvim_create_augroup(AUGROUP_NAME, {
+  clear = true,
 })
 
 vim.api.nvim_create_autocmd('ColorScheme', {
   group = augroup,
-  desc = 'Update statusline mode highlights',
+  desc = 'Update statusline highlights',
   callback = update_highlights,
 })
 
@@ -142,12 +133,12 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 update_highlights()
 
 vim.opt.statusline = table.concat({
-  '%{%v:lua.StatusLine.mode_name()%}',
+  '%{%v:lua.StatusLine.mode_block()%}',
   ' %<%t%m%r',
   ' %{%v:lua.vim.ui.progress_status()%}',
   '%=',
   '%k',
   ' %{%v:lua.vim.diagnostic.status()%}',
-  ' %{v:lua.StatusLine.lsp_client_names()}',
-  ' %3l:%-2v ',
+  ' %{v:lua.StatusLine.lsp_clients()}',
+  ' %#' .. LOCATION_GROUP .. '# %3l:%-2v %*',
 })

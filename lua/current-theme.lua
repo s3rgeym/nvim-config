@@ -1,1 +1,1 @@
-return "github_dark_default"
+return "catppuccin-nvim"
