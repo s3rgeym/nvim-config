@@ -150,24 +150,23 @@ map('v', '<S-Tab>', '<gv', { desc = 'Outdent' })
 -- Переход к help по Enter
 -- map('n', '<cr>', '<C-]>', { desc = 'Help' })
 
--- Search and replace
 -- Замена во всех файлах: :args **/*.py | :argdo %s/\<old\>/new/g | update
 -- <leader>r лучше освободить под префикс для других сочетаний
--- map(
---   'n',
---   '<leader>r',
---   ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
---   { desc = 'Search and replace word under cursor' }
--- )
+map(
+  'n',
+  '<leader>sr',
+  ':%s/\\<<C-r><C-w>\\>//g<Left><Left>',
+  { desc = 'Search and replace word under cursor' }
+)
 
 -- R в Visual бесполезно, можно на него повесить
--- map(
---   'v',
---   '<leader>r',
---   [["hy:%s/<C-r>h//g<Left><Left>]],
---   { desc = 'Search and replace' }
--- )
---
+map(
+  'v',
+  '<leader>sr',
+  [["hy:%s/<C-r>h//g<Left><Left>]],
+  { desc = 'Search and replace selection' }
+)
+
 -- Neovim
 map(
   'n',
@@ -195,7 +194,6 @@ map(
 
 -- Сессии
 map('n', '<leader>ss', '<Cmd>mksession!<cr>', { desc = 'Save session' })
--- map('n', '<leader>ss', '<Cmd>mksession!<cr>', { desc = 'Save session' })
 
 -- Прочее
 map('n', '<leader>tw', '<cmd>set wrap!<CR>', { desc = 'Toggle wrap' })
