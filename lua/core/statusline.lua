@@ -65,7 +65,7 @@ function StatusLine.lsp_clients()
     vim.tbl_map(function(client)
       return client.name
     end, clients),
-    ', '
+    ', ' -- │
   )
 end
 
@@ -131,5 +131,5 @@ vim.opt.statusline = table.concat({
   '%k',
   ' %{%v:lua.vim.diagnostic.status()%}',
   ' %{v:lua.StatusLine.lsp_clients()}',
-  ' %#' .. LOCATION_GROUP .. '# %3l:%-2v %*',
+  ' %#' .. LOCATION_GROUP .. '# %3l:%-2v │ %3p%% %*',
 })
