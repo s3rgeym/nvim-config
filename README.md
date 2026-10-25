@@ -107,7 +107,9 @@ sudo pacman -S go-tools
 # PHP
 sudo pacman -S composer
 # composer config -g home должен быть в $PATH
+# форматирование
 composer global require friendsofphp/php-cs-fixer
+# lsp
 composer global require phpactor/phpactor
 ```
 
