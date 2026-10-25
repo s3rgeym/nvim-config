@@ -1,10 +1,7 @@
 ## Минималистичный конфиг Neovim
 
 <p align="center">
-  <img width="68%" src="https://github.com/user-attachments/assets/e72fd55e-7d29-4977-abf7-8d31d528f551" />
-  <img width="33%" src="https://github.com/user-attachments/assets/a6a01077-c1ec-487d-b9fa-758f9adb7ee8" />
-  <img width="33%" src="https://github.com/user-attachments/assets/fb8c9b35-db32-4d82-8558-82c5022177db" />
-  <img width="33%" src="https://github.com/user-attachments/assets/581d6dbb-7ea0-4c44-9d34-c0f33a04b804" />
+  <img width="75%" src="https://github.com/user-attachments/assets/9dbf70d4-7b41-4b95-ac85-756baf28696d" />
 </p>
 
 ### Описание
@@ -16,7 +13,7 @@
 ### Требования
 
 - Neovim 0.12 или новее.
-- [Nerd Font](https://www.nerdfonts.com/) для иконок и специальных символов. На скриншотах — `Victor Mono Nerd SemiBold`; его nerd-версия есть в стандартном репозитории Arch.
+- [Nerd Font](https://www.nerdfonts.com/) для иконок и специальных символов. На скриншотах — `ZedMono NFM`; он есть в стандартном репозитории Arch.
 - `fzf` и `ripgrep` для поиска по файлам и их содержимому.
 
 ### Основа
