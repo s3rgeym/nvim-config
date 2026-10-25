@@ -7,14 +7,14 @@ end)
 
 -- Порядок подключения конфигов имеет значение
 -- Задает leader и базовые настройки, поэтому должен идти первым
-require('core.options')
+require('config.options')
 -- Все модули, задающие сочтениния, быть загружены после задания клавиши Leader
-require('core.diagnostics')
-require('core.lsp')
-require('core.theme')
-require('core.statusline')
-require('core.commands')
-require('core.keymaps')
+require('config.diagnostics')
+require('config.lsp')
+require('config.theme')
+require('config.statusline')
+require('config.commands')
+require('config.keymaps')
 -- Должна быть загружена после темы, но у меня тема через событие ставится,
 -- поэтому порядок не важен
-require('core.autocmds')
+require('config.autocmds')

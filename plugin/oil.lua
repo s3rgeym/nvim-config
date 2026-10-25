@@ -30,7 +30,10 @@ require('oil').setup({
   lsp_file_methods = {
     enabled = true,
     timeout_ms = 5000,
+    -- Сохранять файлы при изменении импортов
+    autosave_changes = false,
   },
+  delete_to_trash = false,
 })
 
 -- require('oil-git').setup()

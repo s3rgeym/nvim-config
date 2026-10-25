@@ -20,6 +20,74 @@ vim.lsp.semantic_tokens.enable(false)
 -- Уровень логирования
 vim.lsp.log.set_level('WARN')
 
+-- ========================= LSP-серверы =========================
+-- Сами настройки задаются плагином nvim-lspconfig и переопределяются в
+-- <rtp>/after/lsp
+
+vim.lsp.enable({
+  -- sudo pacman -S lua-language-server
+  'lua_ls',
+
+  -- sudo pacman -S vim-language-server
+  'vimls',
+
+  -- sudo pacman -S vscode-html-languageserver
+  'html',
+
+  -- sudo pacman -S vscode-json-languageserver
+  'jsonls',
+
+  -- sudo pacman -S vscode-css-languageserver
+  'cssls',
+
+  -- sudo pacman -S yaml-language-server
+  'yamlls',
+
+  -- sudo pacman -S typescript-language-server
+  'ts_ls',
+
+  -- sudo pacman -S vue-language-server
+  'vue_ls',
+
+  -- sudo pacman -S bash-language-server
+  'bashls',
+
+  -- sudo pacman -S dockerfile-language-server
+  'dockerls',
+
+  -- sudo pacman -S biome
+  'biome',
+
+  -- sudo pacman -S tombi
+  'tombi',
+
+  -- Быстрый, но не умеет править импорты после переименования файла
+  -- sudo pacman -S ty
+  'ty',
+
+  -- sudo pacman -S basedpyright
+  -- 'basedpyright',
+
+  -- sudo pacman -S ruff
+  'ruff',
+
+  -- sudo pacman -S gopls
+  'gopls',
+
+  -- sudo pacman -S rust-analyzer
+  'rust_analyzer',
+
+  -- sudo pacman -S composer
+  -- composer global require -W phpactor/phpactor
+  'phpactor',
+})
+
+vim.diagnostic.config({
+  virtual_text = true,
+  severity_sort = true,
+  float = { border = 'rounded' },
+})
+
 local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
 
 local highlight_group = vim.api.nvim_create_augroup('LspHighlight', {
@@ -137,10 +205,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
-
--- :checkhealth
--- vim.api.nvim_create_user_command('LspCaps', function()
---   for _, c in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
---     vim.print(c.name, c.capabilities.workspace.didChangeWatchedFiles)
---   end
--- end, {})

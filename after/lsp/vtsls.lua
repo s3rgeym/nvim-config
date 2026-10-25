@@ -1,20 +1,21 @@
 -- @see <https://github.com/vuejs/language-tools/wiki/Neovim>
-local vue_language_server_path = vim.fn.stdpath("data")
-  .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
+-- local vue_language_server_path = vim.fn.stdpath("data")
+--   .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
+local vue_language_server_path = '/usr/lib/node_modules/@vue/language-server/'
 
 local tsserver_filetypes = {
-  "typescript",
-  "javascript",
-  "javascriptreact",
-  "typescriptreact",
-  "vue",
+  'typescript',
+  'javascript',
+  'javascriptreact',
+  'typescriptreact',
+  'vue',
 }
 
 local vue_plugin = {
-  name = "@vue/typescript-plugin",
+  name = '@vue/typescript-plugin',
   location = vue_language_server_path,
-  languages = { "vue" },
-  configNamespace = "typescript",
+  languages = { 'vue' },
+  configNamespace = 'typescript',
 }
 
 return {
