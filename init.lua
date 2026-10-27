@@ -15,6 +15,4 @@ require('config.theme-persistence')
 require('config.statusline')
 require('config.commands')
 require('config.keymaps')
--- Должна быть загружена после темы, но у меня тема через событие ставится,
--- поэтому порядок не важен
 require('config.autocmds')
