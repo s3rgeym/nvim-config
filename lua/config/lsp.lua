@@ -56,7 +56,7 @@ vim.lsp.enable({
   'dockerls',
 
   -- sudo pacman -S biome
-  'biome',
+  -- 'biome',
 
   -- sudo pacman -S tombi
   'tombi',
@@ -65,10 +65,14 @@ vim.lsp.enable({
   -- sudo pacman -S ty
   'ty',
 
+  -- sudo pacman -S pyrefly
+  -- 'pyrefly',
+
   -- sudo pacman -S basedpyright
   -- 'basedpyright',
 
   -- sudo pacman -S ruff
+  -- Добавляет code actions
   'ruff',
 
   -- sudo pacman -S gopls

@@ -77,7 +77,7 @@ o.listchars:append({
   tab = '→ ',
   trail = '·',
 })
-o.synmaxcol = 255
+o.synmaxcol = 200
 
 -- Search
 -- Эти 4 настройки включены по дефолту
@@ -89,8 +89,53 @@ o.incsearch = true
 o.inccommand = 'split'
 o.wildignorecase = true
 o.wildignore:append({
+  -- VCS
   '*/.git/*',
+  '*/.hg/*',
+  '*/.svn/*',
+
+  -- зависимости и сборка
   '*/node_modules/*',
+  '*/dist/*',
+  '*/build/*',
+  '*/target/*',
+  '*/vendor/*',
+  '*/.next/*',
+  '*/.nuxt/*',
+
+  -- python
+  '*/__pycache__/*',
+  '*.pyc',
+  '*/.venv/*',
+  '*/venv/*',
+
+  -- кэши и IDE
+  '*/.cache/*',
+  '*/.idea/*',
+  '*/.vscode/*',
+
+  -- бинарники и артефакты
+  '*.o',
+  '*.obj',
+  '*.so',
+  '*.dll',
+  '*.exe',
+  '*.class',
+
+  -- медиа и архивы
+  '*.jpg',
+  '*.jpeg',
+  '*.png',
+  '*.gif',
+  '*.pdf',
+  '*.zip',
+  '*.tar',
+  '*.gz',
+
+  -- мусор системы
+  '*.swp',
+  '*~',
+  '.DS_Store',
 })
 
 -- Files

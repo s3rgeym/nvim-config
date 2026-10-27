@@ -11,7 +11,7 @@ require('config.options')
 -- Все модули, задающие сочтениния, быть загружены после задания клавиши Leader
 require('config.diagnostics')
 require('config.lsp')
-require('config.theme')
+require('config.theme-persistence')
 require('config.statusline')
 require('config.commands')
 require('config.keymaps')

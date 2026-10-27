@@ -19,9 +19,9 @@ local map = vim.keymap.set
 
 -- Общие сочетания
 -- map('n',';', ':')
-map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
+-- map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
 -- <C-w>q немного неудобнее
-map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
+-- map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 
 -- Сочетание для выбора всего текста не нужно
 -- <C-a> я использую для увеличения версии пакета, а <leader>a любят в
@@ -186,7 +186,7 @@ map(
   { desc = 'Edit Neovim config' }
 )
 
-map('n', '<leader>rr', vim.cmd.restart, { desc = 'Restart Neovim' })
+map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neovim' })
 
 -- Диагностика
 -- <C-w>d
@@ -198,13 +198,14 @@ map('n', '<leader>rr', vim.cmd.restart, { desc = 'Restart Neovim' })
 -- )
 map(
   'n',
-  '<leader>dq',
+  '<leader>q',
   vim.diagnostic.setqflist,
   { desc = 'View all diagnostics in quickfix list' }
 )
 
 -- Сессии
 map('n', '<leader>ms', '<Cmd>mksession!<cr>', { desc = 'Save session' })
+-- Сочетание для загрузки сессии не нужно, так как она автоматически грузится
 
 -- Прочее
 map('n', '<leader>tw', '<cmd>set wrap!<CR>', { desc = 'Toggle wrap' })
