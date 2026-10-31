@@ -25,8 +25,9 @@ vim.lsp.log.set_level('WARN')
 -- <rtp>/after/lsp
 
 vim.lsp.enable({
-  -- sudo pacman -S lua-language-server
+  -- sudo pacman -S lua-language-server stylua
   'lua_ls',
+  'stylua',
 
   -- sudo pacman -S vim-language-server
   'vimls',
@@ -84,12 +85,6 @@ vim.lsp.enable({
   -- sudo pacman -S composer
   -- composer global require -W phpactor/phpactor
   'phpactor',
-})
-
-vim.diagnostic.config({
-  virtual_text = true,
-  severity_sort = true,
-  float = { border = 'rounded' },
 })
 
 local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })

@@ -18,10 +18,9 @@
 local map = vim.keymap.set
 
 -- Общие сочетания
--- map('n',';', ':')
--- map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
+map('n', '<leader>w', vim.cmd.write, { desc = 'Save' })
 -- <C-w>q немного неудобнее
--- map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
+map('n', '<leader>q', vim.cmd.quit, { desc = 'Quit' })
 
 -- Сочетание для выбора всего текста не нужно
 -- <C-a> я использую для увеличения версии пакета, а <leader>a любят в
@@ -198,10 +197,13 @@ map('n', '<leader>R', vim.cmd.restart, { desc = 'Restart Neovim' })
 -- )
 map(
   'n',
-  '<leader>q',
+  '<leader>lq',
   vim.diagnostic.setqflist,
   { desc = 'View all diagnostics in quickfix list' }
 )
+
+-- Доп сочетания для quickfix
+map('n', '<leader>co', '<cmd>copen<CR>', { desc = 'Open quickfix' })
 
 -- Сессии
 map('n', '<leader>ms', '<Cmd>mksession!<cr>', { desc = 'Save session' })

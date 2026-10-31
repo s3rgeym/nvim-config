@@ -7,12 +7,12 @@ end)
 
 -- Порядок подключения конфигов имеет значение
 -- Задает leader и базовые настройки, поэтому должен идти первым
-require('config.options')
--- Все модули, задающие сочтениния, быть загружены после задания клавиши Leader
-require('config.diagnostics')
-require('config.lsp')
-require('config.theme-persistence')
-require('config.statusline')
-require('config.commands')
-require('config.keymaps')
-require('config.autocmds')
+require('core.options')
+-- Все модули, задающие сочетания, быть загружены после задания клавиши Leader
+require('core.diagnostics')
+require('core.lsp')
+require('core.theme-persistence')
+require('core.statusline')
+require('core.commands')
+require('core.keymaps')
+require('core.autocmds')
