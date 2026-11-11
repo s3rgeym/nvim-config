@@ -56,8 +56,8 @@ map(
 -- H/L переходят по буферам вместо верха/низа экрана
 -- map('n', 'H', vim.cmd.bprev, { desc = 'Previous buffer' })
 -- map('n', 'L', vim.cmd.bnext, { desc = 'Next buffer' })
-map('n', '<Tab>', vim.cmd.bprev, { desc = 'Previous buffer' })
-map('n', '<S-Tab>', vim.cmd.bnext, { desc = 'Next buffer' })
+map('n', '<Tab>', vim.cmd.bnext, { desc = 'Next buffer' })
+map('n', '<S-Tab>', vim.cmd.bprev, { desc = 'Previous buffer' })
 
 -- Нужно придерживаться правила, согласно которому первая буква после <leader> — namespace,
 -- а вторая — действие. Например: <leader>b — Buffers, <leader>bd — Delete buffer.

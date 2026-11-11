@@ -12,50 +12,57 @@ local o = vim.opt
 g.mapleader = ' '
 g.maplocalleader = ' ' -- Часто его делают ',' или '\\'
 
--- Interface
-o.number = true
-o.relativenumber = true
-o.cursorline = true
--- o.signcolumn = 'yes'
-o.laststatus = 3
-o.shortmess:append('I')
-o.conceallevel = 0
-o.showmode = false -- Не отображаем режим, вместо этого переносим его в statusline
--- В tabline можно показывать имя файла вместо строки статуса, если лишнюю
--- строку не жалко
--- Для отключения табов
--- o.showtabline = 0
+--------------------------------------------------------------------------------
+-- Performance & Timing
+--------------------------------------------------------------------------------
+o.timeoutlen = 1000
+o.updatetime = 300 -- Эта опция влияет на задержку перед появлением всплывающего окна
+o.redrawtime = 1500 -- Лимит времени на отрисовку и подсветку синтаксиса в длинных строках (мс)
+o.ttimeoutlen = 50 -- Задержка после нажатия Esc (убирает лаг при выходе из режима вставки)
 
--- Completion / Popup
--- Без popup справка не отображается
--- Возможно, стот это вынести в настройки LSP
-o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
--- В всплывающем окне с просмотром документации края прямоугольные.
--- https://github.com/neovim/neovim/issues/38248#issuecomment-4038192073
-o.pumborder = 'rounded'
-o.winborder = 'rounded'
--- Эта опция влияет на задержку перед появлением всплывающего окна
-o.updatetime = 200
-
--- Красная линия
--- o.colorcolumn = '+1'
-
+--------------------------------------------------------------------------------
+-- UI & Windows
+--------------------------------------------------------------------------------
 -- Включается автоматически, но требуется явная установка для некоторых плагинов
 if vim.fn.has('termguicolors') == 1 then
   o.termguicolors = true
 end
 
--- Cursor
+o.number = true
+o.relativenumber = true
+o.cursorline = true
+-- o.signcolumn = 'yes'
+-- o.colorcolumn = '+1' -- Красная линия
+o.showmode = false -- Не отображаем режим, вместо этого переносим его в statusline
+o.laststatus = 3
+-- В tabline можно показывать имя файла вместо строки статуса, если лишнюю
+-- строку не жалко
+-- Для отключения табов
+-- o.showtabline = 0
+o.shortmess:append('Ic')
+o.conceallevel = 0
+o.pumheight = 10 -- Ограничивает высоту выпадающего списка автодополнения (чтобы не перекрывал экран)
+
+o.splitbelow = true
+o.splitright = true
+o.splitkeep = 'screen' -- Сохраняет визуальное положение строк при открытии/закрытии сплитов
+
+-- В всплывающем окне с просмотром документации края прямоугольные.
+-- https://github.com/neovim/neovim/issues/38248#issuecomment-4038192073
+o.pumborder = 'rounded'
+o.winborder = 'rounded'
+
+--------------------------------------------------------------------------------
+-- Editing & Navigation
+--------------------------------------------------------------------------------
 o.scrolloff = 8
 o.sidescrolloff = 8
 o.whichwrap = 'h,l,<,>,[,]'
+-- Полезно только при выделении через Ctrl-V
+o.virtualedit = 'block'
 o.mouse = 'a'
+o.jumpoptions = 'view' -- Сохраняет положение скролла при перемещении по истории прыжков (Ctrl-O / Ctrl-I)
 
--- Text
-o.wrap = false
--- o.linebreak = true
--- o.breakindent = true
--- o.showbreak = '↪ '
 o.expandtab = true
 o.tabstop = 4
 o.shiftwidth = 2
@@ -63,11 +70,17 @@ o.softtabstop = 2
 o.smarttab = true
 o.autoindent = true
 o.smartindent = true
+
+o.wrap = false
+-- o.linebreak = true
+-- o.breakindent = true
+-- o.showbreak = '↪ '
 -- o.textwidth = 80
 -- o.joinspaces = false
 -- Не имеет эффекта в Арче, так как устанавливается через системные плагины
 -- после загрузки init.lua
 -- o.formatoptions = { j = true, q = true }
+
 o.list = true
 o.listchars:append({
   extends = '↪',
@@ -79,7 +92,13 @@ o.listchars:append({
 })
 o.synmaxcol = 200
 
--- Search
+--------------------------------------------------------------------------------
+-- Completion & Search
+--------------------------------------------------------------------------------
+-- Без popup справка не отображается
+-- Возможно, стот это вынести в настройки LSP
+o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
+
 -- Эти 4 настройки включены по дефолту
 o.ignorecase = true
 o.smartcase = true
@@ -87,6 +106,7 @@ o.hlsearch = true
 o.incsearch = true
 
 o.inccommand = 'split'
+
 o.wildignorecase = true
 o.wildignore:append({
   -- VCS
@@ -138,29 +158,29 @@ o.wildignore:append({
   '.DS_Store',
 })
 
--- Files
+--------------------------------------------------------------------------------
+-- Files & System
+--------------------------------------------------------------------------------
 o.clipboard = 'unnamedplus'
+
+o.undofile = true
+o.undolevels = 10000 -- Увеличивает максимальное количество шагов для отмены изменений (u)
+-- Хранит позицию курсора, метки и регистры между сессиями
+o.shada = "!,'100,<1000,s10,h"
+-- Claude советовыал добавить, но то скорее его бред
+o.sessionoptions:append('localoptions')
+
 o.swapfile = false
 o.backup = false
-o.undofile = true
 o.hidden = true -- дефолт
 o.autoread = true -- дефолт
 o.confirm = true
 -- Отключает modeline во избежание инъекции команд через содержимое файлов
 o.modeline = false
--- Claude советовыал добавить, но то скорее его бред
---o.sessionoptions:append('localoptions')
--- Хранит позицию курсора, метки и регистры между сессиями
-o.shada = "!,'100,<1000,s10,h"
 
--- Windows
-o.splitbelow = true
-o.splitright = true
-
--- Performance
-o.timeoutlen = 500
-
+--------------------------------------------------------------------------------
 -- Русская раскладка
+--------------------------------------------------------------------------------
 -- Переключение встроенной раскладки через <C-^>
 o.keymap = 'russian-jcukenwin'
 o.iminsert = 0

@@ -11,7 +11,7 @@ require('core.options')
 -- Все модули, задающие сочетания, быть загружены после задания клавиши Leader
 require('core.diagnostics')
 require('core.lsp')
-require('core.theme-persistence')
+require('core.theme')
 require('core.statusline')
 require('core.commands')
 require('core.keymaps')

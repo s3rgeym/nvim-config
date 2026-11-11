@@ -87,12 +87,6 @@ vim.lsp.enable({
   'phpactor',
 })
 
-local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
-
-local highlight_group = vim.api.nvim_create_augroup('LspHighlight', {
-  clear = false,
-})
-
 -- Это сочетание всегда работает с текущим буфером
 vim.keymap.set('n', '<leader>oi', function()
   vim.lsp.buf.code_action({
@@ -100,6 +94,16 @@ vim.keymap.set('n', '<leader>oi', function()
     apply = true,
   })
 end, { desc = 'Organize imports' })
+
+local function pumvisible()
+  return tonumber(vim.fn.pumvisible()) == 1
+end
+
+local lsp_group = vim.api.nvim_create_augroup('LspConfig', { clear = true })
+
+local highlight_group = vim.api.nvim_create_augroup('LspHighlight', {
+  clear = false,
+})
 
 -- https://mintlify.wiki/neovim/neovim/lsp/completion
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -132,7 +136,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Подтверждение выбора по Enter, так как неудобно тянуться до <C-y>
     bufmap('i', '<cr>', function()
-      return vim.fn.pumvisible() == 1 and '<C-y>' or '<cr>'
+      return pumvisible() and '<C-y>' or '<cr>'
+    end, { expr = true })
+
+    bufmap('i', '/', function()
+      return pumvisible() and '<C-e>' or '/'
     end, { expr = true })
 
     -- <C-n> назначать не надо, так как он и так служит для вызова дополнения
@@ -140,7 +148,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Выбор вариантов по Tab и Shift-Tab
     bufmap('i', '<Tab>', function()
-      return vim.fn.pumvisible() == 1 and '<C-n>' or '<Tab>'
+      return pumvisible() and '<C-n>' or '<Tab>'
     end, { expr = true })
 
     -- Если на <S-Tab> в режиме редактирования повесить <C-d>, то он перестанет
@@ -149,7 +157,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- добавляют символы (пусть и непечатные), и никто их переопределять не
     -- станет
     bufmap('i', '<S-Tab>', function()
-      return vim.fn.pumvisible() == 1 and '<C-p>' or '<S-Tab>'
+      return pumvisible() and '<C-p>' or '<S-Tab>'
     end, { expr = true })
 
     bufmap('n', '<leader>th', function()
