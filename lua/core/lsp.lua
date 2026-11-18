@@ -64,13 +64,13 @@ vim.lsp.enable({
 
   -- Быстрый, но не умеет править импорты после переименования файла
   -- sudo pacman -S ty
-  'ty',
+  -- 'ty',
 
   -- sudo pacman -S pyrefly
   -- 'pyrefly',
 
   -- sudo pacman -S basedpyright
-  -- 'basedpyright',
+  'basedpyright',
 
   -- sudo pacman -S ruff
   -- Добавляет code actions

@@ -175,7 +175,7 @@ function _G.render_statusline()
     get_lsp_clients(),
     vim.bo.filetype,
     get_encoding(),
-    '%3l:%-3c',
+    '%3l:%-3c ',
   }, RIGHT_SEPARATOR)
 
   return left .. '%=' .. right
