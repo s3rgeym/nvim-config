@@ -83,14 +83,15 @@ o.wrap = false
 
 o.list = true
 o.listchars:append({
-  extends = '↪',
-  -- lead = '·',
-  nbsp = '␣',
-  precedes = '↩',
   tab = '→ ',
   trail = '·',
+  nbsp = '␣',
+  extends = '›',
+  precedes = '‹',
+  -- lead = "·",
+  -- eol = "↲",
 })
-o.synmaxcol = 200
+o.synmaxcol = 300
 
 --------------------------------------------------------------------------------
 -- Completion & Search

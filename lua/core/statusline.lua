@@ -1,4 +1,5 @@
 local api = vim.api
+local strwidth = api.nvim_strwidth
 local colors = require('utils.colors')
 local string = require('utils.string')
 
@@ -11,6 +12,7 @@ local MODE_HIGHLIGHTS = {
   Insert = 'DiagnosticOk',
   Visual = 'Statement',
   Command = 'DiagnosticWarn',
+  Prompt = 'DiagnosticError',
   Replace = 'DiagnosticError',
   Terminal = 'DiagnosticHint',
   Other = 'Special',
@@ -23,7 +25,7 @@ local MODES = {
   V = { label = 'V-LINE', hl = 'Visual' },
   ['\22'] = { label = 'V-BLOCK', hl = 'Visual' },
   c = { label = 'COMMAND', hl = 'Command' },
-  r = { label = 'PROMPT', hl = 'Replace' },
+  r = { label = 'PROMPT', hl = 'Prompt' },
   R = { label = 'REPLACE', hl = 'Replace' },
   t = { label = 'TERMINAL', hl = 'Terminal' },
   other = { hl = 'Other' },
@@ -40,13 +42,23 @@ local DIAGNOSTICS = {
     icon = '\u{f071}',
     hl = 'DiagnosticWarn',
   },
+  {
+    severity = vim.diagnostic.severity.INFO,
+    icon = '\u{f05a}',
+    hl = 'DiagnosticInfo',
+  },
+  {
+    severity = vim.diagnostic.severity.HINT,
+    icon = '\u{f0eb}',
+    hl = 'DiagnosticHint',
+  },
 }
 
 local GIT_ICON = '\u{f418}'
--- local RIGHT_SEPARATOR = ' \u{2502} '
 local RIGHT_SEPARATOR = ' \u{00b7} '
+local MORE_MARKER = ' \u{2026} '
+local MORE_MARKER_W = strwidth(MORE_MARKER)
 
--- Создаёт группы подсветки режимов на основе темы.
 local function setup_highlights()
   local normal = api.nvim_get_hl(0, { name = 'Normal', link = false })
   local fg, bg = normal.fg or 0xffffff, normal.bg or 0x000000
@@ -64,7 +76,6 @@ end
 
 setup_highlights()
 
--- Получает Git-ветку асинхронно и сохраняет её в переменной буфера.
 local function fetch_git_branch(bufnr)
   if vim.bo[bufnr].buftype ~= '' or api.nvim_buf_get_name(bufnr) == '' then
     return
@@ -98,7 +109,6 @@ api.nvim_create_autocmd('ColorScheme', {
   callback = setup_highlights,
 })
 
--- Ветка запрашивается только один раз для каждого буфера.
 api.nvim_create_autocmd('BufEnter', {
   group = group,
   callback = function(args)
@@ -108,12 +118,10 @@ api.nvim_create_autocmd('BufEnter', {
   end,
 })
 
--- Экранирует «%» в строках, выводимых через statusline.
 local function escape(str)
   return (str:gsub('%%', '%%%%'))
 end
 
--- Формирует счётчики ошибок и предупреждений.
 local function get_diagnostics()
   local counts = vim.diagnostic.count(0)
   local parts = {}
@@ -129,35 +137,30 @@ local function get_diagnostics()
   return table.concat(parts, ' ')
 end
 
--- Имена LSP-клиентов текущего буфера.
 local function get_lsp_clients()
   return vim
     .iter(vim.lsp.get_clients({ bufnr = 0 }))
-    :map(function(client)
-      return client.name
+    :map(function(c)
+      return c.name
     end)
     :join(', ')
 end
 
--- Git-ветка текущего буфера с иконкой.
 local function get_git_branch()
   local branch = vim.b.git_branch or ''
   return branch ~= '' and (GIT_ICON .. ' ' .. branch) or ''
 end
 
--- Название активной раскладки (keymap), если она включена.
 local function get_keymap()
   return vim.bo.iminsert == 1 and (vim.b.keymap_name or vim.bo.keymap) or ''
 end
 
--- Кодировка файла, если она не UTF-8.
 local function get_encoding()
-  local encoding = vim.bo.fileencoding
-  return encoding:lower() ~= 'utf-8' and encoding or ''
+  local enc = vim.bo.fileencoding
+  return enc:lower() ~= 'utf-8' and enc or ''
 end
 
--- Формирует статуслайн текущего окна.
-function statusline()
+function _G.render_statusline()
   local mode_short = api.nvim_get_mode().mode
   local mode = MODES[mode_short:sub(1, 1)] or MODES.other
 
@@ -172,100 +175,101 @@ function statusline()
     get_lsp_clients(),
     vim.bo.filetype,
     get_encoding(),
-    '%3l:%-3c ',
+    '%3l:%-3c',
   }, RIGHT_SEPARATOR)
 
   return left .. '%=' .. right
 end
 
 -- %{ ... } выводит значение.
--- %{% ... %} дополнительно разбирает форматирование.
-vim.opt.statusline = '%{%v:lua.statusline()%}'
+-- %{% ... %} дополнительно разбирает форматирование и группы подсветки.
+vim.opt.statusline = '%{%v:lua.render_statusline()%}'
 
--- Формирует TabLine из загруженных буферов.
-function _G.get_buffers()
-  local current = api.nvim_get_current_buf()
-  local items, curr_idx, total = {}, 1, 0
+local function get_label(buf)
+  local name = api.nvim_buf_get_name(buf)
+  local label = name == '' and '[No Name]' or vim.fs.basename(name)
+  return vim.bo[buf].modified and label .. ' [+]' or label
+end
 
-  for _, bufnr in ipairs(api.nvim_list_bufs()) do
-    if api.nvim_buf_is_loaded(bufnr) and vim.bo[bufnr].buflisted then
-      local name = api.nvim_buf_get_name(bufnr)
-      name = name ~= '' and vim.fs.basename(name) or '[No Name]'
-
-      local text = name .. (vim.bo[bufnr].modified and '+' or '')
-      local len = vim.fn.strdisplaywidth(' ' .. text .. ' ')
-      total = total + len
-
-      if bufnr == current then
-        curr_idx = #items + 1
-      end
-
-      items[#items + 1] = {
-        len = len,
-        str = ('%%%d@v:lua.handle_buffer_click@%%#%s# %s %%*%%X'):format(
-          bufnr,
-          bufnr == current and 'TabLineSel' or 'TabLine',
-          escape(text)
-        ),
-      }
-    end
+function _G.handle_buffer_click(bufnr, _, button)
+  if button ~= 'l' or not api.nvim_buf_is_valid(bufnr) then
+    return
   end
+  api.nvim_set_current_buf(bufnr)
+end
 
-  if #items == 0 then
+function _G.render_tabline()
+  local buffers = vim.tbl_filter(function(buf)
+    return vim.bo[buf].buflisted
+  end, api.nvim_list_bufs())
+
+  local count = #buffers
+  if count == 0 then
     return ''
   end
 
-  local l, r = 1, #items
+  -- Проход 1: подписи и ширины
+  local labels, widths = {}, {}
+  local total = 0
+  for i, buf in ipairs(buffers) do
+    labels[i] = get_label(buf)
+    widths[i] = strwidth(labels[i]) + 2
+    total = total + widths[i]
+  end
 
-  -- Не помещается: окно вокруг текущей вкладки.
-  -- Под два маркера «…» резервируется по три ячейки.
-  if total > vim.o.columns then
-    local limit = vim.o.columns - 6
-    local w = items[curr_idx].len
-    l, r = curr_idx, curr_idx
+  local current = api.nvim_get_current_buf()
+  local columns = vim.o.columns
 
-    local grew = true
-    while grew do
-      grew = false
+  -- Проход 2: разбивка на страницы
+  local items = {}
+  local width = 0
+  local rest = total -- суммарная ширина буферов i..count
+  local has_current = false
+  local tail_fits = false
+  local start_idx = 1
+  local end_idx = count
 
-      if items[l - 1] and w + items[l - 1].len <= limit then
-        l = l - 1
-        w = w + items[l].len
-        grew = true
-      end
+  for i, buf in ipairs(buffers) do
+    local w = widths[i]
+    local was_current = has_current
+    has_current = has_current or buf == current
 
-      if items[r + 1] and w + items[r + 1].len <= limit then
-        r = r + 1
-        w = w + items[r].len
-        grew = true
+    -- место под правый маркер нужно, пока за этим буфером есть ещё буферы
+    local limit = columns - (i < count and MORE_MARKER_W or 0)
+
+    if not tail_fits and width + w > limit then
+      if width + rest <= columns then
+        tail_fits = true -- весь хвост влезает без правого маркера
+      else
+        if was_current then
+          end_idx = i - 1
+          break
+        end
+        -- новая страница не первая, значит под левый маркер уже занято место
+        start_idx = i
+        width = MORE_MARKER_W
+        items = {}
       end
     end
+
+    width = width + w
+    rest = rest - w
+    items[#items + 1] = ('%%%d@v:lua.handle_buffer_click@%%#%s# %s %%T'):format(
+      buf,
+      buf == current and 'TabLineSel' or 'TabLine',
+      escape(labels[i])
+    )
   end
 
-  local res = {}
-
-  if l > 1 then
-    res[#res + 1] = '%#TabLine# … %*'
+  if start_idx > 1 then
+    table.insert(items, 1, '%#TabLineFill#' .. escape(MORE_MARKER))
+  end
+  if end_idx < count then
+    items[#items + 1] = '%#TabLineFill#' .. escape(MORE_MARKER)
   end
 
-  for i = l, r do
-    res[#res + 1] = items[i].str
-  end
-
-  if r < #items then
-    res[#res + 1] = '%#TabLine# … %*'
-  end
-
-  return table.concat(res)
+  return table.concat(items) .. '%#TabLineFill#'
 end
 
--- Левый клик переключает буфер, средний закрывает его.
-function _G.handle_buffer_click(bufnr, _, button)
-  if button == 'l' then
-    api.nvim_set_current_buf(bufnr)
-  elseif button == 'm' then
-    api.nvim_buf_delete(bufnr, { force = false })
-  end
-end
-
-vim.o.tabline = '%!v:lua.get_buffers()'
+vim.o.showtabline = 2
+vim.o.tabline = '%!v:lua.render_tabline()'
