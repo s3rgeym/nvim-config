@@ -71,9 +71,22 @@ map('n', '<leader>fm', fzf_lua.marks, { desc = 'FZF Marks' })
 map('n', '<leader>fq', fzf_lua.quickfix, { desc = 'FZF Quickfix' })
 
 -- Инструменты Neovim
-map('n', '<leader>fc', fzf_lua.builtin, { desc = 'FZF Commands' })
+map('n', '<leader>f?', fzf_lua.builtin, { desc = 'FZF Builtin' })
+map(
+  'n',
+  '<leader>f:',
+  fzf_lua.command_history,
+  { desc = 'FZF Command History' }
+)
+map(
+  'n',
+  '<leader>f/',
+  fzf_lua.lgrep_curbuf,
+  { desc = 'FZF Grep Current Buffer' }
+)
+map('n', '<leader>fc', fzf_lua.commands, { desc = 'FZF Commands' })
 map('n', '<leader>fk', fzf_lua.keymaps, { desc = 'FZF Keymaps' })
-map('n', '<leader>fh', fzf_lua.helptags, { desc = 'FZF Help' })
+map('n', '<leader>fh', fzf_lua.search_history, { desc = 'FZF Search History' })
 map('n', '<leader>fu', fzf_lua.undotree, { desc = 'FZF Undotree' })
 map('n', '<leader>ft', fzf_lua.colorschemes, { desc = 'FZF Themes' })
 
