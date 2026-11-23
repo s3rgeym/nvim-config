@@ -137,15 +137,14 @@ function _G.render_statusline()
 
   return table.concat({
     ('%%#StatusLineMode%s# %s %%*'):format(mode.hl, mode.label or mode_short),
-    ' %f%m%r',
+    ' %<%f%m%r',
     branch ~= '' and '  ' .. branch or '',
     diagnostic ~= '' and ' ' .. diagnostic or '',
     '%=',
     keymap ~= '' and '  ' .. keymap or '',
-    lsp ~= '' and '  ' .. lsp or '',
+    lsp ~= '' and '  ' .. lsp or '',
     -- filetype ~= '' and '  ' .. filetype or '',
-    '  %3l:%-2c',
-    '  %3p%% ',
+    '  %3l:%-2c  %3p%% ',
   })
 end
 
