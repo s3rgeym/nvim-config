@@ -18,15 +18,14 @@ local MODE_HIGHLIGHTS = {
 }
 
 local MODES = {
-  n = { label = 'NORMAL', hl = 'Normal' },
-  i = { label = 'INSERT', hl = 'Insert' },
-  v = { label = 'VISUAL', hl = 'Visual' },
-  V = { label = 'V-LINE', hl = 'Visual' },
-  ['\22'] = { label = 'V-BLOCK', hl = 'Visual' },
-  c = { label = 'COMMAND', hl = 'Command' },
-  r = { label = 'PROMPT', hl = 'Prompt' },
-  R = { label = 'REPLACE', hl = 'Replace' },
-  t = { label = 'TERMINAL', hl = 'Terminal' },
+  n = { label = 'NOR', hl = 'Normal' },
+  i = { label = 'INS', hl = 'Insert' },
+  v = { label = 'VIS', hl = 'Visual' },
+  V = { label = 'V-L', hl = 'Visual' },
+  ['\22'] = { label = 'V-B', hl = 'Visual' },
+  c = { label = 'CMD', hl = 'Command' },
+  R = { label = 'REP', hl = 'Replace' },
+  t = { label = 'TER', hl = 'Terminal' },
   other = { hl = 'Other' },
 }
 
@@ -45,7 +44,7 @@ local GIT_CHANGES = {
   { key = 'conflicted', sign = '!', hl = 'DiagnosticError' },
 }
 
-local function escape_statusline(value)
+local function escape(value)
   return (value:gsub('%%', '%%%%'))
 end
 
@@ -55,18 +54,18 @@ local function setup_highlights()
     link = false,
   })
 
-  local fg = normal.fg or 0xffffff
-  local bg = normal.bg or 0x000000
+  local normal_fg = normal.fg or 0xffffff
+  local normal_bg = normal.bg or 0x000000
 
   for name, source in pairs(MODE_HIGHLIGHTS) do
-    local color = api.nvim_get_hl(0, {
+    local background = api.nvim_get_hl(0, {
       name = source,
       link = false,
     }).fg
 
-    api.nvim_set_hl(0, 'StatusLineMode' .. name, color and {
-      fg = colors.get_more_contrast(color, fg, bg),
-      bg = color,
+    api.nvim_set_hl(0, 'StatusLineMode' .. name, background and {
+      fg = colors.get_more_contrast(background, normal_fg, normal_bg),
+      bg = background,
       bold = true,
     } or {})
   end
@@ -144,10 +143,7 @@ api.nvim_create_autocmd({
 
 local function git_branch()
   local branch = vim.b.git_branch or ''
-
-  return branch ~= ''
-      and ('%%#PmenuSel#  %s %%*'):format(escape_statusline(branch))
-    or ''
+  return branch ~= '' and ('  %s'):format(escape(branch)) or ''
 end
 
 local function git_changes()
@@ -188,11 +184,10 @@ local function lsp_clients()
   local names = {}
 
   for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
-    names[#names + 1] = escape_statusline(client.name)
+    names[#names + 1] = escape(client.name)
   end
 
   -- table.sort(names)
-
   return #names > 0 and '  ' .. table.concat(names, ', ') or ''
 end
 
@@ -203,26 +198,28 @@ local function keymap()
 
   local name = vim.b.keymap_name or vim.bo.keymap
 
-  return name ~= '' and '  ' .. escape_statusline(name) or ''
+  return name ~= '' and '  ' .. escape(name) or ''
 end
 
 function _G.render_statusline()
   local mode_short = api.nvim_get_mode().mode
   local mode = MODES[mode_short:sub(1, 1)] or MODES.other
   local mode_hl = 'StatusLineMode' .. mode.hl
+  local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 
   return table.concat({
     ('%%#%s# %s %%*'):format(mode_hl, mode.label or mode_short),
+    ('%%#PmenuSel#  %s %%*'):format(cwd),
+    -- ' 󰈔 %<%{pathshorten(expand("%:."))}%m%r',
+    ' 󰈔 %<%t%m%r', -- Замени %t на %r, если нужен относительный путь
     git_branch(),
     git_changes(),
-    -- ' %<%{pathshorten(expand("%:~"))}%m%r',
-    ' %<%f%m%r',
     '%=',
     keymap(),
     diagnostics(),
     lsp_clients(),
-    ' %#PmenuSel# %3p%% %*',
-    ('%%#%s# %%3l:%%-2c %%*'):format(mode_hl),
+    ' %#PmenuSel# %3l:%02c %*',
+    ('%%#%s# %%3p%%%% %%*'):format(mode_hl),
   })
 end
 

@@ -1,1 +1,1 @@
-return "catppuccin-nvim"
+return "everforest"
