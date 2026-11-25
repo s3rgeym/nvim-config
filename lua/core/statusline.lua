@@ -193,6 +193,27 @@ local function keymap()
   return name ~= '' and ' ' .. escape(name) or ''
 end
 
+local function filetype()
+  return vim.bo.filetype ~= '' and (' ' .. escape(vim.bo.filetype)) or ''
+end
+
+local function encoding()
+  local enc = vim.bo.fileencoding
+  enc = enc ~= '' and enc or vim.o.encoding
+  return enc ~= 'utf-8' and escape(enc) or ''
+end
+
+local function fileformat()
+  local ff = vim.bo.fileformat
+  if ff == 'dos' then
+    return 'CRLF'
+  end
+  if ff == 'mac' then
+    return 'CR'
+  end
+  return ''
+end
+
 function _G.render_statusline()
   local m = api.nvim_get_mode().mode
   local mode = MODES[m:sub(1, 1)] or { label = m, hl = 'Other' }
@@ -208,6 +229,9 @@ function _G.render_statusline()
       keymap(),
       diagnostics(),
       lsp_clients(),
+      filetype(),
+      encoding(),
+      fileformat(),
       ('%%#%s# %%3l:%%02c %%*'):format(hl),
     })
     :filter(function(x)

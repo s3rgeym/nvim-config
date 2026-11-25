@@ -1,1 +1,1 @@
-return "kanagawa"
+return "catppuccin-mocha"
