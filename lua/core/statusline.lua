@@ -198,20 +198,17 @@ local function filetype()
 end
 
 local function encoding()
-  local enc = vim.bo.fileencoding
-  enc = enc ~= '' and enc or vim.o.encoding
-  return enc ~= 'utf-8' and escape(enc) or ''
+  return escape(
+    (vim.bo.fileencoding ~= '' and vim.bo.fileencoding) or vim.o.encoding
+  )
 end
 
 local function fileformat()
-  local ff = vim.bo.fileformat
-  if ff == 'dos' then
-    return 'CRLF'
-  end
-  if ff == 'mac' then
-    return 'CR'
-  end
-  return ''
+  return ({
+    unix = '',
+    dos = '',
+    mac = '',
+  })[vim.bo.fileformat] or vim.bo.fileformat
 end
 
 function _G.render_statusline()
@@ -225,9 +222,9 @@ function _G.render_statusline()
       '%<%f%m%r', -- Замени %f на %t, если нужно только имя файла
       git_branch(),
       git_changes(),
+      diagnostics(),
       '%=',
       keymap(),
-      diagnostics(),
       lsp_clients(),
       filetype(),
       encoding(),

@@ -8,7 +8,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 
 -- Настройки для всех серверов
--- Эти настройки лишь сохранятсяб а применены они будут только при подключении к
+-- Эти настройки лишь сохранятся, а применены они будут только при подключении к
 -- LSP-серверу
 vim.lsp.config('*', { capabilities = capabilities })
 
