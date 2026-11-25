@@ -1,7 +1,6 @@
 -- Этот плагин нужен, так как не все языковые сервера поддерживают
 -- форматирование, и не все средства форматирования могут работать через LSP.
--- Если мы форматируем через conform, то настройки, заданные в конфигах lsp, не
--- применяются!!!
+-- Если форматируем через conform, настройки из конфигов LSP не применяются!
 --
 -- Плагин ставится встроенным менеджером Neovim 0.12+, обновляется через
 -- :lua vim.pack.update()
@@ -9,7 +8,7 @@ vim.pack.add({ 'https://github.com/stevearc/conform.nvim' })
 
 -- Форматтеры (внешние программы) ставятся через pacman, команды указаны
 -- над каждым типом файлов в formatters_by_ft ниже.
--- Для типов файлов без форматтера в conform (toml, dockerfile и т.д.)
+-- Для типов файлов без форматтера в conform (dockerfile и т.д.)
 -- форматирует LSP благодаря lsp_format = 'fallback'.
 
 local conform = require('conform')
@@ -22,27 +21,6 @@ conform.setup({
 
   formatters = {
     shfmt = { prepend_args = { '-i', '2', '-ci', '-s' } },
-
-    prettier = {
-      prepend_args = {
-        '--no-semi',
-        '--single-quote',
-        '--tab-width=2',
-        '--no-use-tabs',
-      },
-    },
-
-    -- отдельный форматтер для markdown без форматирования вложенного кода
-    prettier_md = {
-      inherit = 'prettier',
-      prepend_args = {
-        '--no-semi',
-        '--single-quote',
-        '--tab-width=2',
-        '--no-use-tabs',
-        '--embedded-language-formatting=off',
-      },
-    },
   },
 
   formatters_by_ft = {
@@ -65,19 +43,23 @@ conform.setup({
     sh = { 'shfmt' },
     bash = { 'shfmt' },
 
-    -- sudo pacman -S biome
-    javascript = { 'biome' },
-    typescript = { 'biome' },
-    json = { 'biome' },
-    jsonc = { 'biome' },
-    css = { 'biome' },
-    scss = { 'biome' },
-
-    -- sudo pacman -S prettier
-    vue = { 'prettier' },
-    html = { 'prettier' },
-    yaml = { 'prettier' },
-    markdown = { 'prettier_md' },
+    -- pnpm add -D oxfmt
+    javascript = { 'oxfmt' },
+    javascriptreact = { 'oxfmt' },
+    typescript = { 'oxfmt' },
+    typescriptreact = { 'oxfmt' },
+    json = { 'oxfmt' },
+    jsonc = { 'oxfmt' },
+    json5 = { 'oxfmt' },
+    css = { 'oxfmt' },
+    scss = { 'oxfmt' },
+    less = { 'oxfmt' },
+    graphql = { 'oxfmt' },
+    toml = { 'oxfmt' },
+    yaml = { 'oxfmt' },
+    markdown = { 'oxfmt' },
+    html = { 'oxfmt' },
+    vue = { 'oxfmt' },
   },
 })
 

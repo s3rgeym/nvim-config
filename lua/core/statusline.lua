@@ -11,22 +11,19 @@ local MODE_HIGHLIGHTS = {
   Insert = 'DiagnosticOk',
   Visual = 'Statement',
   Command = 'DiagnosticWarn',
-  Prompt = 'DiagnosticError',
   Replace = 'DiagnosticError',
-  Terminal = 'DiagnosticHint',
-  Other = 'Special',
+  Other = 'DiagnosticHint',
 }
 
 local MODES = {
-  n = { label = 'NOR', hl = 'Normal' },
-  i = { label = 'INS', hl = 'Insert' },
-  v = { label = 'VIS', hl = 'Visual' },
-  V = { label = 'V-L', hl = 'Visual' },
-  ['\22'] = { label = 'V-B', hl = 'Visual' },
-  c = { label = 'CMD', hl = 'Command' },
-  R = { label = 'REP', hl = 'Replace' },
-  t = { label = 'TER', hl = 'Terminal' },
-  other = { hl = 'Other' },
+  n = { label = 'NORMAL', hl = 'Normal' },
+  i = { label = 'INSERT', hl = 'Insert' },
+  v = { label = 'VISUAL', hl = 'Visual' },
+  V = { label = 'V-LINE', hl = 'Visual' },
+  ['\22'] = { label = 'V-BLOCK', hl = 'Visual' },
+  c = { label = 'COMMAND', hl = 'Command' },
+  R = { label = 'REPLACE', hl = 'Replace' },
+  t = { label = 'TERMINAL', hl = 'Other' },
 }
 
 local DIAGNOSTICS = {
@@ -143,7 +140,7 @@ api.nvim_create_autocmd({
 
 local function git_branch()
   local branch = vim.b.git_branch or ''
-  return branch ~= '' and ('  %s'):format(escape(branch)) or ''
+  return branch ~= '' and (' %s'):format(escape(branch)) or ''
 end
 
 local function git_changes()
@@ -162,7 +159,7 @@ local function git_changes()
     end
   end
 
-  return #parts > 0 and ' ' .. table.concat(parts, ' ') or ''
+  return table.concat(parts, ' ')
 end
 
 local function diagnostics()
@@ -177,7 +174,7 @@ local function diagnostics()
     end
   end
 
-  return #parts > 0 and ' ' .. table.concat(parts, ' ') or ''
+  return table.concat(parts, ' ')
 end
 
 local function lsp_clients()
@@ -187,40 +184,36 @@ local function lsp_clients()
     names[#names + 1] = escape(client.name)
   end
 
-  -- table.sort(names)
-  return #names > 0 and '  ' .. table.concat(names, ', ') or ''
+  return #names > 0 and ' ' .. table.concat(names, ', ') or ''
 end
 
 local function keymap()
-  if vim.bo.iminsert ~= 1 then
-    return ''
-  end
-
-  local name = vim.b.keymap_name or vim.bo.keymap
-
-  return name ~= '' and '  ' .. escape(name) or ''
+  local name = vim.bo.iminsert == 1 and (vim.b.keymap_name or vim.bo.keymap)
+    or ''
+  return name ~= '' and ' ' .. escape(name) or ''
 end
 
 function _G.render_statusline()
-  local mode_short = api.nvim_get_mode().mode
-  local mode = MODES[mode_short:sub(1, 1)] or MODES.other
-  local mode_hl = 'StatusLineMode' .. mode.hl
-  local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+  local m = api.nvim_get_mode().mode
+  local mode = MODES[m:sub(1, 1)] or { label = m, hl = 'Other' }
+  local hl = 'StatusLineMode' .. mode.hl
 
-  return table.concat({
-    ('%%#%s# %s %%*'):format(mode_hl, mode.label or mode_short),
-    ('%%#PmenuSel#  %s %%*'):format(cwd),
-    -- ' 󰈔 %<%{pathshorten(expand("%:."))}%m%r',
-    ' 󰈔 %<%t%m%r', -- Замени %t на %r, если нужен относительный путь
-    git_branch(),
-    git_changes(),
-    '%=',
-    keymap(),
-    diagnostics(),
-    lsp_clients(),
-    ' %#PmenuSel# %3l:%02c %*',
-    ('%%#%s# %%3p%%%% %%*'):format(mode_hl),
-  })
+  return vim
+    .iter({
+      ('%%#%s# %s %%*'):format(hl, mode.label),
+      '%<%f%m%r', -- Замени %f на %t, если нужно только имя файла
+      git_branch(),
+      git_changes(),
+      '%=',
+      keymap(),
+      diagnostics(),
+      lsp_clients(),
+      ('%%#%s# %%3l:%%02c %%*'):format(hl),
+    })
+    :filter(function(x)
+      return x ~= ''
+    end)
+    :join(' ')
 end
 
 -- %{% ... %} в отличии от %{ ... } дополнительно разбирает форматирование
