@@ -1,3 +1,11 @@
+-- Настройки автодополнения
+vim.opt.completeopt = {
+  'menuone', -- показывать меню даже с одним вариантом
+  'noselect', -- не выбирать первый вариант автоматически
+  'fuzzy', -- использовать нечеткий поиск при фильтрации вариантов
+  'popup', -- показывать дополнительную информацию о выбранном варианте во всплывающем окне
+}
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- Эта настройка отвечает за изменение имен импортируемых файлов
@@ -15,7 +23,7 @@ vim.lsp.config('*', { capabilities = capabilities })
 -- Многие отключают подсветку semantic tokens, т.к. за подсветку отвечает
 -- treesitter, но я так и не понял, чем она мешает
 -- https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316
-vim.lsp.semantic_tokens.enable(false)
+-- vim.lsp.semantic_tokens.enable(false)
 
 -- Уровень логирования
 vim.lsp.log.set_level('WARN')
@@ -131,8 +139,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     bufmap('n', 'gD', vim.lsp.buf.declaration, 'Go to Declaration')
 
     -- Показать сигнатуру функции
-    -- На <c-s> уже висит
-    -- map('i', '<c-k>', vim.lsp.buf.signature_help, 'Signature Help')
+    -- На <c-s> уже висит + это сочетания используется для ввода диграфов
+    -- <c-k>12 вставит ½, см список :digraphs
+    -- bufmap('i', '<c-k>', vim.lsp.buf.signature_help, 'Signature Help')
 
     -- Подтверждение выбора по Enter, так как неудобно тянуться до <C-y>
     bufmap('i', '<cr>', function()
@@ -153,9 +162,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Если на <S-Tab> в режиме редактирования повесить <C-d>, то он перестанет
     -- работать из-за этого сочетания. Я даже через feedkeys пробовал. Что-то не
-    -- работает... Проблема тут в том еще, что <cr>, <Tab> в режиме вставки
-    -- добавляют символы (пусть и непечатные), и никто их переопределять не
-    -- станет
+    -- работает...
     bufmap('i', '<S-Tab>', function()
       return pumvisible() and '<C-p>' or '<S-Tab>'
     end, { expr = true })
@@ -186,9 +193,29 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
     end
 
-    -- Включаем Inlay Hints по умолчанию
+    -- Inlay Hints
     if client:supports_method('textDocument/inlayHint') then
       vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
+
+    -- CodeLens
+    -- Поддерживается gopls (запускается через grx)
+    if client:supports_method('textDocument/codeLens') then
+      vim.lsp.codelens.enable(true, { bufnr = bufnr })
+    end
+
+    -- Linked Editing
+    -- Автоматическое переименование закрывающего тега...
+    if client:supports_method('textDocument/linkedEditingRange') then
+      vim.lsp.linked_editing_range.enable(true, {
+        client_id = client.id,
+      })
+    end
+
+    -- Document Color
+    -- Подсветка цветов для css/vue...
+    if client:supports_method('textDocument/documentColor') then
+      vim.lsp.document_color.enable(true, { bufnr = bufnr })
     end
 
     -- Подсветка упоминаний символа под курсором

@@ -103,7 +103,7 @@ o.listchars:append({
 --------------------------------------------------------------------------------
 -- Без popup справка не отображается
 -- Возможно, стот это вынести в настройки LSP
-o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
+-- o.completeopt = { 'menu', 'menuone', 'noselect', 'fuzzy', 'popup' }
 
 -- Эти 4 настройки включены по дефолту
 o.ignorecase = true

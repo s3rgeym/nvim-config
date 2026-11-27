@@ -51,8 +51,14 @@ local function setup_highlights()
     link = false,
   })
 
+  local statusline = api.nvim_get_hl(0, {
+    name = 'StatusLine',
+    link = false,
+  })
+
   local normal_fg = normal.fg or 0xffffff
   local normal_bg = normal.bg or 0x000000
+  local statusline_bg = statusline.bg or normal_bg
 
   for name, source in pairs(MODE_HIGHLIGHTS) do
     local background = api.nvim_get_hl(0, {
@@ -64,6 +70,11 @@ local function setup_highlights()
       fg = colors.get_more_contrast(background, normal_fg, normal_bg),
       bg = background,
       bold = true,
+    } or {})
+
+    api.nvim_set_hl(0, 'StatusLineModeSep' .. name, background and {
+      fg = background,
+      bg = statusline_bg,
     } or {})
   end
 end
@@ -190,7 +201,7 @@ end
 local function keymap()
   local name = vim.bo.iminsert == 1 and (vim.b.keymap_name or vim.bo.keymap)
     or ''
-  return name ~= '' and ' ' .. escape(name) or ''
+  return name ~= '' and '  ' .. escape(name) or ''
 end
 
 local function filetype()
@@ -212,24 +223,31 @@ local function fileformat()
 end
 
 function _G.render_statusline()
-  local m = api.nvim_get_mode().mode
-  local mode = MODES[m:sub(1, 1)] or { label = m, hl = 'Other' }
-  local hl = 'StatusLineMode' .. mode.hl
+  local raw_mode = api.nvim_get_mode().mode
+  local mode = MODES[raw_mode:sub(1, 1)]
+  local hl_name = mode and mode.hl or 'Other'
+  local hl = 'StatusLineMode' .. hl_name
+  local sep_hl = 'StatusLineModeSep' .. hl_name
 
   return vim
     .iter({
-      ('%%#%s# %s %%*'):format(hl, mode.label),
+      ('%%#%s# %s %%*%%#%s#%%*'):format(
+        hl,
+        mode and mode.label or raw_mode,
+        sep_hl
+      ),
       '%<%f%m%r', -- Замени %f на %t, если нужно только имя файла
       git_branch(),
       git_changes(),
-      diagnostics(),
       '%=',
       keymap(),
+      diagnostics(),
       lsp_clients(),
       filetype(),
-      encoding(),
-      fileformat(),
-      ('%%#%s# %%3l:%%02c %%*'):format(hl),
+      -- encoding(),
+      -- fileformat(),
+      -- ('%%#%s#%%*%%#%s# %%3p%%%%  %%3l:%%02c %%*'):format(sep_hl, hl),
+      ('%%#%s#%%*%%#%s# %%3l:%%02c %%*'):format(sep_hl, hl),
     })
     :filter(function(x)
       return x ~= ''
